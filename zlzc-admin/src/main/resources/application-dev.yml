@@ -17,7 +17,7 @@ spring:
       #Oracle需要打开注释
       #validation-query: SELECT 1 FROM DUAL
       test-while-idle: true
-      test-on-borrow: false
+      test-on-borrow: true
       test-on-return: false
       stat-view-servlet:
         enabled: true
@@ -47,3 +47,4 @@ spring:
 #      url: jdbc:postgresql://localhost:5432/zlzc
 #      username: root
 #      password: 123456
+
