@@ -1,4 +1,4 @@
-package com.zlzc.common.config;
+package com.zlzc.common.config.swagger;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
