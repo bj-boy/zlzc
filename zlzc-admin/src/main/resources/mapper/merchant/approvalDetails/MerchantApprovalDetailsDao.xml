@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.zlzc.modules.merchant.dao.approvalDetails.MerchantApprovalDetailsDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap
+		type="com.zlzc.modules.merchant.entity.approvalDetails.MerchantApprovalDetailsEntity"
+		id="merchantApprovalDetailsMap">
+		<result property="merchantApprovalDetailsId" column="merchant_approval_details_id" />
+		<result property="merchantId" column="merchnt_id" />
+		<result property="merchantApprovalStatus" column="merchant_approval_status" />
+		<result property="merchantAuditors" column="merchant_auditors" />
+		<result property="merchantAuditResults" column="merchant_audit_results" />
+		<result property="merchantFeedback" column="merchnt_feedback" />
+		<result property="merchantDate" column="merchant_date" />
+		<result property="merchantDetails" column="merchant_details" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+	</resultMap>
+
+
+	<select id="queryApprovalDetails"
+		resultType="com.zlzc.modules.merchant.vo.merchant.MerchantApprovalDetailsVo">
+		select md.*, 
+			m.merchant_name,
+			m.merchant_account,
+			m.merchant_name,
+			m.merchant_nick,
+			m.merchant_company_name
+		from zlzc_merchant_approval_details md left join zlzc_merchant m
+		on md.merchant_id = m.merchant_id ${ew.customSqlSegment}
+	</select>
+
+
+</mapper>
