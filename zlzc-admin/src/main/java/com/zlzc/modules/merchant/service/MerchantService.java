@@ -14,7 +14,7 @@ import com.zlzc.modules.merchant.entity.MerchantEntity;
  * @date 2019-11-30 14:01:13
  */
 public interface MerchantService extends IService<MerchantEntity> {
+	PageUtils queryPageByCondition(Map<String, Object> params, MerchantEntity merchant);
 
-    PageUtils queryPage(Map<String, Object> params);
+	PageUtils queryPage(Map<String, Object> params);
 }
-

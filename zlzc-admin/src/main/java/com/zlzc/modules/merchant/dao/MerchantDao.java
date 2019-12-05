@@ -15,4 +15,5 @@ import com.zlzc.modules.merchant.entity.MerchantEntity;
 @Mapper
 public interface MerchantDao extends BaseMapper<MerchantEntity> {
 	
+	
 }

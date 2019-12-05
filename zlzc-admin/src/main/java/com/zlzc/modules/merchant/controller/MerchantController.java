@@ -19,6 +19,7 @@ import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
 import com.zlzc.modules.merchant.entity.MerchantEntity;
 import com.zlzc.modules.merchant.service.MerchantService;
+import com.zlzc.modules.merchant.service.approvalDetails.MerchantApprovalDetailsService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,6 +38,48 @@ import io.swagger.annotations.ApiParam;
 public class MerchantController {
 	@Autowired
 	private MerchantService merchantService;
+
+	@Autowired
+	private MerchantApprovalDetailsService merchantApprovalDetailsService;
+
+	/**
+	 * 商户审核详情接口
+	 */
+	@ApiOperation(value = "merchant-7 商户审核详情")
+	@PostMapping("/merchntApprovalDetails/{merchntId}")
+	//@formatter:off
+	@ApiImplicitParams(
+		value = {
+			@ApiImplicitParam(name = "merchntId", value = "商户ID", defaultValue = "1", paramType = "path"),
+		}
+	)
+	//@formatter:on
+	public Result merchntApprovalDetails(@PathVariable("merchntId") String merchntId) {
+
+		merchantApprovalDetailsService.queryApprovalDetails(merchntId);
+
+		return Result.ok();
+	}
+
+	/**
+	 * 根据条件查询商户列表(分页)
+	 */
+	@ApiOperation(value = "merchant-6 根据筛选条件获取商户列表（可分页）")
+	@PostMapping("/listByCondition")
+	//@formatter:off
+	@ApiImplicitParams(
+		value = {
+			@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
+			@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query")
+		}
+	)
+	//@formatter:on
+	public Result listByCondition(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
+			@RequestBody MerchantEntity merchant) {
+		PageUtils page = merchantService.queryPageByCondition(params, merchant);
+
+		return Result.ok().put("page", page);
+	}
 
 	/**
 	 * 列表

@@ -28,112 +28,112 @@ public class MerchantEntity implements Serializable {
 	/**
 	 * ID
 	 */
-	@ApiModelProperty(name = "merchntId", value = "商户ID", example = "001")
+	@ApiModelProperty(name = "merchantId", value = "商户ID", example = "001")
 	@TableId
-	private Long merchntId;
+	private Long merchantId;
 	/**
 	 * 商户账号(系统用户账号)
 	 */
-	@ApiModelProperty(name = "merchntAccount", value = "商户账号", example = "123556822")
-	private String merchntAccount;
+	@ApiModelProperty(name = "merchantAccount", value = "商户账号", example = "123556822")
+	private String merchantAccount;
 	/**
 	 * 商户名称
 	 */
-	@ApiModelProperty(name = "merchntName", value = "商户名称", example = "张三")
-	private String merchntName;
+	@ApiModelProperty(name = "merchantName", value = "商户名称", example = "张三")
+	private String merchantName;
 	/**
 	 * 商户昵称
 	 */
-	@ApiModelProperty(name = "merchntNick", value = "商户昵称", example = "大仙儿")
-	private String merchntNick;
+	@ApiModelProperty(name = "merchantNick", value = "商户昵称", example = "大仙儿")
+	private String merchantNick;
 	/**
 	 * 公司名称
 	 */
-	@ApiModelProperty(name = "merchntCompanyName", value = "公司名称", example = "xxx公司")
-	private String merchntCompanyName;
+	@ApiModelProperty(name = "merchantCompanyName", value = "公司名称", example = "xxx公司")
+	private String merchantCompanyName;
 	/**
 	 * 公司注册地址
 	 */
-	@ApiModelProperty(name = "merchntRegistAddr", value = "公司注册地址", example = "北京市-昌平区-回龙观")
-	private String merchntRegistAddr;
+	@ApiModelProperty(name = "merchantRegistAddr", value = "公司注册地址", example = "北京市-昌平区-回龙观")
+	private String merchantRegistAddr;
 	/**
 	 * 营业执照
 	 */
-	@ApiModelProperty(name = "merchntBusiLicenseUrl", value = "营业执照URL", example = "http://sss.com/xxx.jpg")
-	private String merchntBusiLicenseUrl;
+	@ApiModelProperty(name = "merchantBusiLicenseUrl", value = "营业执照URL", example = "http://sss.com/xxx.jpg")
+	private String merchantBusiLicenseUrl;
 	/**
 	 * 供应等级
 	 */
-	@ApiModelProperty(name = "merchntSupplyLevel", value = "供应等级", example = "1")
-	private Integer merchntSupplyLevel;
+	@ApiModelProperty(name = "merchantSupplyLevel", value = "供应等级", example = "1")
+	private Integer merchantSupplyLevel;
 	/**
 	 * 联系人
 	 */
-	@ApiModelProperty(name = "merchntLinkman", value = "联系人", example = "佘仙儿")
-	private String merchntLinkman;
+	@ApiModelProperty(name = "merchantLinkman", value = "联系人", example = "佘仙儿")
+	private String merchantLinkman;
 	/**
 	 * 联系方式
 	 */
-	@ApiModelProperty(name = "merchntTel", value = "联系方式", example = "15200000000")
-	private String merchntTel;
+	@ApiModelProperty(name = "merchantTel", value = "联系方式", example = "15200000000")
+	private String merchantTel;
 	/**
 	 * 联系地址
 	 */
-	@ApiModelProperty(name = "merchntAddr", value = "联系地址", example = "xxx家园201号")
-	private String merchntAddr;
+	@ApiModelProperty(name = "merchantAddr", value = "联系地址", example = "xxx家园201号")
+	private String merchantAddr;
 	/**
 	 * 所在区域
 	 */
-	@ApiModelProperty(name = "merchntRegion", value = "所在区域", example = "北京市-昌平区-回龙观")
-	private String merchntRegion;
+	@ApiModelProperty(name = "merchantRegion", value = "所在区域", example = "北京市-昌平区-回龙观")
+	private String merchantRegion;
 	/**
 	 * 经营模式
 	 */
-	@ApiModelProperty(name = "merchntMode", value = "经营模式", example = "1")
-	private Integer merchntMode;
+	@ApiModelProperty(name = "merchantMode", value = "经营模式", example = "1")
+	private Integer merchantMode;
 	/**
 	 * 经营范围
 	 */
-	@ApiModelProperty(name = "merchntScope", value = "经营范围", example = "2")
-	private Integer merchntScope;
+	@ApiModelProperty(name = "merchantScope", value = "经营范围", example = "2")
+	private Integer merchantScope;
 	/**
 	 * 入驻时间
 	 */
-	@ApiModelProperty(name = "merchntRegistDate", value = "入驻时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "merchantRegistDate", value = "入驻时间", example = "2019-12-01 12:12:45")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date merchntRegistDate;
+	private Date merchantRegistDate;
 	/**
 	 * 审核状态
 	 */
-	@ApiModelProperty(name = "merchntApprovalStatus", value = "审核状态", example = "2")
-	private Integer merchntApprovalStatus;
+	@ApiModelProperty(name = "merchantApprovalStatus", value = "审核状态", example = "2")
+	private Integer merchantApprovalStatus;
 	/**
 	 * 商户审核人员
 	 */
-	@ApiModelProperty(name = "merchntAuditors", value = "商户审核人员", example = "admin")
-	private String merchntAuditors;
+	@ApiModelProperty(name = "merchantAuditors", value = "商户审核人员", example = "admin")
+	private String merchantAuditors;
 	/**
 	 * 商户审核结果
 	 */
-	@ApiModelProperty(name = "merchntAuditResults", value = "商户审核结果", example = "1")
-	private Integer merchntAuditResults;
+	@ApiModelProperty(name = "merchantAuditResults", value = "商户审核结果", example = "1")
+	private Integer merchantAuditResults;
 	/**
 	 * 商户审核反馈
 	 */
-	@ApiModelProperty(name = "merchntFeedback", value = "商户审核反馈", example = "图片不合格")
-	private String merchntFeedback;
+	@ApiModelProperty(name = "merchantFeedback", value = "商户审核反馈", example = "图片不合格")
+	private String merchantFeedback;
 	
 	/**
 	 * 商户审核时间
 	 */
-	@ApiModelProperty(name = "merchntDate", value = "商户审核时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "merchantDate", value = "商户审核时间", example = "2019-12-01 12:12:45")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date merchntDate;
+	private Date merchantDate;
 	/**
 	 * 商户审核详情
 	 */
-	@ApiModelProperty(name = "merchntDetails", value = "商户审核详情", example = "图片不合格,请从新是上传图片")
-	private String merchntDetails;
+	@ApiModelProperty(name = "merchantDetails", value = "商户审核详情", example = "图片不合格,请从新是上传图片")
+	private String merchantDetails;
 	/**
 	 * 创建时间
 	 */
