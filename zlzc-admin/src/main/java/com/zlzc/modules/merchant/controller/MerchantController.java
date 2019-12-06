@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiParam;
  */
 @Api(value = "后台-商户", tags = { "V1.0 merchant：后台-商户操作相关接口" })
 @RestController
-@RequestMapping("merchant/merchant")
+@RequestMapping("merchant")
 public class MerchantController {
 	@Autowired
 	private MerchantService merchantService;
