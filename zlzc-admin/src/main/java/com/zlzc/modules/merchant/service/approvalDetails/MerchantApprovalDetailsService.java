@@ -20,4 +20,6 @@ public interface MerchantApprovalDetailsService extends IService<MerchantApprova
 	PageUtils queryPage(Map<String, Object> params);
 
 	List<MerchantApprovalDetailsVo> queryApprovalDetails(Serializable merchntId);
+
+	PageUtils queryPageByCondition(Map<String, Object> params, MerchantApprovalDetailsVo merchantApprovalDetails);
 }

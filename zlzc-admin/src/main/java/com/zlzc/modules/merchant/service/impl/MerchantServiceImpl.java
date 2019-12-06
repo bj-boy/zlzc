@@ -33,7 +33,6 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantDao, MerchantEntity
 				.eq(StringUtils.isNotBlank(merchant.getMerchantAccount()), MerchantEntity::getMerchantAccount, merchant.getMerchantAccount())
 				.eq(merchant.getMerchantSupplyLevel() != null, MerchantEntity::getMerchantSupplyLevel, merchant.getMerchantSupplyLevel())
 				.eq(merchant.getMerchantScope() != null, MerchantEntity::getMerchantScope, merchant.getMerchantScope())
-				.eq(merchant.getMerchantApprovalStatus() != null, MerchantEntity::getMerchantApprovalStatus, merchant.getMerchantApprovalStatus())
 				.like(StringUtils.isNotBlank(merchant.getMerchantNick()), MerchantEntity::getMerchantNick, merchant.getMerchantNick())
 				.like(StringUtils.isNotBlank(merchant.getMerchantName()), MerchantEntity::getMerchantName, merchant.getMerchantName())
 				.like(StringUtils.isNotBlank(merchant.getMerchantCompanyName()), MerchantEntity::getMerchantCompanyName, merchant.getMerchantCompanyName())
