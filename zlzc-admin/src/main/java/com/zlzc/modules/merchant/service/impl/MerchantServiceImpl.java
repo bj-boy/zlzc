@@ -1,10 +1,5 @@
 package com.zlzc.modules.merchant.service.impl;
 
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Service;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -15,6 +10,10 @@ import com.zlzc.common.utils.Query;
 import com.zlzc.modules.merchant.dao.MerchantDao;
 import com.zlzc.modules.merchant.entity.MerchantEntity;
 import com.zlzc.modules.merchant.service.MerchantService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service("merchantService")
 public class MerchantServiceImpl extends ServiceImpl<MerchantDao, MerchantEntity> implements MerchantService {
