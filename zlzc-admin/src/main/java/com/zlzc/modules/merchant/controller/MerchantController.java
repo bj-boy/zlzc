@@ -19,7 +19,6 @@ import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
 import com.zlzc.modules.merchant.entity.MerchantEntity;
 import com.zlzc.modules.merchant.service.MerchantService;
-import com.zlzc.modules.merchant.service.approvalDetails.MerchantApprovalDetailsService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -38,28 +37,6 @@ import io.swagger.annotations.ApiParam;
 public class MerchantController {
 	@Autowired
 	private MerchantService merchantService;
-
-	@Autowired
-	private MerchantApprovalDetailsService merchantApprovalDetailsService;
-
-	/**
-	 * 商户审核详情接口
-	 */
-	@ApiOperation(value = "merchant-7 商户审核详情")
-	@PostMapping("/merchntApprovalDetails/{merchntId}")
-	//@formatter:off
-	@ApiImplicitParams(
-		value = {
-			@ApiImplicitParam(name = "merchntId", value = "商户ID", defaultValue = "1", paramType = "path"),
-		}
-	)
-	//@formatter:on
-	public Result merchntApprovalDetails(@PathVariable("merchntId") String merchntId) {
-
-		merchantApprovalDetailsService.queryApprovalDetails(merchntId);
-
-		return Result.ok();
-	}
 
 	/**
 	 * 根据条件查询商户列表(分页)
