@@ -39,7 +39,6 @@ import java.util.Map;
                 .eq(StringUtils.isNotBlank(shop.getShopLinkman()),ShopEntity::getShopLinkman,shop.getShopLinkman())
                 .eq(shop.getShopScope()!=null,ShopEntity::getShopScope,shop.getShopScope())
                 .eq(shop.getShopStatus()!=null,ShopEntity::getShopStatus,shop.getShopStatus());
-
         IPage<ShopEntity> page = this.page(new Query<ShopEntity>().getPage(params), qw);
 
         return new PageUtils(page);
