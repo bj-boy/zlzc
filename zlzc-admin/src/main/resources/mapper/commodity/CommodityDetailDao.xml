@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.modules.commodity.dao.CommodityDetailDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.modules.commodity.entity.CommodityDetailEntity" id="commodityDetailMap">
+        <result property="detailId" column="detail_id"/>
+        <result property="commodityId" column="commodity_id"/>
+        <result property="detailType" column="detail_type"/>
+        <result property="detailUrl" column="detail_url"/>
+        <result property="countryCode" column="country_code"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+
+
+</mapper>
