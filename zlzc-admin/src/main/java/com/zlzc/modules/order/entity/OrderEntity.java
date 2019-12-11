@@ -14,11 +14,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 字典表
+ * 订单表
  */
 @ApiModel(description = "订单表实体")
 @Data
-@TableName("zezl_commodity_order")
+@TableName("zlzc_commodity_order")
 public class OrderEntity implements Serializable {
     /**
      * 订单id

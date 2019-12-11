@@ -3,7 +3,6 @@ package com.zlzc.modules.order.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.modules.order.entity.OrderEntity;
-import com.zlzc.modules.order.entity.vo.OrdeAndLogisticsVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;

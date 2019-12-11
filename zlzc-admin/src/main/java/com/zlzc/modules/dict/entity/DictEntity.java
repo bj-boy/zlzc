@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @ApiModel(description = "字典实体")
 @Data
-@TableName("zezl_dict")
+@TableName("zlzc_dict")
 public class DictEntity implements Serializable {
     /**
      * 字典id

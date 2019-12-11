@@ -3,9 +3,9 @@ package com.zlzc.modules.order.controller;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.order.entity.OrderEntity;
-import com.zlzc.modules.order.service.OrdeAndLogisticsService;
+import com.zlzc.modules.order.service.OrderDetailsVoService;
 import com.zlzc.modules.order.service.OrderService;
-import com.zlzc.modules.order.entity.vo.OrdeAndLogisticsVo;
+import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class OrderController {
 
 
     @Autowired
-    private OrdeAndLogisticsService ordeAndLogisticsService;
+    private OrderDetailsVoService ordeAndLogisticsService;
 
     /**
      * 根据条件查询订单快递表列表详情(分页)
@@ -39,7 +39,7 @@ public class OrderController {
     )
     //@formatter:on
     public Result listByOrdeAndLogisticsDetails(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
-                                                @RequestBody OrdeAndLogisticsVo ordeAndLogisticsVo) {
+                                                @RequestBody OrderDetailsVo ordeAndLogisticsVo) {
 
         PageUtils page = ordeAndLogisticsService.ListGetDetails(params,ordeAndLogisticsVo);
         return Result.ok().put("page", page);
@@ -54,7 +54,7 @@ public class OrderController {
             }
     )
     public Result orderDetails(@PathVariable("id") String id ) {
-        OrdeAndLogisticsVo ordeAndLogisticsVoDetails = ordeAndLogisticsService.getOrdeAndLogisticsVoDetails(id);
+        OrderDetailsVo ordeAndLogisticsVoDetails = ordeAndLogisticsService.getOrdeAndLogisticsVoDetails(id);
         return Result.ok().put("ordeAndLogisticsVoDetails", ordeAndLogisticsVoDetails);
     }
 

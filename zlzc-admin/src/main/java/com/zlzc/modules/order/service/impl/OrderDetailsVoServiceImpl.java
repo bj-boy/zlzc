@@ -5,10 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
-import com.zlzc.modules.order.dao.OrdeAndLogisticsDao;
-import com.zlzc.modules.order.entity.OrderEntity;
-import com.zlzc.modules.order.service.OrdeAndLogisticsService;
-import com.zlzc.modules.order.entity.vo.OrdeAndLogisticsVo;
+import com.zlzc.modules.order.dao.OrderDetailsVoDao;
+import com.zlzc.modules.order.service.OrderDetailsVoService;
+import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +16,14 @@ import java.util.Map;
 
 @Service("ordeAndLogisticsService")
 @Slf4j
-public class OrdeAndLogisticsServiceImpl extends ServiceImpl<OrdeAndLogisticsDao,OrdeAndLogisticsVo> implements OrdeAndLogisticsService {
+public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDetailsVoDao,OrderDetailsVo> implements OrderDetailsVoService {
 
 
     @Override
-    public PageUtils ListGetDetails(Map<String, Object> params, OrdeAndLogisticsVo ordeAndLogisticsVo) {
+    public PageUtils ListGetDetails(Map<String, Object> params, OrderDetailsVo ordeAndLogisticsVo) {
 
 
-        QueryWrapper<OrdeAndLogisticsVo> wq = new QueryWrapper<OrdeAndLogisticsVo>()
+        QueryWrapper<OrderDetailsVo> wq = new QueryWrapper<OrderDetailsVo>()
                 .eq(ordeAndLogisticsVo.getOrderEntity().getOrderNumber()!=null||ordeAndLogisticsVo.getOrderEntity().getOrderNumber()!="","o.order_number",ordeAndLogisticsVo.getOrderEntity().getOrderNumber());
 
                 /*.eq(StringUtils.isNotBlank(me+rchantApprovalDetails.getMerchantAuditors()), "merchant_auditors", merchantApprovalDetails.getMerchantAuditors())
@@ -32,17 +31,17 @@ public class OrdeAndLogisticsServiceImpl extends ServiceImpl<OrdeAndLogisticsDao
                 .like(StringUtils.isNotBlank(merchantApprovalDetails.getMerchantCompanyName()), "merchant_company_name", merchantApprovalDetails.getMerchantCompanyName())
                 .groupBy("merchant_id");*/
 
-        IPage<OrdeAndLogisticsVo> page =
-                baseMapper.queryPageByCondition(new Query<OrdeAndLogisticsVo>().getPage(params), wq);
+        IPage<OrderDetailsVo> page =
+                baseMapper.queryPageByCondition(new Query<OrderDetailsVo>().getPage(params), wq);
 
         return new PageUtils(page);
     }
 
     @Override
-    public OrdeAndLogisticsVo getOrdeAndLogisticsVoDetails(String id) {
+    public OrderDetailsVo getOrdeAndLogisticsVoDetails(String id) {
 
-        QueryWrapper<OrdeAndLogisticsVo> wq = new QueryWrapper<OrdeAndLogisticsVo>().eq("order_id", id);
-        OrdeAndLogisticsVo ordeAndLogisticsVo = baseMapper.queryApprovalDetails(wq);
+        QueryWrapper<OrderDetailsVo> wq = new QueryWrapper<OrderDetailsVo>().eq("order_id", id);
+        OrderDetailsVo ordeAndLogisticsVo = baseMapper.queryApprovalDetails(wq);
         return ordeAndLogisticsVo;
     }
 }

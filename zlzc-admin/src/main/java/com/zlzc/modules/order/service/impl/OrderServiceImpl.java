@@ -8,7 +8,6 @@ import com.zlzc.common.utils.Query;
 
 import com.zlzc.modules.order.dao.OrderDao;
 import com.zlzc.modules.order.entity.OrderEntity;
-import com.zlzc.modules.order.entity.vo.OrdeAndLogisticsVo;
 import com.zlzc.modules.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

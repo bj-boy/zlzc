@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @ApiModel(description = "快递物流实体")
 @Data
-@TableName("zezl_commodity_logistics")
+@TableName("zlzc_commodity_logistics")
 public class LogisticsEntity implements Serializable{
 
     /**

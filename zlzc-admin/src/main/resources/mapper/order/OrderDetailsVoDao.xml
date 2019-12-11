@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zlzc.modules.order.dao.OrdeAndLogisticsDao">
+<mapper namespace="com.zlzc.modules.order.dao.OrderDetailsVoDao">
 	<!-- 可根据自己的需求，是否要使用 -->
-	<resultMap id="OrdeAndLogisticsVoRst" type="com.zlzc.modules.order.entity.vo.OrdeAndLogisticsVo">
+	<resultMap id="OrdeAndLogisticsVoRst" type="com.zlzc.modules.order.entity.vo.OrderDetailsVo">
 		<association property="orderEntity" javaType="OrderEntity">
 			<id property="orderId" column="order_id"/>
 			<result property="commobityId" column="commobity_id" />
@@ -28,7 +28,7 @@
 		</association>
 		<association property="logisticsEntity" javaType="LogisticsEntity">
 			<id property="logisticsId" column="logistics_id" />
-			<result property="orderNumber" column="order_number" />
+			<result property="orderNumber" column="order_number_l" />
 			<result property="logisticsName" column="logistics_name" />
 			<result property="logisticsDelivery" column="logistics_delivery" />
 			<result property="logisticsSender" column="logistics_sender" />
@@ -50,20 +50,70 @@
 			<result property="logisticsDeliveryTime" column="logistics_delivery_time" />
 			<result property="logisticsTimeReceipt" column="logistics_time_receipt" />
 		</association>
+		<association property="commodityEntity" javaType="CommodityEntity">
+			<result property="commodityId" column="commodity_id"/>
+			<result property="merchantId" column="merchant_id"/>
+			<result property="shopId" column="shop_id"/>
+			<result property="brandId" column="brand_id"/>
+			<result property="commodityCategoryId" column="commodity_category_id"/>
+			<result property="commodityAttrId" column="commodity_attr_id"/>
+			<result property="commodityRepertoryId" column="commodity_repertory_id"/>
+			<result property="comodityAlbumId" column="comodity_album_id"/>
+			<result property="commodityNo" column="commodity_no"/>
+			<result property="commodityName" column="commodity_name"/>
+			<result property="commoditySubName" column="commodity_sub_name"/>
+			<result property="commodityOrder" column="commodity_order"/>
+			<result property="commodityStatus" column="commodity_status"/>
+			<result property="countryCode" column="country_code"/>
+			<result property="commodityRemark" column="commodity_remark"/>
+			<result property="createTime" column="create_time"/>
+			<result property="updateTime" column="update_time"/>
+			<result property="operator" column="operator"/>
+		</association>
+		<association property="merchantEntity" javaType="MerchantEntity">
+			<id property="merchntId" column="merchnt_id" />
+			<result property="merchntAccount" column="merchnt_account" />
+			<result property="merchntName" column="merchnt_name" />
+			<result property="merchntNick" column="merchnt_nick" />
+			<result property="merchntCompanyName" column="merchnt_company_name" />
+			<result property="merchntRegistAddr" column="merchnt_regist_addr" />
+			<result property="merchntBusiLicenseUrl" column="merchnt_busi_license_url" />
+			<result property="merchntSupplyLevel" column="merchnt_supply_level" />
+			<result property="merchntLinkman" column="merchnt_linkman" />
+			<result property="merchntTel" column="merchnt_tel" />
+			<result property="merchntAddr" column="merchnt_addr" />
+			<result property="merchntRegion" column="merchnt_region" />
+			<result property="merchntMode" column="merchnt_mode" />
+			<result property="merchntScope" column="merchnt_scope" />
+			<result property="merchntRegistDate" column="merchnt_regist_date" />
+			<result property="merchntApprovalStatus" column="merchnt_approval_status" />
+			<result property="merchntAuditors" column="merchnt_auditors" />
+			<result property="merchntAuditResults" column="merchnt_audit_results" />
+			<result property="merchntFeedback" column="merchnt_feedback" />
+			<result property="merchntDate" column="merchnt_date" />
+			<result property="merchntDetails" column="merchnt_details" />
+			<result property="createTime" column="create_time" />
+			<result property="updateTime" column="update_time" />
+			<result property="operator" column="operator" />
+		</association>
+		<association property="shopEntity" javaType="ShopEntity">
+
+		</association>
+
 
 	</resultMap>
 
 
 	<sql id="select_cols">
-		o.order_id,
-		l.logistics_id
+		o.*,
+		l.*,
+		l.order_number order_number_l
 	</sql>
 
 
-	<select id="queryPageByCondition"
-			resultType="com.zlzc.modules.order.entity.vo.OrdeAndLogisticsVo">
+	<select id="queryPageByCondition" resultMap="OrdeAndLogisticsVoRst">
 		select
-		*
+			<include refid="select_cols" />
 		from
 		zezl_commodity_order o
 		join
@@ -74,7 +124,7 @@
 	</select>
 
 	<select id="queryApprovalDetails"
-			resultType="com.zlzc.modules.order.entity.vo.OrdeAndLogisticsVo">
+			resultMap="OrdeAndLogisticsVoRst">
 		select
 		*
 		from
