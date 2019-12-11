@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.modules.commodity.dao.CommodityDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.modules.commodity.entity.CommodityEntity" id="commodityMap">
+        <result property="commodityId" column="commodity_id"/>
+        <result property="merchantId" column="merchant_id"/>
+        <result property="shopId" column="shop_id"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="commodityCategoryId" column="commodity_category_id"/>
+        <result property="commodityAttrId" column="commodity_attr_id"/>
+        <result property="commodityRepertoryId" column="commodity_repertory_id"/>
+        <result property="comodityAlbumId" column="comodity_album_id"/>
+        <result property="commodityNo" column="commodity_no"/>
+        <result property="commodityName" column="commodity_name"/>
+        <result property="commoditySubName" column="commodity_sub_name"/>
+        <result property="commodityOrder" column="commodity_order"/>
+        <result property="commodityStatus" column="commodity_status"/>
+        <result property="countryCode" column="country_code"/>
+        <result property="commodityRemark" column="commodity_remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+
+
+</mapper>
