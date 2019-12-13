@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.modules.shop.dao.ShopDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.zlzc.modules.shop.entity.ShopEntity"
+		id="shopMap">
+		<id property="shopId" column="shop_id" />
+		<result property="shopName" column="shop_name" />
+		<result property="merchntId" column="merchnt_id" />
+		<result property="merchntName" column="merchnt_name" />
+		<result property="shopLogoUrl" column="shop_logo_url" />
+		<result property="shopAddr" column="shop_addr" />
+		<result property="shopRegion" column="shop_region" />
+		<result property="shopLinkman" column="shop_linkman" />
+		<result property="shopTel" column="shop_tel" />
+		<result property="shopScope" column="shop_scope" />
+		<result property="shopStatus" column="shop_status" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+	</resultMap>
+
+	<sql id="shop_cols">
+		s.shop_id
+		s.shop_name
+		s.merchnt_id
+		s.merchnt_name
+		s.shop_logo_url
+		s.shop_addr
+		s.shop_region
+		s.shop_linkman
+		s.shop_tel
+		s.shop_scope
+		s.shop_status
+		s.create_time
+		s.update_time
+		s.operator
+	</sql>
+	<select id="queryListByCondition"
+			resultType="com.zlzc.modules.merchant.vo.merchant.MerchantApprovalDetailsVo">
+		select
+		md.*,
+		<include refid="merchant_cols" />
+		from zlzc_merchant_approval_details md left join zlzc_merchant m
+		on md.merchant_id = m.merchant_id ${ew.customSqlSegment}
+	</select>
+
+	<select id="queryPageByCondition"
+			resultType="com.zlzc.modules.merchant.vo.merchant.MerchantApprovalDetailsVo">
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		md.*,
+		<include refid="merchant_cols" />
+		FROM
+		zlzc_merchant_approval_details md
+		LEFT JOIN zlzc_merchant m ON md.merchant_id = m.merchant_id
+		ORDER BY
+		md.update_time DESC
+		) tmp
+		${ew.customSqlSegment}
+	</select>
+
+</mapper>
