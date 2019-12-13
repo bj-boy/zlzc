@@ -25,13 +25,13 @@ public class CommodityVo extends CommodityEntity implements Serializable {
 
 	private CommodityCategoryEntity commodityCategory;
 
-	private CommodityAttrVo commodityAttrVo;
-
 	private CommodityRepoEntity commodityRepo;
+
+	private CommodityAttrVo commodityAttrVo;
 
 	private CommodityAlbumVo commodityAlbumVo;
 
 	private List<CommodityPriceEntity> commodityPrices;
 
-	private CommodityDetailEntity commodityDetail;
+	private List<CommodityDetailEntity> commodityDetails;
 }

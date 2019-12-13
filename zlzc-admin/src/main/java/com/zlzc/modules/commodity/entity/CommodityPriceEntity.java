@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
@@ -20,6 +21,7 @@ import java.util.Date;
  */
 @Data
 @TableName("zlzc_commodity_price")
+@Accessors(chain = true)
 public class CommodityPriceEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

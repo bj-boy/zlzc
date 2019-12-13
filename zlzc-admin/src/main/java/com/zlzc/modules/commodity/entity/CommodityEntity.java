@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.Date;
  * @date 2019-12-09 14:50:18
  */
 @Data
+@Accessors(chain = true)
 @TableName("zlzc_commodity")
 public class CommodityEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -56,8 +58,8 @@ public class CommodityEntity implements Serializable {
 	/**
 	 * 库存ID
 	 */
-	@ApiModelProperty(name = "commodityRepertoryId", value = "库存ID", example = "1")
-	private Long commodityRepertoryId;
+	@ApiModelProperty(name = "commodityRepoId", value = "库存ID", example = "1")
+	private Long commodityRepoId;
 	/**
 	 * 相册ID
 	 */

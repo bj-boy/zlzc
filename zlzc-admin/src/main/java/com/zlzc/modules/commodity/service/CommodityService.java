@@ -1,5 +1,6 @@
 package com.zlzc.modules.commodity.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,5 +20,7 @@ public interface CommodityService extends IService<CommodityEntity> {
 	PageUtils queryPage(Map<String, Object> params);
 
 	boolean saveCommodity(CommodityVo commodity);
+
+	List<CommodityVo> queryCommodity();
 
 }
