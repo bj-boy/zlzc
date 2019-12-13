@@ -3,20 +3,57 @@ package com.zlzc.modules.order.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zlzc.common.utils.CodeFactory;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
-
+import com.zlzc.modules.commodity.entity.CommodityEntity;
 import com.zlzc.modules.order.dao.OrderDao;
 import com.zlzc.modules.order.entity.OrderEntity;
 import com.zlzc.modules.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.*;
 
 @Service("orderService")
 @Slf4j
 public class OrderServiceImpl  extends ServiceImpl<OrderDao,OrderEntity> implements OrderService{
+
+
+
+
+       /* SortedSet s = Collections.synchronizedSortedSet(new TreeSet());
+        Long l=1L;
+        for(int i=1;i<=1000;i++){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int j=1; j<=1000; j++) {
+                        try {
+                            Thread.sleep(1L);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+//                        System.out.println(Thread.currentThread().getName() + " ----> " + new OrderCodeFactory().getOrderCode(new Long((long)j)));
+
+                        s.add(new OrderCodeFactory().getOrderCode(new Long((long)j)));
+                    }
+                }
+            }).start();
+        }
+
+
+        try {
+            Thread.sleep(10000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(s.size());
+*/
+
+
     @Override
     public OrderEntity getDetails(String number) {
         OrderEntity orderEntity = null;

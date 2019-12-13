@@ -11,9 +11,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface OrderDetailsVoDao extends BaseMapper<OrderDetailsVo>{
 
-    IPage<OrderDetailsVo> queryPageByCondition(IPage<OrderDetailsVo> page,
-                                               @Param(Constants.WRAPPER) Wrapper<OrderDetailsVo> queryWrapper);
 
-    public OrderDetailsVo queryApprovalDetails(
-            @Param(Constants.WRAPPER) Wrapper<OrderDetailsVo> queryWrapper);
 }

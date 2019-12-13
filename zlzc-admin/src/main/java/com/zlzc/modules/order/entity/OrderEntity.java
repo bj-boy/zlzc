@@ -18,7 +18,7 @@ import java.util.Date;
  */
 @ApiModel(description = "订单表实体")
 @Data
-@TableName("zlzc_commodity_order")
+@TableName("zlzc_order")
 public class OrderEntity implements Serializable {
     /**
      * 订单id
@@ -90,7 +90,7 @@ public class OrderEntity implements Serializable {
      * 订单来源
      */
     @ApiModelProperty(name = "orderSource", value = "订单来源", example = "001")
-     private String  orderSource;
+     private Integer  orderSource;
     /**
      * 订单状态
      */
@@ -125,6 +125,10 @@ public class OrderEntity implements Serializable {
      private Date orderCompleteTime;
 
 
-
+    /**
+     * 删除标识
+     */
+    @ApiModelProperty(name = "orderRemove", value = "删除标识", example = "0")
+    private  Integer orderRemove;
 
 }

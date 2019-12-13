@@ -38,31 +38,6 @@
 		s.update_time
 		s.operator
 	</sql>
-	<select id="queryListByCondition"
-			resultType="com.zlzc.modules.merchant.vo.merchant.MerchantApprovalDetailsVo">
-		select
-		md.*,
-		<include refid="merchant_cols" />
-		from zlzc_merchant_approval_details md left join zlzc_merchant m
-		on md.merchant_id = m.merchant_id ${ew.customSqlSegment}
-	</select>
 
-	<select id="queryPageByCondition"
-			resultType="com.zlzc.modules.merchant.vo.merchant.MerchantApprovalDetailsVo">
-		SELECT
-		*
-		FROM
-		(
-		SELECT
-		md.*,
-		<include refid="merchant_cols" />
-		FROM
-		zlzc_merchant_approval_details md
-		LEFT JOIN zlzc_merchant m ON md.merchant_id = m.merchant_id
-		ORDER BY
-		md.update_time DESC
-		) tmp
-		${ew.customSqlSegment}
-	</select>
 
 </mapper>

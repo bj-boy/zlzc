@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Api(value = "后台-订单", tags = { "V1.0 order：后台-订单操作相关接口" })
@@ -46,7 +47,7 @@ public class OrderController {
     }
 
 
-    @ApiOperation(value = "orderDetails-1 根据订单id查询订单有关的全部数据")
+    @ApiOperation(value = "orderDetails-1 根据订单或者编号查询订单有关的全部数据")
     @GetMapping("/orderDetails/{id}")
     @ApiImplicitParams(
             value = {
@@ -92,24 +93,31 @@ public class OrderController {
     }
      */
 
+    @ApiOperation(value = "order-3 新建订单")
+    @PostMapping("/save")
+    public Result saveOrder(@RequestBody OrderDetailsVo orderDetailsVo){
+        //orderService.save(orderEntity);
+        ordeAndLogisticsService.saveOrder(orderDetailsVo);
+        return Result.ok();
+    }
+
 
     /**
      *保存
-     */
     @ApiOperation(value = "order-3 添加订单")
     @PostMapping("/save")
     public Result save(@RequestBody OrderEntity orderEntity){
         orderService.save(orderEntity);
         return Result.ok();
     }
-
+     */
     /**
      *修改
      */
-    @ApiOperation(value = "order-4 根据id进行修改订单")
+    @ApiOperation(value = "order-4 根据id修改订单")
     @PutMapping("/update")
-    public Result update(@RequestBody OrderEntity orderEntity){
-        orderService.updateById(orderEntity);
+    public Result update(@RequestBody OrderDetailsVo orderDetailsVo){
+        ordeAndLogisticsService.updateStatus(orderDetailsVo);
         return Result.ok();
     }
 
@@ -131,7 +139,7 @@ public class OrderController {
             }
     )
     public Result delete(@RequestBody String[] orderId){
-        orderService.removeByIds(Arrays.asList(orderId));
+        ordeAndLogisticsService.removeStatus(Arrays.asList(orderId));
         return Result.ok();
     }
 
