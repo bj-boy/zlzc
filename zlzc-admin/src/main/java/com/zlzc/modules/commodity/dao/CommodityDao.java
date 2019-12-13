@@ -1,8 +1,12 @@
 package com.zlzc.modules.commodity.dao;
 
-import com.zlzc.modules.commodity.entity.CommodityEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zlzc.modules.commodity.entity.CommodityEntity;
+import com.zlzc.modules.commodity.vo.CommodityVo;
 
 /**
  * 
@@ -13,5 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CommodityDao extends BaseMapper<CommodityEntity> {
-	
+
+	List<CommodityVo> queryCommodity();
+
 }
