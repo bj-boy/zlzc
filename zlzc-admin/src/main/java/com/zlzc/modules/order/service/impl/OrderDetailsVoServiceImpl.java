@@ -49,20 +49,25 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
                 .eq(StringUtils.isNotBlank(ordeAndLogisticsVo.getOrderNumber()),
                         "o.order_number",ordeAndLogisticsVo.getOrderNumber())
                 //提交时间
-                .eq(StringUtils.isNotBlank(ordeAndLogisticsVo.getOrderSubmissionTime().toString()),
+                .eq(ordeAndLogisticsVo.getOrderSubmissionTime()!=null,
                         "o.order_submission_time",ordeAndLogisticsVo.getOrderSubmissionTime())
                 //订单状态
-                .eq(StringUtils.isNotBlank(ordeAndLogisticsVo.getOrderStatus().toString()),
+                .eq(ordeAndLogisticsVo.getOrderStatus()!=null,
                         "o.order_status",ordeAndLogisticsVo.getOrderStatus())
                 //订单来源
-                .eq(StringUtils.isNotBlank(ordeAndLogisticsVo.getOrderSource().toString()),
-                        "o.order_source",ordeAndLogisticsVo.getOrderStatus())
-               //收货人
-                .like(StringUtils.isNotBlank(ordeAndLogisticsVo.getLogisticsEntity().getLogisticsRecipient()),
-                        "l.logistics_recipient",ordeAndLogisticsVo.getLogisticsEntity().getLogisticsRecipient())
-                //店铺名称
-                .like(StringUtils.isNotBlank(ordeAndLogisticsVo.getShopEntity().getShopName()),
-                        "s.shop_name",ordeAndLogisticsVo.getShopEntity().getShopName());
+                .eq(ordeAndLogisticsVo.getOrderSource()!=null,
+                        "o.order_source",ordeAndLogisticsVo.getOrderStatus());
+                if(ordeAndLogisticsVo!=null){
+                    //收货人
+                    if(Objects.nonNull(ordeAndLogisticsVo.getLogisticsEntity())){
+                        wq.like("l.logistics_recipient",ordeAndLogisticsVo.getLogisticsEntity().getLogisticsRecipient());
+                    }
+                    //店铺名称
+                    if(Objects.nonNull(ordeAndLogisticsVo.getLogisticsEntity())){
+                        wq.like(Objects.nonNull(ordeAndLogisticsVo.getLogisticsEntity()),"s.shop_name",ordeAndLogisticsVo.getShopEntity().getShopName());
+                    }
+                }
+
         IPage<OrderDetailsVo> page =
                 baseMapper.queryPageByCondition(new Query<OrderDetailsVo>().getPage(params), wq);
 
@@ -93,9 +98,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
 
 
     /**
-     * 0 创建订单成功
-     * 1 对象为空
-     * 2 用户id 商品id 不能为空
+     * 0 创建订单成功 
      * 3 商品id 不存在
      * 4 库存不足
      * @param orderDetailsVo
@@ -123,7 +126,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
                         .eq("commodity_id", orderDetailsVo.getCommobityId());
                 commodityEntity = commodityService.getOne(wq);
                 System.out.println(commodityEntity);
-                orderDetailsVo.setMerchntId(commodityEntity.getMerchantId());
+                orderDetailsVo.setMerchntId(commodityEntity.getMerchantId(   ));
                 orderDetailsVo.setShopId(commodityEntity.getShopId());
                 orderDetailsVo.setOrderRemove(0);
             }else {
@@ -131,7 +134,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
             }
             //查看商品库存
             QueryWrapper<CommodityRepoEntity> cwq = new QueryWrapper<CommodityRepoEntity>()
-                    .eq("commodity_repertory_id",commodityEntity.getCommodityRepertoryId());
+                    .eq("repo_id",commodityEntity.getCommodityRepoId());
             CommodityRepoEntity one = commodityRepoService.getOne(cwq);
             if(one.getRepoStock()< 0){
                 return 4;
@@ -184,7 +187,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
     public boolean removeStatus(List<String> strings) {
 
         for(int i=0;i<strings.size();i++){
-
+  
             QueryWrapper<OrderEntity> cwq = new QueryWrapper<OrderEntity>()
                     .eq("order_id",strings.get(i));
             OrderEntity orderEntity = baseMapper.selectOne(cwq);
