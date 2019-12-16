@@ -1,7 +1,6 @@
 package com.zlzc.modules.order.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zlzc.common.utils.CodeFactory;
@@ -14,18 +13,18 @@ import com.zlzc.modules.commodity.service.CommodityService;
 import com.zlzc.modules.logistics.service.LogisticsService;
 import com.zlzc.modules.order.dao.OrderDao;
 import com.zlzc.modules.order.entity.OrderEntity;
-import com.zlzc.modules.order.service.OrderDetailsVoService;
 import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
+import com.zlzc.modules.order.service.OrderDetailsVoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.BaseStream;
 
 
 @Service("ordeAndLogisticsService")
@@ -131,7 +130,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
             }
             //查看商品库存
             QueryWrapper<CommodityRepoEntity> cwq = new QueryWrapper<CommodityRepoEntity>()
-                    .eq("commodity_repertory_id",commodityEntity.getCommodityRepertoryId());
+                    .eq("commodity_repertory_id",commodityEntity.getCommodityRepoId());
             CommodityRepoEntity one = commodityRepoService.getOne(cwq);
             if(one.getRepoStock()< 0){
                 return 4;
