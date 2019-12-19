@@ -8,8 +8,8 @@
 		id="shopMap">
 		<id property="shopId" column="shop_id" />
 		<result property="shopName" column="shop_name" />
-		<result property="merchntId" column="merchnt_id" />
-		<result property="merchntName" column="merchnt_name" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="merchantName" column="merchant_name" />
 		<result property="shopLogoUrl" column="shop_logo_url" />
 		<result property="shopAddr" column="shop_addr" />
 		<result property="shopRegion" column="shop_region" />
@@ -25,8 +25,8 @@
 	<sql id="shop_cols">
 		s.shop_id
 		s.shop_name
-		s.merchnt_id
-		s.merchnt_name
+		s.merchant_id
+		s.merchant_name
 		s.shop_logo_url
 		s.shop_addr
 		s.shop_region

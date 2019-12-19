@@ -4,29 +4,29 @@
 <mapper namespace="com.zlzc.modules.order.dao.OrderDao">
 	<!-- 可根据自己的需求，是否要使用 -->
 	<resultMap type="com.zlzc.modules.order.entity.OrderEntity"
-		id="merchantMap">
-		<id property="orderId" column="order_id" />
-		<result property="commobityId" column="commobity_id" />
-		<result property="shopId" column="shop_id" />
-		<result property="userId" column="user_id" />
-		<result property="merchntId" column="merchnt_id" />
-		<result property="orderNumber" column="order_number" />
-		<result property="orderAmount" column="order_amount" />
-		<result property="orderPayable" column="order_payable" />
-		<result property="orderCommodityTotalAmount" column="order_commodity_total_amount" />
-		<result property="orderTotalAmount" column="order_total_amount" />
-		<result property="orderNumberPieces" column="order_number_pieces" />
-		<result property="orderPaymentStatus" column="order_payment_status" />
-		<result property="orderPaymentMethod" column="order_payment_method" />
-		<result property="orderSource" column="order_source" />
-		<result property="orderStatus" column="order_status" />
-		<result property="orderOrderType" column="order_order_type" />
-		<result property="orderRemark" column="order_remark" />
-		<result property="orderSubmissionTime" column="order_submission_time" />
-		<result property="orderEndTime" column="order_end_time" />
-		<result property="orderCompleteTime" column="order_complete_time" />
-		<result property="orderRemove" column="order_remove" />
-	</resultMap>
+						   id="merchantMap">
+	<id property="orderId" column="order_id" />
+	<result property="commobityId" column="commobity_id" />
+	<result property="shopId" column="shop_id" />
+	<result property="userId" column="user_id" />
+	<result property="merchntId" column="merchnt_id" />
+	<result property="orderNumber" column="order_number" />
+	<result property="orderAmount" column="order_amount" />
+	<result property="orderPayable" column="order_payable" />
+	<result property="orderCommodityTotalAmount" column="order_commodity_total_amount" />
+	<result property="orderTotalAmount" column="order_total_amount" />
+	<result property="orderNumberPieces" column="order_number_pieces" />
+	<result property="orderPaymentStatus" column="order_payment_status" />
+	<result property="orderPaymentMethod" column="order_payment_method" />
+	<result property="orderSource" column="order_source" />
+	<result property="orderStatus" column="order_status" />
+	<result property="orderOrderType" column="order_order_type" />
+	<result property="orderRemark" column="order_remark" />
+	<result property="orderSubmissionTime" column="order_submission_time" />
+	<result property="orderEndTime" column="order_end_time" />
+	<result property="orderCompleteTime" column="order_complete_time" />
+	<result property="orderRemove" column="order_remove" />
+</resultMap>
 	<resultMap id="OrdeAndLogisticsVoRst"  type="com.zlzc.modules.order.entity.vo.OrderDetailsVo"
 	extends="merchantMap">
 		<association property="logisticsEntity" javaType="LogisticsEntity">

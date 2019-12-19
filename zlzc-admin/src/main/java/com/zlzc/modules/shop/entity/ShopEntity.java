@@ -38,13 +38,13 @@ public class ShopEntity implements Serializable{
 	/**
 	 * 商户ID
 	 */
-	@ApiModelProperty(name = "merchntId", value = "商户ID", example = "1")
-	private Long merchntId;
+	@ApiModelProperty(name = "merchantId", value = "商户ID", example = "1")
+	private Long merchantId;
 	/**
 	 * 商户名称
 	 */
-	@ApiModelProperty(name = "merchntName", value = "商户名称", example = "大志")
-	private String merchntName;
+	@ApiModelProperty(name = "merchantName", value = "商户名称", example = "大志")
+	private String merchantName;
 	/**
 	 * 店铺logo url
 	 */
