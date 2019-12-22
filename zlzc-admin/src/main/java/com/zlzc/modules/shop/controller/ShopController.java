@@ -143,7 +143,7 @@ public class ShopController {
 	public Result info(@PathVariable("shopId") String shopId) {
 		ShopEntity shop = shopService.getById(shopId);
 
-		return Result.ok().put("shopId", shopId);
+		return Result.ok().put("shop", shop);
 	}
 
 	@ApiOperation(value = "shop-1 获取店铺列表(可分页)")
