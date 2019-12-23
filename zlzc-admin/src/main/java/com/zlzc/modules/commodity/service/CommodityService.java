@@ -31,4 +31,7 @@ public interface CommodityService extends IService<CommodityEntity> {
 
 	List<Map<String, Object>> commodityStatusStatistics(Long merchantId, Long shopId);
 
+	boolean transferCommodityByCommodityCategory(Long merchantId, Long fromCommodityCategoryId,
+			Long toCommodityCategoryId);
+
 }

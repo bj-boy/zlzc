@@ -81,16 +81,16 @@ public class MerchantController {
 	 * 信息
 	 */
 	@ApiOperation(value = "merchant-2 根据商户ID获取商户信息")
-	@GetMapping("/info/{merchntId}")
+	@GetMapping("/info/{merchantId}")
 	//@formatter:off
 	@ApiImplicitParams(
 		value = {
-			@ApiImplicitParam(name = "merchntId", value = "商户ID", defaultValue = "1", paramType = "path"),
+			@ApiImplicitParam(name = "merchantId", value = "商户ID", defaultValue = "1", paramType = "path"),
 		}
 	)
 	//@formatter:on
-	public Result info(@PathVariable("merchntId") String merchntId) {
-		MerchantEntity merchant = merchantService.getById(merchntId);
+	public Result info(@PathVariable("merchantId") String merchantId) {
+		MerchantEntity merchant = merchantService.getById(merchantId);
 
 		return Result.ok().put("merchant", merchant);
 	}

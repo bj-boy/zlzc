@@ -2,7 +2,6 @@ package com.zlzc.modules.commodity.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +9,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,9 +51,26 @@ public class CommodityController {
 	private CommodityService commodityService;
 
 	/**
+	 * 将商品的分类转移至指定商品分类
+	 */
+	@ApiOperation(value = "commodity-6 将商品的分类转移至指定商品分类")
+	@RespTime("/commodity/transferCommodityByCommodityCategory")
+	@PutMapping("/transferCommodityByCommodityCategory/{merchantId}/{fromCommodityCategoryId}/{fromCommodityCategoryId}")
+	//@formatter:off
+	public Result transferCommodityByCommodityCategory(
+			@RequestParam(name = "merchantId", required = true) Long merchantId, 
+			@RequestParam(name = "fromCommodityCategoryId", required = true) Long fromCommodityCategoryId,
+			@RequestParam(name = "toCommodityCategoryId", required = true) Long toCommodityCategoryId) {
+	//@formatter:on
+		boolean transferFlag = commodityService.transferCommodityByCommodityCategory(merchantId,
+				fromCommodityCategoryId, toCommodityCategoryId);
+		return Result.ok().put("rs", transferFlag);
+	}
+
+	/**
 	 * 商品各状态数量统计
 	 */
-	@ApiOperation(value = "merchant-5 商品各状态数量统计")
+	@ApiOperation(value = "commodity-5 商品各状态数量统计")
 	@RespTime("/commodity/statisticsByStatus")
 	@GetMapping("/statisticsByStatus")
 	public Result commodityStatusStatistics(@RequestParam(name = "merchantId", required = false) Long merchantId,
@@ -66,7 +82,7 @@ public class CommodityController {
 	 * 删除
 	 */
 	@RespTime("/commodity/delete")
-	@ApiOperation(value = "merchant-4 删除指定商品(支持批量)")
+	@ApiOperation(value = "commodity-4 删除指定商品(支持批量)")
 	@DeleteMapping("/delete")
 	public Result delete(@RequestBody Long[] commodityIds) {
 		boolean delCommodities = commodityService.delCommodities(commodityIds);
@@ -78,7 +94,7 @@ public class CommodityController {
 	 * 商品列表
 	 */
 	@RespTime("/commodity/queryList")
-	@ApiOperation(value = "merchant-3 获取商品列表")
+	@ApiOperation(value = "commodity-3 获取商品列表")
 	@GetMapping("/queryList")
 	public Result queryList(@RequestParam(required = false) String name) {
 		List<CommodityVo> commodityList = commodityService.queryCommodity();
@@ -88,7 +104,7 @@ public class CommodityController {
 	/**
 	 * 列表
 	 */
-	@ApiOperation(value = "merchant-1 获取商品列表（可分页）")
+	@ApiOperation(value = "commodity-1 获取商品列表（可分页）")
 	@GetMapping("/list")
 	//@formatter:off
   	@ApiImplicitParams(
@@ -108,7 +124,7 @@ public class CommodityController {
 	 * 保存
 	 */
 	@RespTime("/commodity/save")
-	@ApiOperation(value = "merchant-2 添加商品")
+	@ApiOperation(value = "commodity-2 添加商品")
 	@PostMapping("/save")
 	public Result save(@RequestBody CommodityVo comm) {
 		//@formatter:off

@@ -222,94 +222,94 @@
 	
 	<select id="queryCommodity" resultMap="commodityVoMap">
 	SELECT
-	zc.merchant_id,
-	zc.shop_id,
-	zc.commodity_id,
-	zc.commodity_no,
-	zc.commodity_name,
-	zc.commodity_sub_name,
-	zc.commodity_order,
-	zc.commodity_remark,
-	zc.commodity_status,
-	zc.country_code,
-	zcd.detail_id,
-	zcd.country_code country_code_detail,
-	zcd.detail_type,
-	zcd.detail_url,
-	zcc.category_id,
-	zcc.parent_category_id,
-	zcc.category_no,
-	zcc.category_name,
-	zcc.category_icon,
-	zcc.category_desc,
-	zcc.category_order,
-	zcr.repo_id,
-	zcr.repo_stock,
-	zcr.repo_prewarning,
-	zcr.repo_unit,
-	zca.album_id,
-	zca.album_no,
-	zca.album_name,
-	zca.album_desc,
-	zca.album_cover_url,
-	zcp.pic_id,
-	zcp.pic_desc,
-	zcp.pic_url,
-	zcpi.price_id,
-	zcpi.price,
-	zcpi.price_unit,
-	zcpi.country_code country_code_price,
-	zcpi.sales_model,
-	zcpi.sales_rule,
-	zcat.attr_id,
-	zcat.attr_no,
-	zcat.attr_name,
-	zcpa.param_id,
-	zcpa.param_name,
-	zcpa.param_vals,
-	zcpa.param_order,
-	zcpa.country_code country_code_param,
-	zcs.sku_id,
-	zcs.sku_no,
-	zcs.sku_name,
-	zcs.sku_vals,
-	zcs.sku_order,
-	zcs.country_code country_code_sku,
- 	zcr_sku.repo_id repo_id_sku,
- 	zcr_sku.repo_stock repo_stock_sku,
- 	zcr_sku.repo_prewarning repo_prewarning_sku,
- 	zcr_sku.repo_unit repo_unit_sku,
- 	zca_sku.album_id album_id_sku,
- 	zca_sku.album_no album_no_sku,
- 	zca_sku.album_name album_name_sku,
- 	zca_sku.album_desc album_desc_sku,
- 	zca_sku.album_cover_url album_cover_url_sku,
- 	zcp_sku.pic_id pic_id_sku,
- 	zcp_sku.pic_desc pic_desc_sku,
- 	zcp.pic_url pic_url_sku,
- 	zcpi_sku.price_id price_id_sku,
- 	zcpi_sku.price price_sku,
- 	zcpi_sku.price_unit price_unit_sku,
- 	zcpi_sku.country_code country_code_price_sku,
- 	zcpi_sku.sales_model sales_model_sku,
- 	zcpi_sku.sales_rule sales_rule_sku 
-FROM
-	( SELECT * FROM zlzc_commodity t1 WHERE t1.del = 1 LIMIT 0, 10 ) zc
-	LEFT JOIN zlzc_commodity_detail zcd ON zc.commodity_id = zcd.commodity_id
-	LEFT JOIN zlzc_commodity_category zcc ON zc.commodity_category_id = zcc.category_id
-	LEFT JOIN zlzc_commodity_repo zcr ON zc.commodity_repo_id = zcr.repo_id
-	LEFT JOIN zlzc_commodity_album zca ON zc.comodity_album_id = zca.album_id
-	LEFT JOIN zlzc_commodity_pic zcp ON zca.album_id = zcp.album_id
-	INNER JOIN zlzc_commodity_price_middle zcpm ON zc.commodity_id = zcpm.commodity_id
-	LEFT JOIN zlzc_commodity_price zcpi ON zcpm.price_id = zcpi.price_id
-	LEFT JOIN zlzc_commodity_attr zcat ON zc.commodity_attr_id = zcat.attr_id -- 12
-	LEFT JOIN zlzc_commodity_param zcpa ON zcat.attr_id = zcpa.attr_id
-	LEFT JOIN zlzc_commodity_sku zcs ON zcat.attr_id = zcs.attr_id
- 	INNER JOIN zlzc_commodity_sku_middle zcsm ON zcsm.sku_id = zcs.sku_id
- 	LEFT JOIN zlzc_commodity_repo zcr_sku ON zcsm.repo_id = zcr_sku.repo_id
- 	LEFT JOIN zlzc_commodity_album zca_sku ON zcsm.album_id = zca_sku.album_id
- 	LEFT JOIN zlzc_commodity_pic zcp_sku ON zca_sku.album_id = zcp_sku.album_id
- 	LEFT JOIN zlzc_commodity_price zcpi_sku ON zcsm.price_id = zcpi_sku.price_id
+		zc.merchant_id,
+		zc.shop_id,
+		zc.commodity_id,
+		zc.commodity_no,
+		zc.commodity_name,
+		zc.commodity_sub_name,
+		zc.commodity_order,
+		zc.commodity_remark,
+		zc.commodity_status,
+		zc.country_code,
+		zcd.detail_id,
+		zcd.country_code country_code_detail,
+		zcd.detail_type,
+		zcd.detail_url,
+		zcc.category_id,
+		zcc.parent_category_id,
+		zcc.category_no,
+		zcc.category_name,
+		zcc.category_icon,
+		zcc.category_desc,
+		zcc.category_order,
+		zcr.repo_id,
+		zcr.repo_stock,
+		zcr.repo_prewarning,
+		zcr.repo_unit,
+		zca.album_id,
+		zca.album_no,
+		zca.album_name,
+		zca.album_desc,
+		zca.album_cover_url,
+		zcp.pic_id,
+		zcp.pic_desc,
+		zcp.pic_url,
+		zcpi.price_id,
+		zcpi.price,
+		zcpi.price_unit,
+		zcpi.country_code country_code_price,
+		zcpi.sales_model,
+		zcpi.sales_rule,
+		zcat.attr_id,
+		zcat.attr_no,
+		zcat.attr_name,
+		zcpa.param_id,
+		zcpa.param_name,
+		zcpa.param_vals,
+		zcpa.param_order,
+		zcpa.country_code country_code_param,
+		zcs.sku_id,
+		zcs.sku_no,
+		zcs.sku_name,
+		zcs.sku_vals,
+		zcs.sku_order,
+		zcs.country_code country_code_sku,
+	 	zcr_sku.repo_id repo_id_sku,
+	 	zcr_sku.repo_stock repo_stock_sku,
+	 	zcr_sku.repo_prewarning repo_prewarning_sku,
+	 	zcr_sku.repo_unit repo_unit_sku,
+	 	zca_sku.album_id album_id_sku,
+	 	zca_sku.album_no album_no_sku,
+	 	zca_sku.album_name album_name_sku,
+	 	zca_sku.album_desc album_desc_sku,
+	 	zca_sku.album_cover_url album_cover_url_sku,
+	 	zcp_sku.pic_id pic_id_sku,
+	 	zcp_sku.pic_desc pic_desc_sku,
+	 	zcp.pic_url pic_url_sku,
+	 	zcpi_sku.price_id price_id_sku,
+	 	zcpi_sku.price price_sku,
+	 	zcpi_sku.price_unit price_unit_sku,
+	 	zcpi_sku.country_code country_code_price_sku,
+	 	zcpi_sku.sales_model sales_model_sku,
+	 	zcpi_sku.sales_rule sales_rule_sku 
+	FROM
+		( SELECT * FROM zlzc_commodity t1 WHERE t1.del = 1 LIMIT 0, 10 ) zc
+		LEFT JOIN zlzc_commodity_detail zcd ON zc.commodity_id = zcd.commodity_id
+		LEFT JOIN zlzc_commodity_category zcc ON zc.commodity_category_id = zcc.category_id
+		LEFT JOIN zlzc_commodity_repo zcr ON zc.commodity_repo_id = zcr.repo_id
+		LEFT JOIN zlzc_commodity_album zca ON zc.comodity_album_id = zca.album_id
+		LEFT JOIN zlzc_commodity_pic zcp ON zca.album_id = zcp.album_id
+		INNER JOIN zlzc_commodity_price_middle zcpm ON zc.commodity_id = zcpm.commodity_id
+		LEFT JOIN zlzc_commodity_price zcpi ON zcpm.price_id = zcpi.price_id
+		LEFT JOIN zlzc_commodity_attr zcat ON zc.commodity_attr_id = zcat.attr_id -- 12
+		LEFT JOIN zlzc_commodity_param zcpa ON zcat.attr_id = zcpa.attr_id
+		LEFT JOIN zlzc_commodity_sku zcs ON zcat.attr_id = zcs.attr_id
+	 	INNER JOIN zlzc_commodity_sku_middle zcsm ON zcsm.sku_id = zcs.sku_id
+	 	LEFT JOIN zlzc_commodity_repo zcr_sku ON zcsm.repo_id = zcr_sku.repo_id
+	 	LEFT JOIN zlzc_commodity_album zca_sku ON zcsm.album_id = zca_sku.album_id
+	 	LEFT JOIN zlzc_commodity_pic zcp_sku ON zca_sku.album_id = zcp_sku.album_id
+	 	LEFT JOIN zlzc_commodity_price zcpi_sku ON zcsm.price_id = zcpi_sku.price_id
 	</select>
 
 

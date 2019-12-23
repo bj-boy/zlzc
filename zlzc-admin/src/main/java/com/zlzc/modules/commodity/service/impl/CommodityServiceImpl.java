@@ -7,23 +7,18 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zlzc.common.exception.ZException;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.commodity.dao.CommodityDao;
-import com.zlzc.modules.commodity.entity.CommodityCategoryEntity;
 import com.zlzc.modules.commodity.entity.CommodityDetailEntity;
 import com.zlzc.modules.commodity.entity.CommodityEntity;
 import com.zlzc.modules.commodity.entity.CommodityParamEntity;
@@ -91,6 +86,7 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityDao, CommodityEnt
 	/**
 	 * 商品审核
 	 */
+
 	public void commodityApproval() {
 
 	}
@@ -160,94 +156,27 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityDao, CommodityEnt
 
 	}
 
-	/* ##################### 商品属性 ##################### */
-
-	/**
-	 * 商品属性列表(支持分页及条件)
-	 */
-	public void commodityAttrList() {
-
-	}
-
-	/**
-	 * 保存商品属性
-	 */
-	public void saveCommodityAttr(CommodityAttrVo commodityAttr) {
-
-	}
-
-	/**
-	 * 修改商品属性
-	 */
-	public void updCommodityAttr(CommodityAttrVo commodityAttr) {
-
-	}
-
-	/**
-	 * 删除商品属性
-	 */
-	public void delCommodityAttr(Long[] commodityAttrIds) {
-
-	}
-
-	/* ##################### 商品分类 ##################### */
-
-	/**
-	 * 商品分类列表(支持分页及条件)
-	 */
-	public void commodityCategoryList() {
-
-	}
-
-	/**
-	 * 新增商品分类
-	 */
-	public void saveCommodityCategory(CommodityCategoryEntity commodityCategory) {
-
-	}
-
-	/**
-	 * 修改商品分类
-	 */
-	public void updCommodityCategory(CommodityCategoryEntity commodityCategory) {
-
-	}
-
-	/**
-	 * 删除商品分类(支持批量)
-	 */
-	public void delCommodityCategory(Long[] commodityCategoryIds) {
-
-	}
-
-	/**
-	 * 查询指定商品分类是否有相关联商品
-	 */
-	public void queryCommodityByCommodityCategory(Long commodityCategoryId) {
-
-	}
+	/* ##################### 商品 ##################### */
 
 	/**
 	 * 将商品的分类转移至指定商品分类
 	 */
-	public void transferCommodityByCommodityCategory(Long fromCommodityCategoryId, Long toCommodityCategoryId) {
-
+	@Transactional
+	@Override
+	public boolean transferCommodityByCommodityCategory(Long merchantId, Long fromCommodityCategoryId,
+			Long toCommodityCategoryId) {
+		UpdateWrapper<CommodityEntity> updateWrapper = new UpdateWrapper<CommodityEntity>()
+				.set("commodity_category_id", toCommodityCategoryId)
+				.eq("commodity_category_id", fromCommodityCategoryId).eq("merchant_id", merchantId);
+		boolean updFlag = update(updateWrapper);
+		return updFlag;
 	}
-
-	/**
-	 * 查询指定分类的子集列表
-	 */
-	public void querySubCommodityCategory(Long commodityCategoryId) {
-
-	}
-
-	/* ##################### 商品 ##################### */
 
 	/**
 	 * 商品各状态数量统计
 	 */
 	@Override
-	public List<Map<String,Object>> commodityStatusStatistics(Long merchantId, Long shopId) {
+	public List<Map<String, Object>> commodityStatusStatistics(Long merchantId, Long shopId) {
 		//@formatter:off
 		QueryWrapper<CommodityEntity> qw = new QueryWrapper<CommodityEntity>()
 				.select("commodity_status status", "count(commodity_id) cnt")
@@ -257,7 +186,7 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityDao, CommodityEnt
 		//@formatter:on
 		List<Map<String, Object>> rsList = listMaps(qw);
 		System.out.println(rsList);
-		
+
 		return rsList;
 
 	}
