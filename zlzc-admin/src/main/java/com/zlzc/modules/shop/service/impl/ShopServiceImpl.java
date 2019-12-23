@@ -34,7 +34,7 @@ import java.util.Map;
         //@formatter:off
         LambdaQueryWrapper<ShopEntity> qw = Wrappers.<ShopEntity>lambdaQuery()
                 .eq(StringUtils.isNotBlank(shop.getShopLogoUrl()),ShopEntity::getShopLogoUrl,shop.getShopLogoUrl())
-                .eq(StringUtils.isNotBlank(shop.getMerchntName()),ShopEntity::getMerchntName,shop.getMerchntName())
+                .eq(StringUtils.isNotBlank(shop.getMerchantName()),ShopEntity::getMerchantName,shop.getMerchantName())
                 .eq(StringUtils.isNotBlank(shop.getShopAddr()),ShopEntity::getShopAddr,shop.getShopAddr())
                 .eq(StringUtils.isNotBlank(shop.getShopLinkman()),ShopEntity::getShopLinkman,shop.getShopLinkman())
                 .eq(shop.getShopScope()!=null,ShopEntity::getShopScope,shop.getShopScope())

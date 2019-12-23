@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import sun.plugin2.message.Serializer;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,6 +19,7 @@ import java.util.Date;
 @ApiModel(description = "订单表实体")
 @Data
 @TableName("zlzc_order")
+@Accessors(chain = true)
 public class OrderEntity implements Serializable {
     /**
      * 订单id
