@@ -1,5 +1,6 @@
 package com.zlzc.modules.commodity.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -35,11 +36,13 @@ public class CommodityPriceEntity implements Serializable {
 	 * 商品ID
 	 */
 	@ApiModelProperty(name = "commodityId", value = "商品ID", example = "1")
+	@TableField(exist = false)
 	private Long commodityId;
 	/**
 	 * SKU_ID
 	 */
 	@ApiModelProperty(name = "skuId", value = "SKU_ID", example = "1")
+	@TableField(exist = false)
 	private Long skuId;
 	/**
 	 * 销售模式 (批发/零售)

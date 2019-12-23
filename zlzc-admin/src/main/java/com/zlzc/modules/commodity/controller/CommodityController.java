@@ -2,15 +2,15 @@ package com.zlzc.modules.commodity.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.zlzc.common.annotation.RespTime;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
@@ -52,6 +51,32 @@ public class CommodityController {
 	@Autowired
 	private CommodityService commodityService;
 
+	/**
+	 * 商品各状态数量统计
+	 */
+	@ApiOperation(value = "merchant-5 商品各状态数量统计")
+	@RespTime("/commodity/statisticsByStatus")
+	@GetMapping("/statisticsByStatus")
+	public Result commodityStatusStatistics(@RequestParam(name = "merchantId", required = false) Long merchantId,
+			@RequestParam(name = "shopId", required = false) Long shopId) {
+		return Result.ok().put("rs", commodityService.commodityStatusStatistics(merchantId, shopId));
+	}
+
+	/**
+	 * 删除
+	 */
+	@RespTime("/commodity/delete")
+	@ApiOperation(value = "merchant-4 删除指定商品(支持批量)")
+	@DeleteMapping("/delete")
+	public Result delete(@RequestBody Long[] commodityIds) {
+		boolean delCommodities = commodityService.delCommodities(commodityIds);
+
+		return Result.ok().put("rs", delCommodities);
+	}
+
+	/**
+	 * 商品列表
+	 */
 	@RespTime("/commodity/queryList")
 	@ApiOperation(value = "merchant-3 获取商品列表")
 	@GetMapping("/queryList")
@@ -59,7 +84,7 @@ public class CommodityController {
 		List<CommodityVo> commodityList = commodityService.queryCommodity();
 		return Result.ok().put("rs", commodityList);
 	}
-	
+
 	/**
 	 * 列表
 	 */
@@ -387,65 +412,12 @@ public class CommodityController {
 				.setUpdateTime(new Date())
 				.setOperator("admin")
 		);
-		
+		//@formatter:on
 		System.out.println(JSON.toJSONString(commodity));
-		
+
 		boolean isSave = commodityService.saveCommodity(commodity);
-		
+
 		return Result.ok().put("rs", isSave);
 	}
-
-	/* ################ generator ################ */
-
-	/**
-	 * 列表
-	 */
-	// @RequestMapping("/list")
-	// public Result list(@RequestParam Map<String, Object> params){
-	// PageUtils page = commodityService.queryPage(params);
-	//
-	// return Result.ok().put("page", page);
-	// }
-
-	/**
-	 * 信息
-	 */
-	// @RequestMapping("/info/{commodityId}")
-	// public Result info(@PathVariable("commodityId") Long commodityId){
-	// CommodityEntity commodity = commodityService.getById(commodityId);
-	//
-	// return Result.ok().put("commodity", commodity);
-	// }
-
-	/**
-	 * 保存
-	 */
-	// @RequestMapping("/save")
-	// public Result save(@RequestBody CommodityEntity commodity){
-	// commodityService.save(commodity);
-	//
-	// return Result.ok();
-	// }
-
-	/**
-	 * 修改
-	 */
-	// @RequestMapping("/update")
-	// public Result update(@RequestBody CommodityEntity commodity){
-	// ValidatorUtils.validateEntity(commodity);
-	// commodityService.updateById(commodity);
-	//
-	// return Result.ok();
-	// }
-
-	/**
-	 * 删除
-	 */
-	// @RequestMapping("/delete")
-	// public Result delete(@RequestBody Long[] commodityIds){
-	// commodityService.removeByIds(Arrays.asList(commodityIds));
-	//
-	// return Result.ok();
-	// }
 
 }

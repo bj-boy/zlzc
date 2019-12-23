@@ -23,4 +23,12 @@ public interface CommodityService extends IService<CommodityEntity> {
 
 	List<CommodityVo> queryCommodity();
 
+	boolean delCommodities(Long[] commodityIds);
+
+	boolean updCommodity(CommodityVo commodity);
+
+	boolean updCommodityStatus(CommodityEntity commodity);
+
+	List<Map<String, Object>> commodityStatusStatistics(Long merchantId, Long shopId);
+
 }

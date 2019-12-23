@@ -117,4 +117,10 @@ public class CommodityEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "operator", value = "操作人", example = "admin")
 	private String operator;
+	
+	/**
+	 * 删除标识
+	 */
+	@ApiModelProperty(name = "del", value = "删除标识", example = "0", hidden = true)
+	private Integer del;
 }
