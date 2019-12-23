@@ -1,5 +1,6 @@
 package com.zlzc.modules.shop.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -85,12 +86,14 @@ public class ShopEntity implements Serializable{
 	 */
 	@ApiModelProperty(name = "createTime", value = "创建时间", example = "2019-12-01 12:12:46")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	 * 修改时间
 	 */
 	@ApiModelProperty(name = "updateTime", value = "修改时间", example = "2019-12-01 12:12:45")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 	/**
 	 * 操作人

@@ -1,12 +1,12 @@
 package com.zlzc.modules.logistics.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.apache.shiro.io.Serializer;
 
 import java.io.Serializable;
 
@@ -124,11 +124,13 @@ public class LogisticsEntity implements Serializable{
      */
     @ApiModelProperty(name = "logisticsDeliveryTime", value = "发货时间", example = "2019-12-01 12:12:45")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private String  logisticsDeliveryTime;
     /**
      * 收货时间
      */
     @ApiModelProperty(name = "logisticsTimeReceipt", value = "收货时间", example = "2019-12-01 12:12:45")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private String  logisticsTimeReceipt;
 }
