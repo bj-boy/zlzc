@@ -1,28 +1,15 @@
 package com.zlzc.modules.commodity.controller;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.zlzc.common.annotation.RespTime;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.commodity.entity.CommodityCategoryEntity;
 import com.zlzc.modules.commodity.service.CommodityCategoryService;
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.util.Map;
 
 /**
  * @author LSR
@@ -39,6 +26,9 @@ public class CommodityCategoryController {
 	/**
 	 * 商品分类列表
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = CommodityCategoryEntity.class, code = 200, message = "商品分类列表响应字段说明")
+	})
 	@RespTime("/queryList")
 	@ApiOperation(value = "commodityCategory-1 获取商品分类列表(一级分类)")
 	@PostMapping("/queryList")
@@ -59,6 +49,9 @@ public class CommodityCategoryController {
 	/**
 	 * 查询指定分类的子集列表
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = CommodityCategoryEntity.class, code = 200, message = "指定分类的下级商品分类列表响应字段说明")
+	})
 	@RespTime("/querySubList")
 	@ApiOperation(value = "commodityCategory-2 获取指定分类的下级商品分类列表")
 	@GetMapping("/querySubList")

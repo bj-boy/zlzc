@@ -1,34 +1,18 @@
 package com.zlzc.modules.merchant.controller;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.zlzc.common.config.swagger.ApiJsonObject;
-import com.zlzc.common.config.swagger.ApiJsonProperty;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.merchant.entity.approvalDetails.MerchantApprovalDetailsEntity;
 import com.zlzc.modules.merchant.service.approvalDetails.MerchantApprovalDetailsService;
 import com.zlzc.modules.merchant.vo.merchant.MerchantApprovalDetailsVo;
 import com.zlzc.modules.merchant.vo.merchant.MerchantApprovalVo;
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.Example;
-import io.swagger.annotations.ExampleProperty;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author LSR
@@ -46,6 +30,9 @@ public class MerchantApprovalDetailsController {
 	/**
 	 * 查询指定商户的审核详情
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = MerchantApprovalDetailsVo.class, code = 200, message = "查询指定商户的审核详情响应字段说明")
+	})
 	@ApiOperation(value = "merchantApprovalDetails-1 查询指定商户的审核详情")
 	@PostMapping("/merchntApprovalDetails/{merchntId}")
 	//@formatter:off
@@ -63,8 +50,11 @@ public class MerchantApprovalDetailsController {
 	}
 
 	/**
-	 * 根据条件查询商户审核详情列表(分页)
+	 * 根据筛选条件获取商户审核详情列表（可分页）
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = MerchantApprovalDetailsVo.class, code = 200, message = "根据筛选条件获取商户审核详情列表（可分页）响应字段说明")
+	})
 	@ApiOperation(value = "merchantApprovalDetails-2 根据筛选条件获取商户审核详情列表（可分页）")
 	@PostMapping("/listByCondition")
 	//@formatter:off

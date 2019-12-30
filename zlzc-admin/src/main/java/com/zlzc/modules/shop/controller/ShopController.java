@@ -45,6 +45,9 @@ public class ShopController {
        * @Exception
        * @Date:  2019/12/5 23:46
        */
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopEntity.class, code = 200, message = "根据筛选条件获取商户列表（可分页）响应字段说明")
+	})
     @PostMapping("/listByCondition")
     //@formatter:off
     @ApiImplicitParams(
@@ -135,6 +138,9 @@ public class ShopController {
        * @Exception
        * @Date:  2019/12/5 23:10
        */
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopEntity.class, code = 200, message = "根据店铺ID获取商户信息响应字段说明")
+	})
 	@GetMapping("/info/{shopId}")
 	// @formatter:off
 	@ApiImplicitParams(value = {
@@ -158,6 +164,9 @@ public class ShopController {
        * @Exception
        * @Date:  2019/12/5 23:10
        */
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopEntity.class, code = 200, message = "获取店铺列表(可分页)响应字段说明")
+	})
 	@GetMapping("/list")
 	@ApiImplicitParams(value = {
 			@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),

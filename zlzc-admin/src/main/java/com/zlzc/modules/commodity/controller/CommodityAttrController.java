@@ -1,18 +1,5 @@
 package com.zlzc.modules.commodity.controller;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.zlzc.common.annotation.RespTime;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
@@ -20,12 +7,12 @@ import com.zlzc.modules.commodity.entity.CommodityAttrEntity;
 import com.zlzc.modules.commodity.entity.CommodityParamEntity;
 import com.zlzc.modules.commodity.entity.CommoditySkuEntity;
 import com.zlzc.modules.commodity.service.CommodityAttrService;
+import com.zlzc.modules.commodity.vo.CommodityAttrPageVo;
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.util.Map;
 
 /**
  * @author LSR
@@ -43,6 +30,9 @@ public class CommodityAttrController {
 	/**
 	 * 商品属性列表
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = CommodityAttrPageVo.class, code = 200, message = "商品属性列表响应字段说明")
+	})
 	@RespTime("/commodityAttr/queryList")
 	@ApiOperation(value = "commodityAttr-1 获取商品属性列表")
 	@PostMapping("/queryList")
@@ -111,6 +101,9 @@ public class CommodityAttrController {
 	/**
 	 * 查询指定商品属性id查询属性参数
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = CommodityParamEntity.class, code = 200, message = "指定商品属性id查询属性参数响应字段说明")
+	})
 	@RespTime("/commodityAttr/queryAttrParam")
 	@ApiOperation(value = "commodityAttr-5 查询指定商品属性id查询属性参数")
 	@GetMapping("/queryAttrParam/{attrId}")
@@ -121,6 +114,9 @@ public class CommodityAttrController {
 	/**
 	 * 查询指定商品属性id查询SKU
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = CommoditySkuEntity.class, code = 200, message = "指定商品属性id查询SKU响应字段说明")
+	})
 	@RespTime("/commodityAttr/queryAttrSku")
 	@ApiOperation(value = "commodityAttr-6 查询指定商品属性id查询SKU")
 	@GetMapping("/queryAttrSku/{attrId}")

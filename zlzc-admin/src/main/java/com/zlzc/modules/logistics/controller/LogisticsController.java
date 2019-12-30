@@ -4,12 +4,10 @@ import com.zlzc.common.utils.Result;
 import com.zlzc.modules.dict.entity.DictEntity;
 import com.zlzc.modules.logistics.entity.LogisticsEntity;
 import com.zlzc.modules.logistics.service.LogisticsService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Arrays;
 
 
@@ -25,6 +23,9 @@ public class LogisticsController {
     /**
      * 根据物流快id查询详细信息
      */
+    @ApiResponses(value = {
+            @ApiResponse(response = DictEntity.class, code = 200, message = "根据物流快id查询详细信息响应字段说明")
+    })
     @ApiOperation(value = "logistics-1 根据物流快id查询详细信息")
     @GetMapping("/info/{number}")
     @ApiImplicitParams(
