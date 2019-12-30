@@ -1,42 +1,24 @@
 package com.zlzc.modules.commodity.controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.fastjson.JSON;
 import com.zlzc.common.annotation.RespTime;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
-import com.zlzc.modules.commodity.entity.CommodityCategoryEntity;
-import com.zlzc.modules.commodity.entity.CommodityDetailEntity;
-import com.zlzc.modules.commodity.entity.CommodityParamEntity;
-import com.zlzc.modules.commodity.entity.CommodityPicEntity;
-import com.zlzc.modules.commodity.entity.CommodityPriceEntity;
-import com.zlzc.modules.commodity.entity.CommodityRepoEntity;
+import com.zlzc.modules.commodity.entity.*;
 import com.zlzc.modules.commodity.service.CommodityService;
 import com.zlzc.modules.commodity.vo.CommodityAlbumVo;
 import com.zlzc.modules.commodity.vo.CommodityAttrVo;
 import com.zlzc.modules.commodity.vo.CommoditySkuVo;
 import com.zlzc.modules.commodity.vo.CommodityVo;
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author LSR
@@ -93,6 +75,9 @@ public class CommodityController {
 	/**
 	 * 商品列表
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = CommodityVo.class, code = 200, message = "商品列表响应字段说明")
+	})
 	@RespTime("/commodity/queryList")
 	@ApiOperation(value = "commodity-3 获取商品列表")
 	@GetMapping("/queryList")
@@ -102,8 +87,11 @@ public class CommodityController {
 	}
 
 	/**
-	 * 列表
+	 * 获取商品列表（可分页）
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response =CommodityEntity.class, code = 200, message = "获取商品列表（可分页）响应字段说明")
+	})
 	@ApiOperation(value = "commodity-1 获取商品列表（可分页）")
 	@GetMapping("/list")
 	//@formatter:off
