@@ -37,6 +37,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * @author LSR
@@ -70,6 +72,9 @@ public class CommodityController {
 	/**
 	 * 商品各状态数量统计
 	 */
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "商品各状态数量统计响应字段说明")
+	})
 	@ApiOperation(value = "commodity-5 商品各状态数量统计")
 	@RespTime("/commodity/statisticsByStatus")
 	@GetMapping("/statisticsByStatus")
@@ -93,6 +98,9 @@ public class CommodityController {
 	/**
 	 * 商品列表
 	 */
+	@ApiResponses(value = {
+		@ApiResponse(response = CommodityVo.class, code = 200, message = "商品列表响应字段说明")
+	})
 	@RespTime("/commodity/queryList")
 	@ApiOperation(value = "commodity-3 获取商品列表")
 	@GetMapping("/queryList")
