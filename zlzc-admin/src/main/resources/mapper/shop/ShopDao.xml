@@ -20,6 +20,7 @@
 		<result property="createTime" column="create_time" />
 		<result property="updateTime" column="update_time" />
 		<result property="operator" column="operator" />
+		<result property="shopNo" column="shop_no" />
 	</resultMap>
 
 	<sql id="shop_cols">

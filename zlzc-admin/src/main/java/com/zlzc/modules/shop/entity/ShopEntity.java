@@ -49,7 +49,7 @@ public class ShopEntity implements Serializable{
 	/**
 	 * 店铺logo url
 	 */
-	@ApiModelProperty(name = "shopLogoUrl", value = "店铺logoUrl", example = "www")
+	@ApiModelProperty(name = "shopLogoUrl", value = "店铺logoUrl", example = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1577790414255&di=0c7918624b446771f4955ee23c09eaed&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D3048152894%2C3789302586%26fm%3D214%26gp%3D0.jpg")
 	private String shopLogoUrl;
 	/**
 	 * 店铺地址
@@ -99,6 +99,10 @@ public class ShopEntity implements Serializable{
 	 * 操作人
 	 */
 	@ApiModelProperty(name = "operator", value = "操作人", example = "名言")
-	private String operator;	
-	
+	private String operator;
+	/**
+	 * 店铺编号
+	 */
+	@ApiModelProperty(name = "shopNo", value = "店铺编号", example = "12121")
+	private String shopNo;
 }
