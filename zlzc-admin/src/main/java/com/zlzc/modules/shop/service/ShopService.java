@@ -15,7 +15,11 @@ import java.util.Map;
  *
  */
 public interface ShopService extends IService<ShopEntity>{
-	PageUtils queryPage(Map<String, Object> params);
-	PageUtils queryPageByCondition(Map<String, Object> params, ShopEntity shop);
+	PageUtils queryPage(Map<String, Object> params);    //没有关联商品件数
+
+	Map<String, Object> queryShopDetails(Integer shopId);
+
+	PageUtils queryPageWithCnt(Map<String, Object> params, ShopEntity shop);
+
 
 }

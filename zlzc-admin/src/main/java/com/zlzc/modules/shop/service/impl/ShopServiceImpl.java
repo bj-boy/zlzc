@@ -1,9 +1,7 @@
 package com.zlzc.modules.shop.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
@@ -30,19 +28,29 @@ import java.util.Map;
     }
 
     @Override
-    public PageUtils queryPageByCondition(Map<String, Object> params, ShopEntity shop) {
-        //@formatter:off
-        LambdaQueryWrapper<ShopEntity> qw = Wrappers.<ShopEntity>lambdaQuery()
-                .eq(StringUtils.isNotBlank(shop.getShopLogoUrl()),ShopEntity::getShopLogoUrl,shop.getShopLogoUrl())
-                .eq(StringUtils.isNotBlank(shop.getMerchantName()),ShopEntity::getMerchantName,shop.getMerchantName())
-                .eq(StringUtils.isNotBlank(shop.getShopAddr()),ShopEntity::getShopAddr,shop.getShopAddr())
-                .eq(StringUtils.isNotBlank(shop.getShopLinkman()),ShopEntity::getShopLinkman,shop.getShopLinkman())
-                .eq(shop.getShopScope()!=null,ShopEntity::getShopScope,shop.getShopScope())
-                .eq(shop.getShopStatus()!=null,ShopEntity::getShopStatus,shop.getShopStatus());
-        IPage<ShopEntity> page = this.page(new Query<ShopEntity>().getPage(params), qw);
+    public Map<String, Object> queryShopDetails(Integer shopId) {
+        QueryWrapper<ShopEntity> wq = new QueryWrapper<ShopEntity>()
+                .eq("sp.shop_id",shopId);
+
+        Map<String, Object> rsMap = baseMapper.queryShopDetails(wq);
+
+        return rsMap;
+    }
+
+
+    @Override
+    public PageUtils queryPageWithCnt(Map<String, Object> params, ShopEntity shop) {
+        QueryWrapper<ShopEntity> qw = new QueryWrapper<ShopEntity>()
+                .eq(StringUtils.isNotBlank(shop.getShopLogoUrl()),"sp.shop_logo_url",shop.getShopLogoUrl())
+                .eq(StringUtils.isNotBlank(shop.getMerchantName()),"sp.merchant_name",shop.getMerchantName())
+                .eq(StringUtils.isNotBlank(shop.getShopAddr()),"sp.shop_addr",shop.getShopAddr())
+                .eq(StringUtils.isNotBlank(shop.getShopLinkman()),"sp.shop_linkman",shop.getShopLinkman())
+                .eq(shop.getShopScope()!=null,"sp.shop_scope",shop.getShopScope())
+                .eq(shop.getShopStatus()!=null,"sp.shop_status",shop.getShopStatus())
+                .groupBy("sp.shop_id");
+        IPage<ShopEntity> page = baseMapper.queryPageWithCnt(new Query<ShopEntity>().getPage(params), qw);
 
         return new PageUtils(page);
-
     }
 
 

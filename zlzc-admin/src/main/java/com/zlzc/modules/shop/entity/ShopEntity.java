@@ -1,6 +1,7 @@
 package com.zlzc.modules.shop.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,7 +25,6 @@ import java.util.Date;
 @TableName("zlzc_shop")
 public class ShopEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
-
 	/**
 	 * 店铺ID
 	 */
@@ -105,4 +105,8 @@ public class ShopEntity implements Serializable{
 	 */
 	@ApiModelProperty(name = "shopNo", value = "店铺编号", example = "12121")
 	private String shopNo;
+
+	@ApiModelProperty(name = "commodityCnt", value = "商品数量", example = "0")
+	@TableField(exist = false)
+	private Integer commodityCnt;
 }
