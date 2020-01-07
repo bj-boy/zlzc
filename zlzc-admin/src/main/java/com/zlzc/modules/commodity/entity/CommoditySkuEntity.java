@@ -1,9 +1,10 @@
 package com.zlzc.modules.commodity.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -34,11 +35,13 @@ public class CommoditySkuEntity implements Serializable {
 	 * 库存ID
 	 */
 	@ApiModelProperty(name = "repoId", value = "库存ID", example = "1")
+	@TableField(exist = false)
 	private Long repoId;
 	/**
 	 * 相册ID
 	 */
 	@ApiModelProperty(name = "albumId", value = "相册ID", example = "1")
+	@TableField(exist = false)
 	private Long albumId;
 	/**
 	 * sku编号
@@ -75,12 +78,14 @@ public class CommoditySkuEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "createTime", value = "创建时间", example = "2019-12-01 12:12:45")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	 * 更新时间
 	 */
 	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "2019-12-01 12:12:45")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 	/**
 	 * 操作人

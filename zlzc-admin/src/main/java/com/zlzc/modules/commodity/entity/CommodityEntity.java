@@ -1,9 +1,9 @@
 package com.zlzc.modules.commodity.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -105,16 +105,24 @@ public class CommodityEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "createTime", value = "创建时间", example = "2019-12-01 12:12:45")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	 * 更新时间
 	 */
 	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "2019-12-01 12:12:45")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 	/**
 	 * 操作人
 	 */
 	@ApiModelProperty(name = "operator", value = "操作人", example = "admin")
 	private String operator;
+	
+	/**
+	 * 删除标识
+	 */
+	@ApiModelProperty(name = "del", value = "删除标识", example = "0", hidden = true)
+	private Integer del;
 }

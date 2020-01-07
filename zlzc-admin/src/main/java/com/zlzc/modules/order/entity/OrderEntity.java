@@ -1,13 +1,14 @@
 package com.zlzc.modules.order.entity;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import sun.plugin2.message.Serializer;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ import java.util.Date;
 @ApiModel(description = "订单表实体")
 @Data
 @TableName("zlzc_order")
+@Accessors(chain = true)
 public class OrderEntity implements Serializable {
     /**
      * 订单id
@@ -110,18 +112,21 @@ public class OrderEntity implements Serializable {
      * 提交时间
      */
     @ApiModelProperty(name = "orderSubmissionTime", value = "提交时间", example = "2019-12-01 12:12:45")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
      private Date orderSubmissionTime;
     /**
      * 结束时间
      */
     @ApiModelProperty(name = "orderEndTime", value = "结束时间", example = "2019-12-01 12:12:45")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
      private Date orderEndTime;
     /**
      * 完成时间
      */
     @ApiModelProperty(name = "orderCompleteTime", value = "完成时间", example = "2019-12-01 12:12:45")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
      private Date orderCompleteTime;
 
 

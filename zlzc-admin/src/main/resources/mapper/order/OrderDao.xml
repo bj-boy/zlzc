@@ -48,7 +48,6 @@
 			<result property="logisticsRecipientAddress" column="logistics_recipient_address" />
 			<result property="logisticsRecipientPostcode" column="logistics_recipient_postcode" />
 			<result property="logisticsRecipientCompanyAddress" column="logistics_recipient_company_address" />
-			<result property="logisticsReceiptStarts" column="logistics_receipt_starts" />
 			<result property="logisticsRecipientIdNumber" column="logistics_recipient_id_number" />
 			<result property="logisticsNote" column="logistics_note" />
 			<result property="logisticsDeliveryTime" column="logistics_delivery_time" />
@@ -205,7 +204,7 @@
 		LEFT
 		JOIN zlzc_merchant m
 		on
-		o.merchant_id = m.merchant_id
+		o.merchnt_id = m.merchant_id
 		LEFT
 		JOIN
 		zlzc_shop s

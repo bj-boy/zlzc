@@ -1,12 +1,14 @@
 package com.zlzc.modules.dict.entity;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -63,6 +65,7 @@ public class DictEntity implements Serializable {
      */
     @ApiModelProperty(name = "dictCreateDate", value = "创建日期", example = "2019-12-01 12:12:45")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date   dictCreateDate;
     /**
      * 更新者
@@ -74,6 +77,7 @@ public class DictEntity implements Serializable {
      */
     @ApiModelProperty(name = "dictUpdateDate", value = "更新日期", example = "2019-12-01 12:12:45")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private  Date   dictUpdateDate;
     /**
      * 备注

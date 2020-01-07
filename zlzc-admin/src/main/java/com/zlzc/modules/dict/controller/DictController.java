@@ -1,14 +1,9 @@
 package com.zlzc.modules.dict.controller;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.dict.entity.DictEntity;
 import com.zlzc.modules.dict.service.DictService;
-import com.zlzc.modules.merchant.entity.MerchantEntity;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +27,10 @@ public class DictController {
     /**
      * 根据标签查寻字典值
      */
-    @ApiOperation(value = "dict 根据字典标签查询")
+    @ApiResponses(value = {
+            @ApiResponse(response = DictEntity.class, code = 200, message = "根据字典标签查询字典值响应字段说明")
+    })
+    @ApiOperation(value = "dict 根据字典标签查询字典值")
     @GetMapping("/info/{dictLabel}")
     @ApiImplicitParams(
             value = {

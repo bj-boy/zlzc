@@ -99,6 +99,8 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
 
     /**
      * 0 创建订单成功
+     * 1 对象为空
+     * 2 用户id 商品id 不能为空
      * 3 商品id 不存在
      * 4 库存不足
      * @param orderDetailsVo
@@ -187,7 +189,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
     public boolean removeStatus(List<String> strings) {
 
         for(int i=0;i<strings.size();i++){
-  
+
             QueryWrapper<OrderEntity> cwq = new QueryWrapper<OrderEntity>()
                     .eq("order_id",strings.get(i));
             OrderEntity orderEntity = baseMapper.selectOne(cwq);

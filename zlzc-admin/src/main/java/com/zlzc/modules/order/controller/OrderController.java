@@ -5,16 +5,14 @@ import com.zlzc.common.config.swagger.ApiJsonObject;
 import com.zlzc.common.config.swagger.ApiJsonProperty;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
-import com.zlzc.modules.order.entity.OrderEntity;
+import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
 import com.zlzc.modules.order.service.OrderDetailsVoService;
 import com.zlzc.modules.order.service.OrderService;
-import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 @Api(value = "后台-订单", tags = { "V1.0 order：后台-订单操作相关接口" })
@@ -32,6 +30,9 @@ public class OrderController {
     /**
      * 根据条件查询订单快递表列表详情(分页)
      */
+    @ApiResponses(value = {
+            @ApiResponse(response = OrderDetailsVo.class, code = 200, message = "根据条件查询订单快递表列表详情（可分页）响应字段说明")
+    })
     @ApiOperation(value = "listByOrdeAndLogisticsDetails-2 根据条件查询订单快递表列表详情（可分页）")
     @PostMapping("/listByOrderDetails")
     //@formatter:off
@@ -57,7 +58,12 @@ public class OrderController {
         return Result.ok().put("page", page);
     }
 
-
+    /**
+     * 根据订单或者编号查询订单有关的全部数据
+     */
+    @ApiResponses(value = {
+            @ApiResponse(response = OrderDetailsVo.class, code = 200, message = "根据订单或者编号查询订单有关的全部数据响应字段说明")
+    })
     @ApiOperation(value = "orderDetails-1 根据订单或者编号查询订单有关的全部数据")
     @GetMapping("/orderDetails/{id}")
     @ApiImplicitParams(
