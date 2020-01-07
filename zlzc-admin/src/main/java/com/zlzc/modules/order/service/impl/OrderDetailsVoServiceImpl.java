@@ -128,7 +128,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
                         .eq("commodity_id", orderDetailsVo.getCommobityId());
                 commodityEntity = commodityService.getOne(wq);
                 System.out.println(commodityEntity);
-                orderDetailsVo.setMerchntId(commodityEntity.getMerchantId(   ));
+                orderDetailsVo.setMerchntId(commodityEntity.getMerchantId());
                 orderDetailsVo.setShopId(commodityEntity.getShopId());
                 orderDetailsVo.setOrderRemove(0);
             }else {
@@ -136,7 +136,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
             }
             //查看商品库存
             QueryWrapper<CommodityRepoEntity> cwq = new QueryWrapper<CommodityRepoEntity>()
-                    .eq("repo_id",commodityEntity.getCommodityRepoId());
+                    .eq("commodity_repertory_id",commodityEntity.getCommodityRepoId());
             CommodityRepoEntity one = commodityRepoService.getOne(cwq);
             if(one.getRepoStock()< 0){
                 return 4;
