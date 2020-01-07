@@ -15,6 +15,8 @@
 		<result property="logisticsSenderAccount" column="logistics_sender_account" />
 		<result property="logisticsSenderAddress" column="logistics_sender_address" />
 		<result property="logisticsSenderPostcode" column="logistics_sender_postcode" />
+		<result property="logisticsReceiptStarts" column="logistics_receipt_starts" />
+
 		<result property="logisticsSenderCompanyAddress" column="logistics_sender_company_address" />
 		<result property="logisticsSingleNumber" column="logistics_single_number" />
 		<result property="logisticsSerialNumber" column="logistics_serial_number" />

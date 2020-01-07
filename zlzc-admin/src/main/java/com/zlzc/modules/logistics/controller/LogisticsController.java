@@ -18,7 +18,6 @@ import java.util.Arrays;
 @RequestMapping("/logistics")
 public class LogisticsController {
 
-
     @Autowired
     private LogisticsService logisticsService;
 

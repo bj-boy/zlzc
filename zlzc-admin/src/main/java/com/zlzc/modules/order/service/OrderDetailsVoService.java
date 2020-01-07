@@ -21,4 +21,5 @@ public interface OrderDetailsVoService  extends IService<OrderEntity> {
     public   boolean  updateStatus(OrderDetailsVo orderDetailsVo);
 
     public   boolean  removeStatus(List<String> strings);
+
 }

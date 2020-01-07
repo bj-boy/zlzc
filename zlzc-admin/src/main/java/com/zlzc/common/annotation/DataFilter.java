@@ -1,5 +1,7 @@
 package com.zlzc.common.annotation;
 
+import com.zlzc.common.config.swagger.ApiJsonProperty;
+
 import java.lang.annotation.*;
 
 /**

@@ -49,63 +49,63 @@ public class OrderEntity implements Serializable {
     /**
      * 订单编号
      */
-    @ApiModelProperty(name = "orderNumber", value = "订单编号", example = "001")
+    @ApiModelProperty(name = "orderNumber", value = "订单编号", example = "")
      private String orderNumber;
     /**
      * 订单金额
      */
-    @ApiModelProperty(name = "orderAmount", value = "订单金额", example = "001")
+    @ApiModelProperty(name = "orderAmount", value = "订单金额", example = "299.00")
      private BigDecimal  orderAmount;
     /**
      * 订单应付款金额
      */
-    @ApiModelProperty(name = "orderPayable", value = "订单应付款金额", example = "001")
+    @ApiModelProperty(name = "orderPayable", value = "订单应付款金额", example = "299.00")
      private BigDecimal orderPayable;
     /**
      * 商品合计金额
      */
-    @ApiModelProperty(name = "orderCommodityTotalAmount", value = "商品合计金额", example = "001")
+    @ApiModelProperty(name = "orderCommodityTotalAmount", value = "商品合计金额", example = "299.00")
      private BigDecimal orderCommodityTotalAmount;
     /**
      * 订单总金额
      */
-    @ApiModelProperty(name = "orderTotalAmount", value = "订单总金额", example = "001")
+    @ApiModelProperty(name = "orderTotalAmount", value = "订单总金额", example = "299.00")
      private BigDecimal orderTotalAmount;
     /**
      * 订单件数
      */
-    @ApiModelProperty(name = "orderNumberPieces", value = "订单件数", example = "001")
+    @ApiModelProperty(name = "orderNumberPieces", value = "订单件数", example = "2")
      private Integer orderNumberPieces;
     /**
      * 支付状态
      */
-    @ApiModelProperty(name = "orderPaymentStatus", value = "支付状态", example = "001")
+    @ApiModelProperty(name = "orderPaymentStatus", value = "支付状态", example = "1")
      private Integer orderPaymentStatus;
     /**
      *支付方式
      */
-    @ApiModelProperty(name = "orderPaymentMethod", value = "支付方式", example = "001")
+    @ApiModelProperty(name = "orderPaymentMethod", value = "支付方式", example = "1")
      private Integer orderPaymentMethod;
     /**
      * 订单来源
      */
-    @ApiModelProperty(name = "orderSource", value = "订单来源", example = "001")
+    @ApiModelProperty(name = "orderSource", value = "订单来源", example = "1")
      private Integer  orderSource;
     /**
      * 订单状态
      */
-    @ApiModelProperty(name = "orderStatus", value = "订单状态", example = "001")
+    @ApiModelProperty(name = "orderStatus", value = "订单状态", example = "2")
      private Integer orderStatus;
     /**
      * 订单类型
      */
-    @ApiModelProperty(name = "orderOrderType", value = "订单类型", example = "001")
+    @ApiModelProperty(name = "orderOrderType", value = "订单类型", example = "1")
      private String orderOrderType;
     /**
      * 备注
      */
-    @ApiModelProperty(name = "orderRemark", value = "备注", example = "001")
-     private Integer orderRemark;
+    @ApiModelProperty(name = "orderRemark", value = "备注", example = "暂无备注")
+     private String orderRemark;
     /**
      * 提交时间
      */

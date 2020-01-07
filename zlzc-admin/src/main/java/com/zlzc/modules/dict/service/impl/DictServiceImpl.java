@@ -22,15 +22,15 @@ public class DictServiceImpl extends ServiceImpl<DictDao, DictEntity> implements
 
     @Override
     public List<DictEntity> getDict(String dictLabel) {
-        List<Object> cacheDictEntityList = redisTemplate.opsForList().range(dictLabel, 0, -1);
+       List<Object> cacheDictEntityList = redisTemplate.opsForList().range(dictLabel, 0, -1);
 
-        if (cacheDictEntityList.size() < 1) {
+       if (cacheDictEntityList.size() < 1) {
             // 条件构造器 where ....
             QueryWrapper<DictEntity> wq = new QueryWrapper<DictEntity>().eq("dict_label",dictLabel);
             List<DictEntity> dictEntityList = this.list(wq);
             Long rows = redisTemplate.opsForList().leftPushAll(dictLabel, dictEntityList);
             return dictEntityList;
-        }
+       }
         return null;
     }
 }
