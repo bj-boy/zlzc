@@ -53,5 +53,11 @@ import java.util.Map;
         return new PageUtils(page);
     }
 
+    @Override
+    public PageUtils queryPageShop(Map<String, Object> params) {
+        IPage<ShopEntity> page = baseMapper.queryPageShop(new Query<ShopEntity>().getPage(params));
+        return new PageUtils(page);
+    }
+
 
 }
