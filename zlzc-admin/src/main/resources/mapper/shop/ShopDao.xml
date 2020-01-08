@@ -7,6 +7,7 @@
 	<!--店铺实体类相关映射-->
 	<resultMap type="com.zlzc.modules.shop.entity.ShopEntity"
 		id="shopMap">
+
 		<id property="shopId" column="shop_id" />
 		<result property="shopName" column="shop_name" />
 		<result property="merchantId" column="merchant_id" />
@@ -130,6 +131,15 @@
 		LEFT JOIN zlzc_commodity cy ON cy.shop_id = sp.shop_id
 		AND cy.del = 0
 		${ew.customSqlSegment}
+	</select>
+
+	<select id="queryPageShop" resultMap="shopMap2">
+		SELECT
+		<include refid="pageCnt"/>
+		FROM
+		zlzc_shop sp
+		LEFT JOIN zlzc_commodity cy ON cy.shop_id = sp.shop_id
+		AND cy.del = 0
 	</select>
 
 

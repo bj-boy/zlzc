@@ -1,24 +1,53 @@
 package com.zlzc.modules.commodity.controller;
 
+import java.io.File;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.alibaba.fastjson.JSON;
 import com.zlzc.common.annotation.RespTime;
+import com.zlzc.common.utils.FileUpload;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
-import com.zlzc.modules.commodity.entity.*;
+import com.zlzc.modules.commodity.entity.CommodityCategoryEntity;
+import com.zlzc.modules.commodity.entity.CommodityDetailEntity;
+import com.zlzc.modules.commodity.entity.CommodityEntity;
+import com.zlzc.modules.commodity.entity.CommodityParamEntity;
+import com.zlzc.modules.commodity.entity.CommodityPicEntity;
+import com.zlzc.modules.commodity.entity.CommodityPriceEntity;
+import com.zlzc.modules.commodity.entity.CommodityRepoEntity;
 import com.zlzc.modules.commodity.service.CommodityService;
 import com.zlzc.modules.commodity.vo.CommodityAlbumVo;
 import com.zlzc.modules.commodity.vo.CommodityAttrVo;
 import com.zlzc.modules.commodity.vo.CommoditySkuVo;
 import com.zlzc.modules.commodity.vo.CommodityVo;
-import io.swagger.annotations.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * @author LSR
@@ -32,6 +61,7 @@ public class CommodityController {
 	@Autowired
 	private CommodityService commodityService;
 
+	
 	/**
 	 * 将商品的分类转移至指定商品分类
 	 */
@@ -52,6 +82,7 @@ public class CommodityController {
 	/**
 	 * 商品各状态数量统计
 	 */
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "商品各状态数量统计响应字段说明") })
 	@ApiOperation(value = "commodity-5 商品各状态数量统计")
 	@RespTime("/commodity/statisticsByStatus")
 	@GetMapping("/statisticsByStatus")
@@ -75,9 +106,11 @@ public class CommodityController {
 	/**
 	 * 商品列表
 	 */
+	//@formatter:off
 	@ApiResponses(value = {
-			@ApiResponse(response = CommodityVo.class, code = 200, message = "商品列表响应字段说明")
+		@ApiResponse(response = CommodityVo.class, code = 200, message = "商品列表响应字段说明")
 	})
+	//@formatter:on
 	@RespTime("/commodity/queryList")
 	@ApiOperation(value = "commodity-3 获取商品列表")
 	@GetMapping("/queryList")
@@ -89,9 +122,11 @@ public class CommodityController {
 	/**
 	 * 获取商品列表（可分页）
 	 */
+	//@formatter:off
 	@ApiResponses(value = {
-			@ApiResponse(response =CommodityEntity.class, code = 200, message = "获取商品列表（可分页）响应字段说明")
+		@ApiResponse(response =CommodityEntity.class, code = 200, message = "获取商品列表（可分页）响应字段说明")
 	})
+	//@formatter:on
 	@ApiOperation(value = "commodity-1 获取商品列表（可分页）")
 	@GetMapping("/list")
 	//@formatter:off

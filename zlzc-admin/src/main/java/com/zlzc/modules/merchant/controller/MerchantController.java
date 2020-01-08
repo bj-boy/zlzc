@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
+import com.zlzc.common.config.swagger.ApiJsonObject;
+import com.zlzc.common.config.swagger.ApiJsonProperty;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
@@ -25,6 +28,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * @author LSR
@@ -41,6 +46,9 @@ public class MerchantController {
 	/**
 	 * 根据条件查询商户列表(分页)
 	 */
+	@ApiResponses(value = {
+		@ApiResponse(response = MerchantEntity.class, code = 200, message = "商户列表响应字段说明")
+	})	
 	@ApiOperation(value = "merchant-6 根据筛选条件获取商户列表（可分页）")
 	@PostMapping("/listByCondition")
 	//@formatter:off
@@ -50,9 +58,17 @@ public class MerchantController {
 			@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query")
 		}
 	)
-	//@formatter:on
 	public Result listByCondition(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
+			// 自定义requestbody描述，使用map作为参数
+//			@ApiJsonObject(
+//				name = "merchant",
+//				value = {
+//					@ApiJsonProperty(key = "merchantName", example = "张三", description = "商户名")
+//				}
+//			)
+//			MerchantEntity merchant = JSONObject.parseObject(JSONObject.toJSONString(paramMap), MerchantEntity.class);
 			@RequestBody MerchantEntity merchant) {
+	//@formatter:on
 		PageUtils page = merchantService.queryPageByCondition(params, merchant);
 
 		return Result.ok().put("page", page);
@@ -61,6 +77,9 @@ public class MerchantController {
 	/**
 	 * 列表
 	 */
+	@ApiResponses(value = {
+		@ApiResponse(response = MerchantEntity.class, code = 200, message = "商户列表响应字段说明")
+	})	
 	@ApiOperation(value = "merchant-1 获取商户列表（可分页）")
 	@GetMapping("/list")
 	//@formatter:off

@@ -21,5 +21,7 @@ public interface ShopService extends IService<ShopEntity>{
 
 	PageUtils queryPageWithCnt(Map<String, Object> params, ShopEntity shop);
 
+	PageUtils queryPageShop(Map<String, Object> params);
+
 
 }
