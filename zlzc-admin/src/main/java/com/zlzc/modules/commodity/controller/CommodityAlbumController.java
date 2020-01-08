@@ -1,8 +1,15 @@
 package com.zlzc.modules.commodity.controller;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.zlzc.common.annotation.RespTime;
+import com.zlzc.common.utils.FileUpload;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.commodity.entity.CommodityAlbumEntity;
@@ -34,21 +43,46 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @RequestMapping("commodityAlbum")
 public class CommodityAlbumController {
-
-	// 上传图片到指定相册(可批量)
-
-	// 纯上传图片(可批量)
-
 	/* ################# method ################# */
 
 	@Autowired
 	private CommodityAlbumService commodityAlbumService;
 
 	/**
+	 * 上传图片到指定相册(可批量)
+	 * 
+	 * 注：（商品模块缺少图片上传功能）
+	 */
+	//@formatter:off
+	@SuppressWarnings("serial")
+	@RespTime("/commodityAlbum/uploadPic")
+	@ApiOperation(value = "commodityAlbum-8 上传图片到指定相册(可批量)")
+	@PostMapping("/uploadPic")
+	public Result uploadPic(
+		@ApiParam(value = "文件") @RequestParam(value = "files") MultipartFile[] files,
+		@ApiParam(value = "相册id", defaultValue = "1") @RequestParam(value = "albumId") Long albumId, 
+		@ApiParam(value = "商户id", defaultValue = "7") @RequestParam(value = "merchantId") Long merchantId,
+		Model model, 
+		HttpServletRequest request) {
+	//@formatter:off
+		// 上传图片
+		Pair<List<File>, List<MultipartFile>> rs = FileUpload.webFileUploader(files, FileUpload.UP_PATH + merchantId + "/" + albumId);
+		if(rs == null) {
+			return Result.ok().put("rs", false);
+		}
+		// 保存图片到相册
+		Pair<List<String>, List<String>> saveRs = commodityAlbumService.savePics(albumId, merchantId, rs);
+		return Result.ok().put("rs", new HashMap<String, List<String>>() {{
+			put("success", saveRs.getFirst());
+			put("failure", saveRs.getSecond());
+		}});
+	}
+
+	/**
 	 * 删除图片
 	 */
 	@RespTime("/commodityAlbum/delCommodityPic")
-	@ApiOperation(value = "commodityAttr-7  删除图片(可批量)")
+	@ApiOperation(value = "commodityAlbum-7  删除图片(可批量)")
 	@DeleteMapping("/delCommodityPic")
 	//@formatter:off
 	@ApiImplicitParams(
@@ -66,12 +100,12 @@ public class CommodityAlbumController {
 	public Result delCommodityPic(@RequestBody Long[] commodityPicIds) {
 		return Result.ok().put("rs", commodityAlbumService.delPics(commodityPicIds));
 	}
-	
+
 	/**
 	 * 转移指定图片到指定相册
 	 */
 	@RespTime("/commodityAlbum/transferPic")
-	@ApiOperation(value = "transferPic-6 转移图片到指定相册")
+	@ApiOperation(value = "commodityAlbum-6 转移图片到指定相册")
 	@PostMapping("/transferPic/{picId}/{fromAlbumId}/{toAlbumId}")
 	//@formatter:off
 	public Result transferPic(
@@ -107,7 +141,7 @@ public class CommodityAlbumController {
 	 * 删除相册
 	 */
 	@RespTime("/commodityAlbum/delCommodityAlbum")
-	@ApiOperation(value = "commodityAttr-4  删除相册(可批量)")
+	@ApiOperation(value = "commodityAlbum-4  删除相册(可批量)")
 	@DeleteMapping("/delCommodityAlbum")
 	//@formatter:off
 	@ApiImplicitParams(
@@ -125,7 +159,7 @@ public class CommodityAlbumController {
 	public Result delCommodityAlbum(@RequestBody Long[] commodityAlbumIds) {
 		return Result.ok().put("rs", commodityAlbumService.delAlbum(commodityAlbumIds));
 	}
-	
+
 	/**
 	 * 修改相册
 	 */

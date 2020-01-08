@@ -1,18 +1,25 @@
 package com.zlzc.modules.commodity.service.impl;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zlzc.common.utils.FileUpload;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
 import com.zlzc.modules.commodity.dao.CommodityAlbumDao;
@@ -27,6 +34,44 @@ public class CommodityAlbumServiceImpl extends ServiceImpl<CommodityAlbumDao, Co
 
 	@Autowired
 	private CommodityPicService commodityPicService;
+
+	/**
+	 * 保存上传图片到相册中
+	 */
+	@Transactional
+	@Override
+	public Pair<List<String>, List<String>> savePics(Long albumId, Long merchantId,
+			Pair<List<File>, List<MultipartFile>> rs) {
+
+		List<File> successList = rs.getFirst();
+		List<MultipartFile> failureList = rs.getSecond();
+
+		List<String> successFileUrl = new ArrayList<>();
+		List<String> failureFileUrl = new ArrayList<>();
+
+		// 上传成功的插入数据库记录
+		successList.forEach(file -> {
+			//@formatter:off
+			String picUrl = file.getPath()
+								.replaceAll("\\\\", "/")
+								.replace(FileUpload.UP_PATH, "");
+			CommodityPicEntity picEntity = new CommodityPicEntity()
+				.setAlbumId(albumId)
+				.setPicUrl(picUrl)
+				.setPicName(file.getName())
+				.setCreateTime(new Date())
+				.setUpdateTime(new Date());
+			//@formatter:on
+			if (commodityPicService.save(picEntity)) {
+				successFileUrl.add(picUrl);
+			} else {
+				failureFileUrl.add(file.getName());
+			}
+		});
+		// 插入上传失败文件名
+		failureList.forEach(file -> failureFileUrl.add(file.getOriginalFilename()));
+		return Pair.<List<String>, List<String>>of(successFileUrl, failureFileUrl);
+	}
 
 	/**
 	 * 删除图片（可批量）

@@ -28,6 +28,28 @@ public class MerchantApprovalDetailsController {
 	private MerchantApprovalDetailsService merchantApprovalDetailsService;
 
 	/**
+	 * 查询指定商户的审核状态（最新）
+	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = MerchantApprovalDetailsVo.class, code = 200, message = "查询指定商户的审核状态情响应字段说明")
+	})
+	@ApiOperation(value = "merchantApprovalDetails-4 查询指定商户的审核状态")
+	@GetMapping("/merchntApprovalDetailsStatus/{merchntId}")
+	//@formatter:off
+	@ApiImplicitParams(
+		value = {
+			@ApiImplicitParam(name = "merchntId", value = "商户ID", defaultValue = "1", paramType = "path"),
+		}
+	)
+	//@formatter:on
+	public Result merchntApprovalDetailsStatus(@PathVariable("merchntId") String merchntId) {
+		List<MerchantApprovalDetailsVo> queryApprovalDetailes = merchantApprovalDetailsService
+				.queryApprovalDetails(merchntId);
+
+		return Result.ok().put("approvalDetailesStatus", queryApprovalDetailes.get(0));
+	}
+	
+	/**
 	 * 查询指定商户的审核详情
 	 */
 	@ApiResponses(value = {

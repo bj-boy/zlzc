@@ -10,4 +10,16 @@
 	<name>zlzc-api</name>
 	<description>数据接口服务</description>
 	<packaging>jar</packaging>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.zlzc</groupId>
+			<artifactId>zlzc-common</artifactId>
+			<version>${zlzc.version}</version>
+		</dependency>
+		
+		
+		
+	</dependencies>
+	
 </project>

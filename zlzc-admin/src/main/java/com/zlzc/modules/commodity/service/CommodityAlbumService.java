@@ -1,6 +1,11 @@
 package com.zlzc.modules.commodity.service;
 
+import java.io.File;
+import java.util.List;
 import java.util.Map;
+
+import org.springframework.data.util.Pair;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zlzc.common.utils.PageUtils;
@@ -30,5 +35,7 @@ public interface CommodityAlbumService extends IService<CommodityAlbumEntity> {
 	boolean delAlbum(Long[] commodityAlbumIds);
 
 	boolean delPics(Long[] commodityPicIds);
+
+	Pair<List<String>, List<String>> savePics(Long albumId, Long merchantId, Pair<List<File>, List<MultipartFile>> rs);
 
 }

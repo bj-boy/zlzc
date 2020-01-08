@@ -1,4 +1,7 @@
 spring:
+  http:
+    encoding:
+      force: true # 解决响应的中文乱码问题
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -49,3 +52,4 @@ spring:
 #      username: root
 #      password: 123456
 
+  
