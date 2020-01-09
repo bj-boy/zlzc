@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.zlzc.modules.commodity.vo.CommodityAttrPageVo;
 import com.zlzc.modules.shop.entity.ShopEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,8 +28,6 @@ public interface ShopDao extends BaseMapper<ShopEntity> {
 
     public Map<String, Object> queryShopDetails(
             @Param(Constants.WRAPPER) QueryWrapper<ShopEntity> queryWrapper);
-
-    IPage<CommodityAttrPageVo> queryPage(IPage<CommodityAttrPageVo> page);
 
     IPage<ShopEntity> queryPageShop(IPage<ShopEntity> page);
 }
