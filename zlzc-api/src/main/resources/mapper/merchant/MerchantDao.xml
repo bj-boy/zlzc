@@ -3,5 +3,35 @@
 
 <mapper namespace="com.zlzc.api.rest.merchant.dao.MerchantDao">
 
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.zlzc.api.rest.merchant.entity.MerchantEntity"
+		id="merchantMap">
+		<id property="merchntId" column="merchnt_id" />
+		<result property="merchntAccount" column="merchnt_account" />
+		<result property="merchntName" column="merchnt_name" />
+		<result property="merchntNick" column="merchnt_nick" />
+		<result property="merchntCompanyName" column="merchnt_company_name" />
+		<result property="merchntRegistAddr" column="merchnt_regist_addr" />
+		<result property="merchntBusiLicenseUrl" column="merchnt_busi_license_url" />
+		<result property="merchntSupplyLevel" column="merchnt_supply_level" />
+		<result property="merchntLinkman" column="merchnt_linkman" />
+		<result property="merchntTel" column="merchnt_tel" />
+		<result property="merchntAddr" column="merchnt_addr" />
+		<result property="merchntRegion" column="merchnt_region" />
+		<result property="merchntMode" column="merchnt_mode" />
+		<result property="merchntScope" column="merchnt_scope" />
+		<result property="merchntRegistDate" column="merchnt_regist_date" />
+		<result property="merchntApprovalStatus" column="merchnt_approval_status" />
+		<result property="merchntAuditors" column="merchnt_auditors" />
+		<result property="merchntAuditResults" column="merchnt_audit_results" />
+		<result property="merchntFeedback" column="merchnt_feedback" />
+		<result property="merchntDate" column="merchnt_date" />
+		<result property="merchntDetails" column="merchnt_details" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+	</resultMap>
+
+
 
 </mapper>

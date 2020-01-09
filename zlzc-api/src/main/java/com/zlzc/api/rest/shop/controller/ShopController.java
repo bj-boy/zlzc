@@ -1,11 +1,12 @@
 package com.zlzc.api.rest.shop.controller;
 
 
+import com.zlzc.api.rest.shop.entity.ShopEntity;
+import com.zlzc.api.rest.shop.service.ShopService;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
-import com.zlzc.modules.shop.entity.ShopEntity;
-import com.zlzc.modules.shop.service.ShopService;
+
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -3,11 +3,11 @@ package com.zlzc.api.rest.shop.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zlzc.api.rest.shop.dao.ShopDao;
+import com.zlzc.api.rest.shop.entity.ShopEntity;
+import com.zlzc.api.rest.shop.service.ShopService;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
-import com.zlzc.modules.shop.dao.ShopDao;
-import com.zlzc.modules.shop.entity.ShopEntity;
-import com.zlzc.modules.shop.service.ShopService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
