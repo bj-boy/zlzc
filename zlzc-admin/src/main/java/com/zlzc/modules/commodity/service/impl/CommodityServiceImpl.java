@@ -1,15 +1,5 @@
 package com.zlzc.modules.commodity.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -19,32 +9,20 @@ import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.commodity.dao.CommodityDao;
-import com.zlzc.modules.commodity.entity.CommodityDetailEntity;
-import com.zlzc.modules.commodity.entity.CommodityEntity;
-import com.zlzc.modules.commodity.entity.CommodityParamEntity;
-import com.zlzc.modules.commodity.entity.CommodityPicEntity;
-import com.zlzc.modules.commodity.entity.CommodityPriceEntity;
-import com.zlzc.modules.commodity.entity.CommodityPriceMiddleEntity;
-import com.zlzc.modules.commodity.entity.CommodityRepoEntity;
-import com.zlzc.modules.commodity.entity.CommoditySkuMiddleEntity;
-import com.zlzc.modules.commodity.service.CommodityAlbumService;
-import com.zlzc.modules.commodity.service.CommodityAttrService;
-import com.zlzc.modules.commodity.service.CommodityCategoryService;
-import com.zlzc.modules.commodity.service.CommodityDetailService;
-import com.zlzc.modules.commodity.service.CommodityParamService;
-import com.zlzc.modules.commodity.service.CommodityPicService;
-import com.zlzc.modules.commodity.service.CommodityPriceMiddleService;
-import com.zlzc.modules.commodity.service.CommodityPriceService;
-import com.zlzc.modules.commodity.service.CommodityRepoService;
-import com.zlzc.modules.commodity.service.CommodityService;
-import com.zlzc.modules.commodity.service.CommoditySkuMiddleService;
-import com.zlzc.modules.commodity.service.CommoditySkuService;
-import com.zlzc.modules.commodity.vo.CommodityAlbumVo;
-import com.zlzc.modules.commodity.vo.CommodityAttrVo;
-import com.zlzc.modules.commodity.vo.CommoditySkuVo;
-import com.zlzc.modules.commodity.vo.CommodityVo;
-
+import com.zlzc.modules.commodity.entity.*;
+import com.zlzc.modules.commodity.service.*;
+import com.zlzc.modules.commodity.vo.*;
+import com.zlzc.modules.merchant.entity.MerchantEntity;
+import com.zlzc.modules.merchant.service.MerchantService;
+import com.zlzc.modules.shop.entity.ShopEntity;
+import com.zlzc.modules.shop.service.ShopService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 @Slf4j
 @Service("commodityService")
@@ -82,6 +60,12 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityDao, CommodityEnt
 
 	@Autowired
 	private CommodityPriceMiddleService commodityPriceMiddleService;
+
+	@Autowired
+	private MerchantService merchantService;
+
+	@Autowired
+	private ShopService shopService;
 
 	/**
 	 * 商品审核
@@ -347,8 +331,35 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityDao, CommodityEnt
 	 * 查询商品(支持分页及条件)
 	 */
 	@Override
-	public List<CommodityVo> queryCommodity() {
-		return baseMapper.queryCommodity();
+	public PageUtils queryCommodity(Map<String, Object> params, CommodityListCondition condition) {
+		IPage<CommodityVo> page = new Query<CommodityVo>().getPage(params);
+
+		QueryWrapper<CommodityVo> qw = new QueryWrapper<CommodityVo>()
+				.eq(Objects.nonNull(condition.getCommodityNo()), "zc.commodity_no", condition.getCommodityNo())
+				.eq(StringUtils.isNotBlank(condition.getCommodityName()), "zc.commodity_name", condition.getCommodityName())
+				.eq(Objects.nonNull(condition.getCommodityCategoryId()), "zc.commodity_category_id", condition.getCommodityCategoryId())
+				.eq(Objects.nonNull(condition.getCommodityStatus()), "zc.commodity_status", condition.getCommodityStatus());
+
+		if (StringUtils.isNotBlank(condition.getMerchantName())) {
+			MerchantEntity merchant = merchantService.list(
+					new QueryWrapper<MerchantEntity>().eq("merchant_name", condition.getMerchantName())
+			).get(0);
+			qw.eq(Objects.nonNull(merchant.getMerchantId()), "zc.merchant_id", merchant.getMerchantId());
+		}
+
+		if(StringUtils.isNotBlank(condition.getShopName())) {
+			ShopEntity shop = shopService.list(
+					new QueryWrapper<ShopEntity>().eq("shop_name", condition.getShopName())
+			).get(0);
+			qw.eq(Objects.nonNull(shop.getShopId()), "zc.shop_id", shop.getShopId());
+		}
+
+		List<CommodityVo> commodityVos = baseMapper.queryCommodity(qw, page.offset(), page.getSize());
+
+		page.setRecords(commodityVos);
+		page.setTotal(baseMapper.queryCommodityCnt(qw, page.offset(), page.getSize()));
+
+		return new PageUtils(page);
 	}
 
 	/**

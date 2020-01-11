@@ -33,4 +33,5 @@ public class DictServiceImpl extends ServiceImpl<DictDao, DictEntity> implements
        }
         return null;
     }
+
 }

@@ -294,7 +294,7 @@
 	 	zcpi_sku.sales_model sales_model_sku,
 	 	zcpi_sku.sales_rule sales_rule_sku 
 	FROM
-		( SELECT * FROM zlzc_commodity t1 WHERE t1.del = 1 LIMIT 0, 10 ) zc
+		( SELECT * FROM zlzc_commodity t1 WHERE t1.del = 1 LIMIT #{current},#{size}) zc
 		LEFT JOIN zlzc_commodity_detail zcd ON zc.commodity_id = zcd.commodity_id
 		LEFT JOIN zlzc_commodity_category zcc ON zc.commodity_category_id = zcc.category_id
 		LEFT JOIN zlzc_commodity_repo zcr ON zc.commodity_repo_id = zcr.repo_id
@@ -310,7 +310,37 @@
 	 	LEFT JOIN zlzc_commodity_album zca_sku ON zcsm.album_id = zca_sku.album_id
 	 	LEFT JOIN zlzc_commodity_pic zcp_sku ON zca_sku.album_id = zcp_sku.album_id
 	 	LEFT JOIN zlzc_commodity_price zcpi_sku ON zcsm.price_id = zcpi_sku.price_id
+	  ${ew.customSqlSegment}
 	</select>
+
+
+    <select id="queryCommodityCnt" resultType="java.lang.Integer">
+    SELECT
+      count(DISTINCT commodity_id) cnt
+    FROM
+    (
+        SELECT
+            zc.commodity_id
+        FROM
+        ( SELECT * FROM zlzc_commodity t1 WHERE t1.del = 1) zc
+        LEFT JOIN zlzc_commodity_detail zcd ON zc.commodity_id = zcd.commodity_id
+        LEFT JOIN zlzc_commodity_category zcc ON zc.commodity_category_id = zcc.category_id
+        LEFT JOIN zlzc_commodity_repo zcr ON zc.commodity_repo_id = zcr.repo_id
+        LEFT JOIN zlzc_commodity_album zca ON zc.comodity_album_id = zca.album_id
+        LEFT JOIN zlzc_commodity_pic zcp ON zca.album_id = zcp.album_id
+        INNER JOIN zlzc_commodity_price_middle zcpm ON zc.commodity_id = zcpm.commodity_id
+        LEFT JOIN zlzc_commodity_price zcpi ON zcpm.price_id = zcpi.price_id
+        LEFT JOIN zlzc_commodity_attr zcat ON zc.commodity_attr_id = zcat.attr_id -- 12
+        LEFT JOIN zlzc_commodity_param zcpa ON zcat.attr_id = zcpa.attr_id
+        LEFT JOIN zlzc_commodity_sku zcs ON zcat.attr_id = zcs.attr_id
+        INNER JOIN zlzc_commodity_sku_middle zcsm ON zcsm.sku_id = zcs.sku_id
+        LEFT JOIN zlzc_commodity_repo zcr_sku ON zcsm.repo_id = zcr_sku.repo_id
+        LEFT JOIN zlzc_commodity_album zca_sku ON zcsm.album_id = zca_sku.album_id
+        LEFT JOIN zlzc_commodity_pic zcp_sku ON zca_sku.album_id = zcp_sku.album_id
+        LEFT JOIN zlzc_commodity_price zcpi_sku ON zcsm.price_id = zcpi_sku.price_id
+        ${ew.customSqlSegment}
+    ) tmp
+    </select>
 
 
 </mapper>

@@ -25,7 +25,7 @@ import java.util.Map;
  * @Date: 2019/12/5 23:01
  * @Version: 1.0
  */
-@Api(value = "后台-店铺", tags = { "V1.0 shop：后台-店铺操作相关接口" })
+@Api(value = "api-店铺", tags = { "V1.0 shop：api-店铺操作相关接口" })
 @RestController
 @RequestMapping("shop")
 public class ShopController {
