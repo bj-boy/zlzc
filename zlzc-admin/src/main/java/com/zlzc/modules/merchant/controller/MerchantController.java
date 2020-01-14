@@ -1,35 +1,16 @@
 package com.zlzc.modules.merchant.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.alibaba.fastjson.JSONObject;
-import com.zlzc.common.config.swagger.ApiJsonObject;
-import com.zlzc.common.config.swagger.ApiJsonProperty;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
 import com.zlzc.modules.merchant.entity.MerchantEntity;
 import com.zlzc.modules.merchant.service.MerchantService;
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * @author LSR
@@ -99,6 +80,9 @@ public class MerchantController {
 	/**
 	 * 信息
 	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = MerchantEntity.class, code = 200, message = "根据商户ID获取商户信息响应字段说明")
+	})
 	@ApiOperation(value = "merchant-2 根据商户ID获取商户信息")
 	@GetMapping("/info/{merchantId}")
 	//@formatter:off

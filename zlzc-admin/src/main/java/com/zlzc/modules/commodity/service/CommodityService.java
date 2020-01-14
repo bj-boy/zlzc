@@ -1,12 +1,13 @@
 package com.zlzc.modules.commodity.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.modules.commodity.entity.CommodityEntity;
+import com.zlzc.modules.commodity.vo.CommodityListCondition;
 import com.zlzc.modules.commodity.vo.CommodityVo;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -21,7 +22,7 @@ public interface CommodityService extends IService<CommodityEntity> {
 
 	boolean saveCommodity(CommodityVo commodity);
 
-	List<CommodityVo> queryCommodity();
+	PageUtils queryCommodity(Map<String, Object> params, CommodityListCondition condition);
 
 	boolean delCommodities(Long[] commodityIds);
 

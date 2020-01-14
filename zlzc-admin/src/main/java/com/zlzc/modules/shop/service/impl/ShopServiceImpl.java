@@ -21,11 +21,6 @@ import java.util.Map;
  */
 @Service("shopService")
     public class ShopServiceImpl extends ServiceImpl<ShopDao, ShopEntity> implements ShopService {
-        @Override
-    public PageUtils queryPage(Map<String, Object> params) {
-        IPage<ShopEntity> page = this.page(new Query<ShopEntity>().getPage(params), new QueryWrapper<ShopEntity>());
-        return new PageUtils(page);
-    }
 
     @Override
     public Map<String, Object> queryShopDetails(Integer shopId) {

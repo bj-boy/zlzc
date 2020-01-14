@@ -23,6 +23,7 @@
 		<result property="updateTime" column="update_time" />
 		<result property="operator" column="operator" />
 		<result property="shopNo" column="shop_no" />
+		<result property="commodityCnt" column="commodity_cnt" />
 
 	<!-- 商品实体类映射 -->
 
@@ -98,6 +99,26 @@
 		<result property="commodityCnt" column="commodity_cnt" />
 	</resultMap>
 
+	<resultMap type="com.zlzc.modules.shop.entity.ShopEntity"
+			   id="shopMap3">
+		<id property="shopId" column="shop_id" />
+		<result property="shopName" column="shop_name" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="merchantName" column="merchant_name" />
+		<result property="shopLogoUrl" column="shop_logo_url" />
+		<result property="shopAddr" column="shop_addr" />
+		<result property="shopRegion" column="shop_region" />
+		<result property="shopLinkman" column="shop_linkman" />
+		<result property="shopTel" column="shop_tel" />
+		<result property="shopScope" column="shop_scope" />
+		<result property="shopStatus" column="shop_status" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+		<result property="shopNo" column="shop_no" />
+		<result property="commodityCnt" column="commodity_cnt" />
+	</resultMap>
+
 	<sql id="pageCnt">
 		sp.shop_id,
 		sp.shop_no,
@@ -133,7 +154,7 @@
 		${ew.customSqlSegment}
 	</select>
 
-	<select id="queryPageShop" resultMap="shopMap2">
+	<select id="queryPageShop" resultMap="shopMap3">
 		SELECT
 		<include refid="pageCnt"/>
 		FROM
