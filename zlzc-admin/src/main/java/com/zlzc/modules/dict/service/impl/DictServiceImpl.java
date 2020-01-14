@@ -5,12 +5,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zlzc.modules.dict.dao.DictDao;
 import com.zlzc.modules.dict.entity.DictEntity;
 import com.zlzc.modules.dict.service.DictService;
-import com.zlzc.modules.merchant.vo.merchant.MerchantApprovalDetailsVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import sun.misc.Request;
 
 import java.util.List;
 

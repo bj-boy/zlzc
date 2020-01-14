@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zlzc.modules.logistics.dao.LogisticsDao;
 import com.zlzc.modules.logistics.entity.LogisticsEntity;
 import com.zlzc.modules.logistics.service.LogisticsService;
-import com.zlzc.modules.order.entity.OrderEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

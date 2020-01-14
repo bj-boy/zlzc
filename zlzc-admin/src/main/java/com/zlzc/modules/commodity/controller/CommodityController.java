@@ -51,9 +51,6 @@ public class CommodityController {
 	 * 商品各状态数量统计
 	 */
 
-	@ApiResponses(value = {
-			@ApiResponse(response = commodityStatusStatisticsRT.class, code = 200, message = "商品各状态数量统计响应字段说明")
-	})
 	@ApiOperation(value = "commodity-5 商品各状态数量统计")
 	@RespTime("/commodity/statisticsByStatus")
 	@GetMapping("/statisticsByStatus")

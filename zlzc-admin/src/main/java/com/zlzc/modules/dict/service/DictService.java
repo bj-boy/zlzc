@@ -2,7 +2,6 @@ package com.zlzc.modules.dict.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zlzc.modules.dict.entity.DictEntity;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
