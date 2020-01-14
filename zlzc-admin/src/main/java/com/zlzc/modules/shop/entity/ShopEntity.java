@@ -28,85 +28,85 @@ public class ShopEntity implements Serializable{
 	/**
 	 * 店铺ID
 	 */
-	@ApiModelProperty(name = "shopId", value = "店铺ID", example = "1")
+	@ApiModelProperty(name = "shopId", value = "店铺ID", example = "店铺ID")
 	@TableId
 	private Long shopId;
 	/**
 	 * 店铺名称
 	 */
-	@ApiModelProperty(name = "shopName", value = "店铺名称", example = "飞哥水果店")
+	@ApiModelProperty(name = "shopName", value = "店铺名称", example = "店铺名称")
 	private String shopName;
 	/**
 	 * 商户ID
 	 */
-	@ApiModelProperty(name = "merchantId", value = "商户ID", example = "1")
+	@ApiModelProperty(name = "merchantId", value = "商户ID", example = "商户ID")
 	private Long merchantId;
 	/**
 	 * 商户名称
 	 */
-	@ApiModelProperty(name = "merchantName", value = "商户名称", example = "大志")
+	@ApiModelProperty(name = "merchantName", value = "商户名称", example = "商户名称")
 	private String merchantName;
 	/**
 	 * 店铺logo url
 	 */
-	@ApiModelProperty(name = "shopLogoUrl", value = "店铺logoUrl", example = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1577790414255&di=0c7918624b446771f4955ee23c09eaed&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D3048152894%2C3789302586%26fm%3D214%26gp%3D0.jpg")
+	@ApiModelProperty(name = "shopLogoUrl", value = "店铺logoUrl", example = "店铺logoUrl")
 	private String shopLogoUrl;
 	/**
 	 * 店铺地址
 	 */
-	@ApiModelProperty(name = "shopAddr", value = "店铺地址", example = "朝信安路101")
+	@ApiModelProperty(name = "shopAddr", value = "店铺地址", example = "店铺地址")
 	private String shopAddr;
 	/**
 	 * 店铺区域
 	 */
-	@ApiModelProperty(name = "shopRegion", value = "店铺区域", example = "朝阳区")
+	@ApiModelProperty(name = "shopRegion", value = "店铺区域", example = "店铺区域")
 	private String shopRegion;
 	/**
 	 * 店铺联系人
 	 */
-	@ApiModelProperty(name = " shopLinkman", value = "店铺联系人", example = "花")
+	@ApiModelProperty(name = " shopLinkman", value = "店铺联系人", example = "店铺联系人")
 	private String shopLinkman;
 	/**
 	 * 联系方式
 	 */
-	@ApiModelProperty(name = "shopTel", value = "联系方式", example = "138888888")
+	@ApiModelProperty(name = "shopTel", value = "联系方式", example = "联系方式")
 	private String shopTel;
 	/**
 	 * 店铺经营范围
 	 */
-	@ApiModelProperty(name = "shopScope", value = "店铺经营范围", example = "1")
+	@ApiModelProperty(name = "shopScope", value = "店铺经营范围", example = "店铺经营范围")
 	private Integer shopScope;
 	/**
 	 * 店铺状态
 	 */
-	@ApiModelProperty(name = "shopStatus", value = "店铺状态", example = "1")
+	@ApiModelProperty(name = "shopStatus", value = "店铺状态", example = "店铺状态")
 	private Integer shopStatus;
 	/**
 	 * 创建时间
 	 */
-	@ApiModelProperty(name = "createTime", value = "创建时间", example = "2019-12-01 12:12:46")
+	@ApiModelProperty(name = "createTime", value = "创建时间", example = "创建时间")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	 * 修改时间
 	 */
-	@ApiModelProperty(name = "updateTime", value = "修改时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "updateTime", value = "修改时间", example = "修改时间")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 	/**
 	 * 操作人
 	 */
-	@ApiModelProperty(name = "operator", value = "操作人", example = "名言")
+	@ApiModelProperty(name = "operator", value = "操作人", example = "操作人")
 	private String operator;
 	/**
 	 * 店铺编号
 	 */
-	@ApiModelProperty(name = "shopNo", value = "店铺编号", example = "12121")
+	@ApiModelProperty(name = "shopNo", value = "店铺编号", example = "店铺编号")
 	private String shopNo;
 
-	@ApiModelProperty(name = "commodityCnt", value = "商品数量", example = "0")
+	@ApiModelProperty(name = "commodityCnt", value = "商品数量", example = "商品数量")
 	@TableField(exist = false)
 	private Integer commodityCnt;
 }

@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class CommodityAttrPageVo extends CommodityAttrEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@ApiModelProperty(name = "paramCount", value = "参数数量统计")
+	@ApiModelProperty(name = "paramCount", value = "参数数量统计",example = "商品ID")
 	private Integer paramCount;
-	@ApiModelProperty(name = "skuCount", value = "sku数量统计")
+	@ApiModelProperty(name = "skuCount", value = "sku数量统计",example = "商品ID")
 	private Integer skuCount;
 
 }

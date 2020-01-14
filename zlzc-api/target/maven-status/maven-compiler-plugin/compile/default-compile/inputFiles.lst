@@ -46,9 +46,12 @@ G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\service\Com
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\order\dao\OrderDao.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\config\swagger\MapApiReader.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\dict\controller\DictController.java
+G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodityEvaluation\service\CommodityEvaluationService.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\vo\CommodityAttrPageVo.java
+G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodityEvaluation\entity\CommodityEvaluationEntity.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\merchant\service\approvalDetails\MerchantApprovalDetailsService.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\logistics\service\LogisticsService.java
+G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodityEvaluation\controller\CommodityEvaluationController.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\service\impl\CommodityServiceImpl.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\entity\CommodityCategoryEntity.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\service\impl\CommodityCategoryServiceImpl.java
@@ -65,8 +68,10 @@ G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\service\Com
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\config\HttpConverterConfig.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\merchant\service\approvalDetails\impl\MerchantApprovalDetailsServiceImpl.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\service\CommodityDetailService.java
+G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodityEvaluation\service\impl\CommodityEvaluationServiceImpl.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\merchant\dao\approvalDetails\MerchantApprovalDetailsDao.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\service\impl\CommodityAlbumServiceImpl.java
+G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodityEvaluation\entity\CommodityEvaluationEntity1.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\entity\CommodityEntity.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\entity\CommodityAttrEntity.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\service\CommodityPicService.java
@@ -86,6 +91,7 @@ G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\logistics\entity\Logi
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\dict\service\impl\DictServiceImpl.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\entity\CommoditySkuEntity.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodity\service\impl\CommoditySkuServiceImpl.java
+G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\commodityEvaluation\dao\CommodityEvaluationDao.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\config\FilterConfig.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\config\swagger\ApiJsonProperty.java
 G:\workspace\zlzc\zlzc-api\src\main\java\com\zlzc\api\rest\merchant\vo\merchant\MerchantApprovalDetailsVo.java
