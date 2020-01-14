@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 
 
-@Api(value = "后台-快递物流", tags = { "V1.0 logistics：后台-快递物流操作相关接口" })
+@Api(value = "App-物流管理", tags = { "V1.0 logistics：App-物流管理操作相关接口" })
 @RestController
-@RequestMapping("/logistics")
+@RequestMapping("/App/logistics")
 public class LogisticsController {
 
     @Autowired
     private LogisticsService logisticsService;
+
 
     /**
      * 根据物流快id查询详细信息
@@ -36,6 +37,10 @@ public class LogisticsController {
         LogisticsEntity logistics = logisticsService.getLogistics(number);
         return Result.ok().put("logistics",logistics);
     }
+
+
+
+
 
     /**
      *保存

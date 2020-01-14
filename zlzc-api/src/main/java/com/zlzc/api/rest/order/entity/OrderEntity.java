@@ -46,8 +46,8 @@ public class OrderEntity implements Serializable {
     /**
      * 商户id
      */
-    @ApiModelProperty(name = "merchntId", value = "商户id", example = "001")
-     private  Long merchntId;
+    @ApiModelProperty(name = "merchantId", value = "商户id", example = "001")
+     private  Long merchantId;
     /**
      * 订单编号
      */

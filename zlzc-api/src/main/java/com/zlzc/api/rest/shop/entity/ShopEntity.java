@@ -84,7 +84,7 @@ public class ShopEntity implements Serializable{
 	/**
 	 * 创建时间
 	 */
-	@ApiModelProperty(name = "createTime", value = "创建时间", example = "2019-12-01 12:12:46")
+	@ApiModelProperty(name = "shopCreateTime", value = "创建时间", example = "2019-12-01 12:12:46")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;

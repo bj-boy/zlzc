@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.api.rest.content.dao.ContentLnformationDao">
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.api.rest.content.entity.ContentLnformationEntity" id="LnformationMap">
+        <result property="informationId" column="Information_id"/>
+        <result property="commentId" column="comment_id"/>
+        <result property="informationClassId" column="Information_class_id"/>
+        <result property="informationNumber" column="Information_number"/>
+        <result property="informationImage" column="Information_image"/>
+        <result property="informationTitle" column="Information_title"/>
+        <result property="informationRecommend" column="Information_recommend"/>
+        <result property="informationFavorites" column="Information_favorites"/>
+        <result property="informationForwards" column="Information_forwards"/>
+        <result property="informationReda" column="Information_reda"/>
+        <result property="informationTime" column="Information_time"/>
+        <result property="informationCreateTime" column="Information_create_time"/>
+        <result property="informationDelete" column="Information_delete"/>
+    </resultMap>
+
+    <resultMap type="com.zlzc.api.rest.content.vo.ContentLnformationVo"
+               id="contentLnformationMap" extends="LnformationMap">
+        <association property="contentClassEntity" javaType="ContentClassEntity">
+            <result property="informationClassId" column="Information_class_id"/>
+            <result property="informationClassNumber" column="Information_class_number"/>
+            <result property="informationClassImg" column="Information_class_img"/>
+            <result property="informationClassName" column="Information_class_name"/>
+            <result property="informationClassQuantity" column="Information_class_quantity"/>
+            <result property="informationClassDisplay" column="Information_class_display"/>
+            <result property="informationClassTime" column="Information_class_time"/>
+            <result property="informationClassRemark" column="Information_class_remark"/>
+            <result property="informationClassSelect" column="Information_class_select"/>
+            <result property="informationClassDelete" column="Information_class_delete"/>
+        </association>
+        <association property="contentCommentEntity" javaType="ContentCommentEntity">
+            <result property="commentId" column="comment_id"/>
+            <result property="userId" column="user_id"/>
+            <result property="commentReplyContent" column="comment_reply_content"/>
+            <result property="commentTime" column="comment_time"/>
+            <result property="commentDelete" column="comment_delete"/>
+        </association>
+        <association property="contentNewsVideoCenterEntity" javaType="ContentNewsVideoCenterEntity">
+            <result property="newsVideoCenterId" column="news_video_center_id"/>
+            <result property="informationId" column="Information_id"/>
+            <result property="videoId" column="video_id"/>
+            <result property="commodityId" column="commodity_id"/>
+        </association>
+        <association property="contentVideoEntity" javaType="ContentVideoEntity">
+            <result property="videoId" column="video_id"/>
+            <result property="commentId" column="comment_id"/>
+            <result property="informationClassId" column="Information_class_id"/>
+            <result property="videoNumber" column="video_number"/>
+            <result property="videoTitle" column="video_title"/>
+            <result property="videoAddress" column="video_address"/>
+            <result property="videoContent" column="video_content"/>
+            <result property="videoClick" column="video_click"/>
+            <result property="videoFavorite" column="video_favorite"/>
+            <result property="videoForward" column="video_forward"/>
+            <result property="videoShare it" column="video_share it"/>
+            <result property="videoTime" column="video_time"/>
+
+        </association>
+        <association property="commodityEntity" javaType="CommodityEntity">
+            <result property="commodityId" column="ccommodity_id" />
+            <result property="merchantId" column="merchant_id" />
+            <result property="shopId" column="shop_id" />
+            <result property="brandId" column="brand_id" />
+            <result property="commodityCategoryId" column="commodity_category_id" />
+            <result property="commodityAttrId" column="commodity_attr_id" />
+            <result property="commodityRepertoryId" column="commodity_repo_id" />
+            <result property="comodityAlbumId" column="comodity_album_id" />
+            <result property="commodityNo" column="commodity_no" />
+            <result property="commodityName" column="commodity_name" />
+            <result property="commoditySubName" column="commodity_sub_name" />
+            <result property="commodityOrder" column="commodity_order" />
+            <result property="commodityStatus" column="commodity_status" />
+            <result property="countryCode" column="country_code" />
+            <result property="commodityRemark" column="commodity_remark" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+            <result property="operator" column="operator" />
+        </association>
+        <association property="commodityPriceEntity" javaType="CommodityPriceEntity">
+            <result property="priceId" column="price_id"/>
+            <result property="commodityId" column="commodity_id"/>
+            <result property="skuId" column="sku_id"/>
+            <result property="salesModel" column="sales_model"/>
+            <result property="price" column="price"/>
+            <result property="priceUnit" column="price_unit"/>
+            <result property="countryCode" column="country_code"/>
+            <result property="salesRule" column="sales_rule"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+        <association property="commodityPriceMiddleEntity" javaType="CommodityPriceMiddleEntity">
+            <result property="middleId" column="middle_id"/>
+            <result property="priceId" column="price_id"/>
+            <result property="commodityId" column="commodity_id"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+        <association property="userEntity" javaType="UserEntity">
+            <result property="userId" column="user_id"/>
+            <result property="username" column="username"/>
+            <result property="userAcct" column="user_acct"/>
+            <result property="userPassword" column="user_password"/>
+            <result property="mobile" column="mobile"/>
+            <result property="email" column="email"/>
+            <result property="userStatus" column="user_status"/>
+            <result property="gender" column="gender"/>
+            <result property="birthday" column="birthday"/>
+            <result property="address" column="address"/>
+            <result property="signature" column="signature"/>
+            <result property="profession" column="profession"/>
+            <result property="img" column="img"/>
+            <result property="favouriteCategory" column="favourite_category"/>
+            <result property="source" column="source"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+
+    </resultMap>
+
+    <select id="getInformationCommodityById" resultMap="contentLnformationMap">
+          SELECT
+            distinct
+            c.commodity_id,
+            c.commodity_name,
+            commodity_sub_name,
+            sales_model,
+            p.price,
+            l.Information_image
+        FROM
+            zlzc_content_lnformation l
+        LEFT JOIN
+            zlzc_content_lnformation_center lc
+        ON
+            l.Information_id=lc.Information_id
+        LEFT JOIN
+             zlzc_commodity  c
+         ON
+            lc.commodity_id=c.commodity_id
+        LEFT JOIN
+            zlzc_commodity_price_middle pm
+        ON
+            c.commodity_id =pm.commodity_id
+        LEFT JOIN
+            zlzc_commodity_price   p
+        ON
+            p.price_id=pm.price_id
+            ${ew.customSqlSegment}
+    </select>
+    <select id="getInformationContentById" resultMap="contentLnformationMap">
+        SELECT
+            u.username,
+            u.img,
+            cc.comment_reply_content,
+            cc.comment_time,
+            cc.comment_favorite
+        FROM
+            zlzc_content_lnformation l
+        LEFT JOIN
+            zlzc_content_comment cc
+        ON
+            l.comment_id=cc.comment_id
+        LEFT JOIN
+            zlzc_user  u
+        ON
+            u.user_id=cc.user_id
+	    ${ew.customSqlSegment}
+
+    </select>
+
+</mapper>

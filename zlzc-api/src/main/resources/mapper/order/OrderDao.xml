@@ -9,7 +9,7 @@
 		<result property="commobityId" column="commobity_id" />
 		<result property="shopId" column="shop_id" />
 		<result property="userId" column="user_id" />
-		<result property="merchntId" column="merchant_id" />
+		<result property="merchantId" column="merchant_id" />
 		<result property="orderNumber" column="order_number" />
 		<result property="orderAmount" column="order_amount" />
 		<result property="orderPayable" column="order_payable" />
@@ -27,6 +27,7 @@
 		<result property="orderCompleteTime" column="order_complete_time" />
 		<result property="orderRemove" column="order_remove" />
 	</resultMap>
+
 	<resultMap id="OrdeAndLogisticsVoRst"  type="com.zlzc.api.rest.order.entity.vo.OrderDetailsVo"
 	extends="merchantMap">
 		<association property="logisticsEntity" javaType="LogisticsEntity">
@@ -74,7 +75,7 @@
 			<result property="operator" column="operator"/>
 		</association>
 		<association property="merchantEntity" javaType="MerchantEntity">
-			<id property="merchntId" column="merchnt_id_l" />
+			<id property="merchantId" column="merchant_id_l" />
 			<result property="merchntAccount" column="merchnt_account" />
 			<result property="merchntName" column="merchnt_name" />
 			<result property="merchntNick" column="merchnt_nick" />
@@ -102,7 +103,7 @@
 		<association property="shopEntity" javaType="ShopEntity">
 			<id property="shopId" column="shop_id_m" />
 			<result property="shopName" column="shop_name" />
-			<result property="merchntId" column="merchant_id_m" />
+			<result property="merchantId" column="merchant_id_m" />
 			<result property="merchntName" column="merchnt_name" />
 			<result property="shopLogoUrl" column="shop_logo_url" />
 			<result property="shopAddr" column="shop_addr" />
@@ -204,7 +205,7 @@
 		LEFT
 		JOIN zlzc_merchant m
 		on
-		o.merchnt_id = m.merchant_id
+		o.merchant_id = m.merchant_id
 		LEFT
 		JOIN
 		zlzc_shop s

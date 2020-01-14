@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.api.rest.brand.dao.BrandDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.api.rest.brand.entity.BrandEntity" id="brandMap">
+        <result property="brandId" column="brand_id"/>
+        <result property="brandCategoryId" column="brand_category_id"/>
+        <result property="brandCommentId" column="brand_comment_id"/>
+        <result property="brandNumber" column="brand_number"/>
+        <result property="brandName" column="brand_name"/>
+        <result property="brandLogo" column="brand_logo"/>
+        <result property="brandIntroduction" column="brand_introduction"/>
+        <result property="brandInitials" column="brand_Initials"/>
+        <result property="brandArea" column="brand_area"/>
+        <result property="brandSort" column="brand_sort"/>
+        <result property="brandRecommend" column="brand_recommend"/>
+        <result property="brandManufacturer" column="brand_manufacturer"/>
+        <result property="brandDisplay" column="brand_display"/>
+        <result property="brandTime" column="brand_time"/>
+        <result property="brandRemark" column="brand_remark"/>
+        <result property="brandDelete" column="brand_delete"/>
+    </resultMap>
+    <resultMap type="com.zlzc.api.rest.brand.vo.BrandVo" id="brandVoMap" extends="brandMap">
+        <association property="brandCategoryEntity" javaType="BrandCategoryEntity">
+            <result property="brandCategoryId" column="brand_category_id"/>
+            <result property="brandCategoryName" column="brand_category_name"/>
+            <result property="brandCategoryIcon" column="brand_category_icon"/>
+            <result property="brandCategoryQuantity" column="brand_category_quantity"/>
+            <result property="brandCategoryDisplay" column="brand_category_display"/>
+            <result property="brandCategorySort" column="brand_category_sort"/>
+            <result property="brandCategoryTime" column="brand_category_time"/>
+            <result property="brandCategoryDelete" column="brand_category_delete"/>
+        </association>
+        <association property="brandCommentEntity" javaType="BrandCommentEntity">
+            <result property="brandCommentId" column="brand_comment_id"/>
+            <result property="userId" column="user_id"/>
+            <result property="brandReplyContent" column="brand_reply_content"/>
+            <result property="brandTime" column="brand_time"/>
+            <result property="brandDelete" column="brand_delete"/>
+        </association>
+        <association property="commodityEntity" javaType="CommodityEntity">
+            <result property="commodityId" column="idcommodity_id" />
+            <result property="merchantId" column="merchant_id" />
+            <result property="shopId" column="shop_id" />
+            <result property="brandId" column="brand_id" />
+            <result property="commodityCategoryId" column="commodity_category_id" />
+            <result property="commodityAttrId" column="commodity_attr_id" />
+            <result property="commodityRepertoryId" column="commodity_repo_id" />
+            <result property="comodityAlbumId" column="comodity_album_id" />
+            <result property="commodityNo" column="commodity_no" />
+            <result property="commodityName" column="commodity_name" />
+            <result property="commoditySubName" column="commodity_sub_name" />
+            <result property="commodityOrder" column="commodity_order" />
+            <result property="commodityStatus" column="commodity_status" />
+            <result property="countryCode" column="country_code" />
+            <result property="commodityRemark" column="commodity_remark" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+            <result property="operator" column="operator" />
+        </association>
+        <association property="commodityPriceEntity" javaType="CommodityPriceEntity">
+            <result property="priceId" column="price_id"/>
+            <result property="commodityId" column="commodity_id"/>
+            <result property="skuId" column="sku_id"/>
+            <result property="salesModel" column="sales_model"/>
+            <result property="price" column="price"/>
+            <result property="priceUnit" column="price_unit"/>
+            <result property="countryCode" column="country_code"/>
+            <result property="salesRule" column="sales_rule"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+        <association property="commodityPicEntity" javaType="CommodityPicEntity">
+            <result property="picId" column="pic_id"/>
+            <result property="albumId" column="album_id"/>
+            <result property="picUrl" column="pic_url"/>
+            <result property="picDesc" column="pic_desc"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+        <association property="shopEntity" javaType="ShopEntity">
+            <result property="shopId" column="shop_id" />
+            <result property="shopName" column="shop_name" />
+            <result property="merchantId" column="merchant_id" />
+            <result property="merchantName" column="merchant_name" />
+            <result property="shopLogoUrl" column="shop_logo_url" />
+            <result property="shopAddr" column="shop_addr" />
+            <result property="shopRegion" column="shop_region" />
+            <result property="shopLinkman" column="shop_linkman" />
+            <result property="shopTel" column="shop_tel" />
+            <result property="shopScope" column="shop_scope" />
+            <result property="shopStatus" column="shop_status" />
+            <result property="createTime" column="shop_create_time" />
+            <result property="updateTime" column="update_time" />
+            <result property="operator" column="operator" />
+            <result property="shopNo" column="shop_no" />
+        </association>
+    </resultMap>
+    <select id="getBrandCategoriesDao" resultMap="brandVoMap">
+            select
+            brand_id,
+            brand_name,
+            brand_logo,
+            brand_introduction
+            from zlzc_brand b
+            LEFT JOIN
+            zlzc_brand_category c
+            ON
+            b.brand_category_id =c.brand_category_id
+          	${ew.customSqlSegment}
+    </select>
+
+    <select id="getBrandCommodityDao" resultMap="brandVoMap">
+       SELECT
+        c.commodity_name,
+        c.commodity_sub_name,
+        p.price,
+        pic.pic_url,
+        c.commodity_id  idcommodity_id
+        FROM
+        zlzc_brand b
+        LEFT JOIN
+        zlzc_brand_goods_middle m
+        ON
+        b.brand_id=m.brand_id
+        LEFT JOIN
+        zlzc_commodity  c
+        ON
+        m.commodity_id =c.commodity_id
+        LEFT JOIN
+        zlzc_commodity_price_middle  mi
+        ON
+        c.commodity_id =mi.commodity_id
+        LEFT JOIN
+        zlzc_commodity_price  p
+        ON
+        mi.price_id = p.price_id
+        LEFT JOIN
+        zlzc_commodity_album  a
+        ON
+        c.comodity_album_id =a.album_id
+        LEFT JOIN
+        zlzc_commodity_pic pic
+        ON
+        a.album_id=  pic.album_id
+        ${ew.customSqlSegment}
+    </select>
+    <select id="getBrandShopDao" resultMap="brandVoMap">
+       SELECT
+            sh.merchant_name,
+            sh.create_time shop_create_time,
+            sh.shop_logo_url,
+            s.shop_id
+        FROM
+            zlzc_brand b
+            LEFT JOIN zlzc_brand_middle_shop s ON b.brand_id = s.brand_id
+            LEFT JOIN zlzc_shop sh ON sh.shop_id = s.shop_id
+	       ${ew.customSqlSegment}
+    </select>
+    <select id="getBrandCommentDao" resultMap="brandVoMap">
+
+</select>
+    <select id="getBrandSearchFor" resultMap="brandVoMap">
+           select
+            brand_id,
+            brand_name,
+            brand_logo,
+            brand_introduction
+            from zlzc_brand b
+            LEFT JOIN
+            zlzc_brand_category c
+            ON
+            b.brand_category_id =c.brand_category_id
+          ${ew.customSqlSegment}
+    </select>
+
+
+</mapper>
