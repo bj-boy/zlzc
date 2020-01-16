@@ -39,8 +39,6 @@ import java.util.Map;
 
         return rsMap;
     }
-
-
     @Override
     public PageUtils queryPageWithCnt(Map<String, Object> params, ShopEntity shop) {
         QueryWrapper<ShopEntity> qw = new QueryWrapper<ShopEntity>()
