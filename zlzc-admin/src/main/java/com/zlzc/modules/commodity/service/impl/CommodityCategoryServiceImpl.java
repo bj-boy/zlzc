@@ -1,10 +1,5 @@
 package com.zlzc.modules.commodity.service.impl;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.stereotype.Service;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,6 +8,11 @@ import com.zlzc.common.utils.Query;
 import com.zlzc.modules.commodity.dao.CommodityCategoryDao;
 import com.zlzc.modules.commodity.entity.CommodityCategoryEntity;
 import com.zlzc.modules.commodity.service.CommodityCategoryService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+import java.util.Map;
 
 @Service("commodityCategoryService")
 public class CommodityCategoryServiceImpl extends ServiceImpl<CommodityCategoryDao, CommodityCategoryEntity>
@@ -54,6 +54,7 @@ public class CommodityCategoryServiceImpl extends ServiceImpl<CommodityCategoryD
 	/**
 	 * 修改商品分类
 	 */
+	@Transactional
 	@Override
 	public boolean updCommodityCategory(CommodityCategoryEntity commodityCategory) {
 		boolean updFlag = updateById(commodityCategory);
@@ -63,10 +64,15 @@ public class CommodityCategoryServiceImpl extends ServiceImpl<CommodityCategoryD
 	/**
 	 * 删除商品分类(支持批量)
 	 */
+	@Transactional
 	@Override
 	public boolean delCommodityCategory(Long[] commodityCategoryIds) {
+
+		QueryWrapper<CommodityCategoryEntity> wq = new QueryWrapper<CommodityCategoryEntity>()
+				.in("parent_category_id", Arrays.asList(commodityCategoryIds));
+		boolean removeChilds = remove(wq);
 		boolean rmFlag = removeByIds(Arrays.asList(commodityCategoryIds));
-		return rmFlag;
+		return removeChilds && rmFlag;
 	}
 
 	/* ##################### generator ##################### */

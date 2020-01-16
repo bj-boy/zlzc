@@ -12,13 +12,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * Redis配置
  */
 @Configuration
-public class RedisConfig {
+public class RedisConfig<k,v> {
 	@Autowired
 	private RedisConnectionFactory factory;
 
 	@Bean
-	public RedisTemplate<String, Object> redisTemplate() {
-		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+	public RedisTemplate<k,v> redisTemplate() {
+		RedisTemplate<k,v> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
 		redisTemplate.setHashValueSerializer(new StringRedisSerializer());

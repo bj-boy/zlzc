@@ -16,7 +16,6 @@ import java.util.Arrays;
 @RequestMapping("/logistics")
 public class LogisticsController {
 
-
     @Autowired
     private LogisticsService logisticsService;
 
@@ -30,7 +29,7 @@ public class LogisticsController {
     @GetMapping("/info/{number}")
     @ApiImplicitParams(
             value = {
-                    @ApiImplicitParam(name = "number", value = "快递单号", defaultValue = "number", paramType = "path"),
+                    @ApiImplicitParam(name = "number", value = "快递单号", defaultValue = "KD9895425152312312", paramType = "path"),
             }
     )
     public Result info(@PathVariable("number") String number){

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.api.rest.commodity.dao.CommodityRecommendDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.api.rest.commodity.vo.CommodityRecommendVo" id="commodityRecommendMap">
+        <result property="recommendId" column="recommend_id"/>
+        <result property="commodityId" column="commodity_id"/>
+        <result property="recommendStatus" column="recommend_status"/>
+        <result property="recommendOperator" column="recommend_operator"/>
+        <result property="recommendRemark" column="recommend_remark"/>
+        <result property="recommendOperatingTime" column="recommend_operating_time"/>
+        <result property="recommendUpdateTime" column="recommend_update_time"/>
+        <result property="recommendDelete" column="recommend_delete"/>
+
+        <association property="commodityEntity" javaType="CommodityEntity">
+            <result property="commodityId" column="commodity_id" />
+            <result property="merchantId" column="merchant_id" />
+            <result property="shopId" column="shop_id" />
+            <result property="brandId" column="brand_id" />
+            <result property="commodityCategoryId" column="commodity_category_id" />
+            <result property="commodityAttrId" column="commodity_attr_id" />
+            <result property="commodityRepoId" column="commodity_repo_id" />
+            <result property="comodityAlbumId" column="comodity_album_id" />
+            <result property="commodityNo" column="commodity_no" />
+            <result property="commodityName" column="commodity_name" />
+            <result property="commoditySubName" column="commodity_sub_name" />
+            <result property="commodityOrder" column="commodity_order" />
+            <result property="commodityStatus" column="commodity_status" />
+            <result property="countryCode" column="country_code" />
+            <result property="commodityRemark" column="commodity_remark" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+            <result property="operator" column="operator" />
+        </association>
+        <association property="commodityPriceEntity" javaType="CommodityPriceEntity">
+            <result property="priceId" column="price_id"/>
+            <result property="commodityId" column="commodity_id"/>
+            <result property="skuId" column="sku_id"/>
+            <result property="salesModel" column="sales_model"/>
+            <result property="price" column="price"/>
+            <result property="priceUnit" column="price_unit"/>
+            <result property="countryCode" column="country_code"/>
+            <result property="salesRule" column="sales_rule"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+        <association property="commodityPriceMiddleEntity" javaType="CommodityPriceMiddleEntity">
+            <result property="middleId" column="middle_id"/>
+            <result property="priceId" column="price_id"/>
+            <result property="commodityId" column="commodity_id"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+    </resultMap>
+
+    <select id="getByStatus" resultMap="commodityRecommendMap">
+        /*SELECT
+        *
+        FROM
+        zlzc_commodity_recommend r
+        LEFT JOIN
+        zlzc_commodity  c
+        ON
+        c.commodity_id=r.commodity_id*/
+        SELECT
+        *
+        FROM
+        zlzc_commodity_recommend r
+        LEFT JOIN
+        zlzc_commodity  c
+        ON
+        c.commodity_id=r.commodity_id
+        LEFT JOIN
+        zlzc_commodity_price_middle m
+        ON
+        c.commodity_id=m.commodity_id
+        LEFT JOIN
+        zlzc_commodity_price p
+        ON
+        p.price_id=m.price_id
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

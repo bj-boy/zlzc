@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.api.rest.content.dao.ContentClassDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.api.rest.content.entity.ContentClassEntity" id="contentClassMap">
+        <result property="informationClassId" column="Information_class_id"/>
+        <result property="informationClassNumber" column="Information_class_number"/>
+        <result property="informationClassImg" column="Information_class_img"/>
+        <result property="informationClassName" column="Information_class_name"/>
+        <result property="informationClassQuantity" column="Information_class_quantity"/>
+        <result property="informationClassDisplay" column="Information_class_display"/>
+        <result property="informationClassTime" column="Information_class_time"/>
+        <result property="informationClassRemark" column="Information_class_remark"/>
+        <result property="informationClassSelect" column="Information_class_select"/>
+        <result property="informationClassDelete" column="Information_class_delete"/>
+    </resultMap>
+
+
+</mapper>

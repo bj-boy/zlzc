@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.api.rest.commodity.dao.CommodityDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	
+	<!-- 商品实体类映射 -->
+	<resultMap type="com.zlzc.api.rest.commodity.entity.CommodityEntity"
+		id="commodityMap">
+		<result property="commodityId" column="commodity_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="shopId" column="shop_id" />
+		<result property="brandId" column="brand_id" />
+		<result property="commodityCategoryId" column="commodity_category_id" />
+		<result property="commodityAttrId" column="commodity_attr_id" />
+		<result property="commodityRepertoryId" column="commodity_repo_id" />
+		<result property="comodityAlbumId" column="comodity_album_id" />
+		<result property="commodityNo" column="commodity_no" />
+		<result property="commodityName" column="commodity_name" />
+		<result property="commoditySubName" column="commodity_sub_name" />
+		<result property="commodityOrder" column="commodity_order" />
+		<result property="commodityStatus" column="commodity_status" />
+		<result property="countryCode" column="country_code" />
+		<result property="commodityRemark" column="commodity_remark" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+	</resultMap>
+	
+	<!-- 商品分类实体映射 -->
+	<resultMap type="com.zlzc.api.rest.commodity.entity.CommodityCategoryEntity" id="commodityCategoryMap">
+        <result property="categoryId" column="category_id"/>
+        <result property="categoryNo" column="category_no"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="parentCategoryId" column="parent_category_id"/>
+        <result property="categoryOrder" column="category_order"/>
+        <result property="categoryIcon" column="category_icon"/>
+        <result property="categoryDesc" column="category_desc"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property=" operator" column=" operator"/>
+    </resultMap>
+    
+    <!-- 商品库存实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.entity.CommodityRepoEntity" id="commodityRepoMap">
+        <result property="repoId" column="repo_id"/>
+        <result property="repoStock" column="repo_stock"/>
+        <result property="repoPrewarning" column="repo_prewarning"/>
+        <result property="repoUnit" column="repo_unit"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+    
+    <!-- 商品详情实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.entity.CommodityDetailEntity" id="commodityDetailMap">
+        <result property="detailId" column="detail_id"/>
+        <result property="commodityId" column="commodity_id"/>
+        <result property="detailType" column="detail_type"/>
+        <result property="detailUrl" column="detail_url"/>
+        <result property="countryCode" column="country_code_detail"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+    
+    <!-- 商品价格实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.entity.CommodityPriceEntity" id="commodityPriceMap">
+        <result property="priceId" column="price_id"/>
+        <result property="commodityId" column="commodity_id"/>
+        <result property="salesModel" column="sales_model"/>
+        <result property="price" column="price"/>
+        <result property="priceUnit" column="price_unit"/>
+        <result property="countryCode" column="country_code_price"/>
+        <result property="salesRule" column="sales_rule"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+    
+    <!-- 商品图片实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.entity.CommodityPicEntity" id="commodityPicMap">
+        <result property="picId" column="pic_id"/>
+        <result property="albumId" column="album_id"/>
+        <result property="picUrl" column="pic_url"/>
+        <result property="picDesc" column="pic_desc"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+    
+    <!-- 商品相册实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.vo.CommodityAlbumVo" id="commodityAlbumVoMap">
+        <result property="albumId" column="album_id"/>
+        <result property="merchantId" column="merchant_id"/>
+        <result property="shopId" column="shop_id"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="albumNo" column="album_no"/>
+        <result property="albumName" column="album_name"/>
+        <result property="albumDesc" column="album_desc"/>
+        <result property="albumCoverUrl" column="album_cover_url"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+        <association property="commodityPics" resultMap="commodityPicMap" />
+    </resultMap>
+    
+    <!-- 商品属性实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.vo.CommodityAttrVo" id="commodityAttrVoMap">
+        <result property="attrId" column="attr_id"/>
+        <result property="merchantId" column="merchant_id"/>
+        <result property="shopId" column="shop_id"/>
+        <result property="attrNo" column="attr_no"/>
+        <result property="attrName" column="attr_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+        <collection property="commodityParams" resultMap="commodityParamMap"/>
+        <collection property="commoditySkuVos" resultMap="commoditySkuVoMap"/>
+    </resultMap>
+    
+    <!-- 商品参数实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.entity.CommodityParamEntity" id="commodityParamMap">
+        <result property="paramId" column="param_id"/>
+        <result property="attrId" column="attr_id"/>
+        <result property="paramName" column="param_name"/>
+        <result property="paramVals" column="param_vals"/>
+        <result property="countryCode" column="country_code_param"/>
+        <result property="paramOrder" column="param_order"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+    
+    <!-- 商品SKU实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.vo.CommoditySkuVo" id="commoditySkuVoMap">
+        <result property="skuId" column="sku_id"/>
+        <result property="skuNo" column="sku_no"/>
+        <result property="attrId" column="attr_id"/>
+        <result property="skuName" column="sku_name"/>
+        <result property="skuVals" column="sku_vals"/>
+        <result property="countryCode" column="country_code_sku"/>
+        <result property="skuOrder" column="sku_order"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+        <association property="commodityRepoSku" resultMap="skuRepoMap" />
+        <association property="commodityAlbumVoSku" resultMap="skuAlbumVoMap"/>
+        <collection property="commodityPricesSku" resultMap="skuPriceMap"/>
+    </resultMap>
+    
+    <!-- SKU库存实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.entity.CommodityRepoEntity" id="skuRepoMap">
+        <result property="repoId" column="repo_id_sku"/>
+        <result property="repoStock" column="repo_stock_sku"/>
+        <result property="repoPrewarning" column="repo_prewarning_sku"/>
+        <result property="repoUnit" column="repo_unit_sku"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+    
+    <!-- SKU图片实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.entity.CommodityPicEntity" id="skuPicMap">
+        <result property="picId" column="pic_id_sku"/>
+        <result property="albumId" column="album_id_sku"/>
+        <result property="picUrl" column="pic_url_sku"/>
+        <result property="picDesc" column="pic_desc_sku"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+    
+    <!-- SKU相册实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.vo.CommodityAlbumVo" id="skuAlbumVoMap">
+        <result property="albumId" column="album_id_sku"/>
+        <result property="merchantId" column="merchant_id"/>
+        <result property="shopId" column="shop_id"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="albumNo" column="album_no_sku"/>
+        <result property="albumName" column="album_name_sku"/>
+        <result property="albumDesc" column="album_desc_sku"/>
+        <result property="albumCoverUrl" column="album_cover_url_sku"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+        <association property="commodityPics" resultMap="skuPicMap" />
+    </resultMap>
+    
+    <!-- 商品价格实体映射 -->
+    <resultMap type="com.zlzc.api.rest.commodity.entity.CommodityPriceEntity" id="skuPriceMap">
+        <result property="priceId" column="price_id_sku"/>
+        <result property="commodityId" column="commodity_id"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="salesModel" column="sales_model_sku"/>
+        <result property="price" column="price_sku"/>
+        <result property="priceUnit" column="price_unit_sku"/>
+        <result property="countryCode" column="country_code_price_sku"/>
+        <result property="salesRule" column="sales_rule_sku"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+    
+
+	<resultMap type="com.zlzc.api.rest.commodity.vo.CommodityVo" id="commodityVoMap" extends="commodityMap">
+		<!-- 暂未关联查询商户和店铺信息 -->
+		<!-- 
+		<association property="merchant"></association>
+		<association property="shop"></association>
+		 -->
+		<association property="commodityCategory" resultMap="commodityCategoryMap" />
+		<association property="commodityRepo" resultMap="commodityRepoMap" />
+		<association property="commodityAlbumVo" resultMap="commodityAlbumVoMap" />
+		<association property="commodityAttrVo" resultMap="commodityAttrVoMap" />
+		<collection property="commodityDetails" resultMap="commodityDetailMap" />
+		<collection property="commodityPrices" resultMap="commodityPriceMap" />
+	</resultMap>
+	
+	
+	
+	<select id="queryCommodity" resultMap="commodityVoMap">
+	SELECT
+		zc.merchant_id,
+		zc.shop_id,
+		zc.commodity_id,
+		zc.commodity_no,
+		zc.commodity_name,
+		zc.commodity_sub_name,
+		zc.commodity_order,
+		zc.commodity_remark,
+		zc.commodity_status,
+		zc.country_code,
+		zcd.detail_id,
+		zcd.country_code country_code_detail,
+		zcd.detail_type,
+		zcd.detail_url,
+		zcc.category_id,
+		zcc.parent_category_id,
+		zcc.category_no,
+		zcc.category_name,
+		zcc.category_icon,
+		zcc.category_desc,
+		zcc.category_order,
+		zcr.repo_id,
+		zcr.repo_stock,
+		zcr.repo_prewarning,
+		zcr.repo_unit,
+		zca.album_id,
+		zca.album_no,
+		zca.album_name,
+		zca.album_desc,
+		zca.album_cover_url,
+		zcp.pic_id,
+		zcp.pic_desc,
+		zcp.pic_url,
+		zcpi.price_id,
+		zcpi.price,
+		zcpi.price_unit,
+		zcpi.country_code country_code_price,
+		zcpi.sales_model,
+		zcpi.sales_rule,
+		zcat.attr_id,
+		zcat.attr_no,
+		zcat.attr_name,
+		zcpa.param_id,
+		zcpa.param_name,
+		zcpa.param_vals,
+		zcpa.param_order,
+		zcpa.country_code country_code_param,
+		zcs.sku_id,
+		zcs.sku_no,
+		zcs.sku_name,
+		zcs.sku_vals,
+		zcs.sku_order,
+		zcs.country_code country_code_sku,
+	 	zcr_sku.repo_id repo_id_sku,
+	 	zcr_sku.repo_stock repo_stock_sku,
+	 	zcr_sku.repo_prewarning repo_prewarning_sku,
+	 	zcr_sku.repo_unit repo_unit_sku,
+	 	zca_sku.album_id album_id_sku,
+	 	zca_sku.album_no album_no_sku,
+	 	zca_sku.album_name album_name_sku,
+	 	zca_sku.album_desc album_desc_sku,
+	 	zca_sku.album_cover_url album_cover_url_sku,
+	 	zcp_sku.pic_id pic_id_sku,
+	 	zcp_sku.pic_desc pic_desc_sku,
+	 	zcp.pic_url pic_url_sku,
+	 	zcpi_sku.price_id price_id_sku,
+	 	zcpi_sku.price price_sku,
+	 	zcpi_sku.price_unit price_unit_sku,
+	 	zcpi_sku.country_code country_code_price_sku,
+	 	zcpi_sku.sales_model sales_model_sku,
+	 	zcpi_sku.sales_rule sales_rule_sku 
+	FROM
+		( SELECT * FROM zlzc_commodity t1 WHERE t1.del = 1 LIMIT 0, 10 ) zc
+		LEFT JOIN zlzc_commodity_detail zcd ON zc.commodity_id = zcd.commodity_id
+		LEFT JOIN zlzc_commodity_category zcc ON zc.commodity_category_id = zcc.category_id
+		LEFT JOIN zlzc_commodity_repo zcr ON zc.commodity_repo_id = zcr.repo_id
+		LEFT JOIN zlzc_commodity_album zca ON zc.comodity_album_id = zca.album_id
+		LEFT JOIN zlzc_commodity_pic zcp ON zca.album_id = zcp.album_id
+		INNER JOIN zlzc_commodity_price_middle zcpm ON zc.commodity_id = zcpm.commodity_id
+		LEFT JOIN zlzc_commodity_price zcpi ON zcpm.price_id = zcpi.price_id
+		LEFT JOIN zlzc_commodity_attr zcat ON zc.commodity_attr_id = zcat.attr_id -- 12
+		LEFT JOIN zlzc_commodity_param zcpa ON zcat.attr_id = zcpa.attr_id
+		LEFT JOIN zlzc_commodity_sku zcs ON zcat.attr_id = zcs.attr_id
+	 	INNER JOIN zlzc_commodity_sku_middle zcsm ON zcsm.sku_id = zcs.sku_id
+	 	LEFT JOIN zlzc_commodity_repo zcr_sku ON zcsm.repo_id = zcr_sku.repo_id
+	 	LEFT JOIN zlzc_commodity_album zca_sku ON zcsm.album_id = zca_sku.album_id
+	 	LEFT JOIN zlzc_commodity_pic zcp_sku ON zca_sku.album_id = zcp_sku.album_id
+	 	LEFT JOIN zlzc_commodity_price zcpi_sku ON zcsm.price_id = zcpi_sku.price_id
+	</select>
+
+
+</mapper>

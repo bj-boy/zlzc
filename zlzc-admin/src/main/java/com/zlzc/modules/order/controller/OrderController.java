@@ -1,5 +1,8 @@
 package com.zlzc.modules.order.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.zlzc.common.config.swagger.ApiJsonObject;
+import com.zlzc.common.config.swagger.ApiJsonProperty;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
@@ -40,10 +43,18 @@ public class OrderController {
             }
     )
     //@formatter:on
-    public Result listByOrdeAndLogisticsDetails(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
-                                                @RequestBody OrderDetailsVo ordeAndLogisticsVo) {
-
-        PageUtils page = ordeAndLogisticsService.ListGetDetails(params,ordeAndLogisticsVo);
+    public Result listByOrdeAndLogisticsDetails(
+             @ApiJsonObject(name = "paramMap", value = {
+                 @ApiJsonProperty(key = "orderNumber",example = "订单编号"),
+                 @ApiJsonProperty(key = "logisticsRecipient",example = "收货人"),
+                 @ApiJsonProperty(key = "orderSubmissionTime",example = "提交时间"),
+                 @ApiJsonProperty(key = "orderStatus",example = "订单状态"),
+                 @ApiJsonProperty(key = "orderOrderType",example = "订单分类"),
+                 @ApiJsonProperty(key = "orderSource",example = "订单来源")
+             })
+             @RequestBody Map<String, Object> paramMap /*@RequestBody OrderDetailsVo ordeAndLogisticsVo*/) {
+        OrderDetailsVo ordeAndLogisticsVo = JSONObject.parseObject(JSONObject.toJSONString(paramMap), OrderDetailsVo.class);
+        PageUtils page = ordeAndLogisticsService.ListGetDetails(paramMap,ordeAndLogisticsVo);
         return Result.ok().put("page", page);
     }
 

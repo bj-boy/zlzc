@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: zlzc-common
+Implementation-Version: v1.0
+Built-By: AA
+Implementation-Vendor-Id: com.zlzc
+Build-Jdk: 1.8.0_141
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/shop-platform/zlzc-common
+Created-By: Maven Integration for Eclipse
+

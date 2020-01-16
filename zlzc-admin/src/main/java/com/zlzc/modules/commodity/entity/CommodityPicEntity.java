@@ -27,47 +27,47 @@ public class CommodityPicEntity implements Serializable {
 	/**
 	 * 图片ID
 	 */
-	@ApiModelProperty(name = "picId", value = "图片ID", example = "1")
+	@ApiModelProperty(name = "picId", value = "图片ID", example = "图片ID")
 	@TableId
 	private Long picId;
 	/**
 	 * 相册ID
 	 */
-	@ApiModelProperty(name = "albumId", value = "相册ID", example = "1")
+	@ApiModelProperty(name = "albumId", value = "相册ID", example = "相册ID")
 	private Long albumId;
 	/**
 	 * 图片URL
 	 */
-	@ApiModelProperty(name = "picUrl", value = "图片URL", example = "http://www.pic.com")
+	@ApiModelProperty(name = "picUrl", value = "图片URL", example = "图片URL")
 	private String picUrl;
 	/**
 	 * 图片描述
 	 */
-	@ApiModelProperty(name = "picUrl", value = "图片描述", example = "图片01描述")
+	@ApiModelProperty(name = "picUrl", value = "图片描述", example = "图片描述")
 	private String picDesc;
 	/**
 	 * 图片名称
 	 */
-	@ApiModelProperty(name = "picName", value = "图片名称", example = "图片01")
+	@ApiModelProperty(name = "picName", value = "图片名称", example = "图片名称")
 	private String picName;
 	/**
 	 * 创建时间
 	 */
-	@ApiModelProperty(name = "createTime", value = "创建时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "createTime", value = "创建时间", example = "创建时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	 * 更新时间
 	 */
-	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "更新时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 	/**
 	 * 操作人
 	 */
-	@ApiModelProperty(name = "operator", value = "操作人", example = "admin")
+	@ApiModelProperty(name = "operator", value = "操作人", example = "操作人")
 	private String operator;
 
 }

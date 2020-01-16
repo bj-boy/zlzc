@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.zlzc.api.rest.merchant.dao.approvalDetails.MerchantApprovalDetailsDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap
+		type="com.zlzc.api.rest.merchant.entity.approvalDetails.MerchantApprovalDetailsEntity"
+		id="merchantApprovalDetailsMap">
+		<result property="merchantApprovalDetailsId" column="merchant_approval_details_id" />
+		<result property="merchantId" column="merchnt_id" />
+		<result property="merchantApprovalStatus" column="merchant_approval_status" />
+		<result property="merchantAuditors" column="merchant_auditors" />
+		<result property="merchantFeedback" column="merchnt_feedback" />
+		<result property="merchantDate" column="merchant_date" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+	</resultMap>
+	
+	<sql id="merchant_cols">
+		m.merchant_account,
+		m.merchant_name,
+		m.merchant_nick,
+		m.merchant_company_name,
+		m.merchant_regist_addr,
+		m.merchant_busi_license_url,
+		m.merchant_supply_level,
+		m.merchant_linkman,
+		m.merchant_tel,
+		m.merchant_addr,
+		m.merchant_region,
+		m.merchant_mode,
+		m.merchant_scope,
+		m.merchant_regist_date
+	</sql>
+
+	<select id="queryApprovalDetails"
+		resultType="com.zlzc.api.rest.merchant.vo.merchant.MerchantApprovalDetailsVo">
+		select 
+			md.*, 
+			<include refid="merchant_cols" />
+		from zlzc_merchant_approval_details md left join zlzc_merchant m
+		on md.merchant_id = m.merchant_id ${ew.customSqlSegment}
+	</select>
+	
+	<select id="queryPageByCondition"
+		resultType="com.zlzc.api.rest.merchant.vo.merchant.MerchantApprovalDetailsVo">
+		SELECT
+			* 
+		FROM
+			(
+			SELECT
+				md.*,
+				<include refid="merchant_cols" />
+			FROM
+				zlzc_merchant_approval_details md
+				LEFT JOIN zlzc_merchant m ON md.merchant_id = m.merchant_id 
+			ORDER BY
+			md.update_time DESC 
+			) tmp
+			${ew.customSqlSegment}
+	</select>
+
+
+</mapper>

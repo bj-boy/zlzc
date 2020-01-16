@@ -3,15 +3,12 @@ package com.zlzc.modules.order.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zlzc.common.utils.CodeFactory;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
-import com.zlzc.modules.commodity.entity.CommodityEntity;
 import com.zlzc.modules.order.dao.OrderDao;
 import com.zlzc.modules.order.entity.OrderEntity;
 import com.zlzc.modules.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

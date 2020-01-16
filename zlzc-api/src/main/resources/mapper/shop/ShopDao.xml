@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.api.rest.shop.dao.ShopDao">
+
+
+	<resultMap id="shopVoMap" type="com.zlzc.api.rest.shop.vo.ShopVo" extends="shopMap">
+			<association property="merchantEntity" javaType="MerchantEntity">
+				<result property="merchantId" column="merchant_id" />
+				<result property="merchantAccount" column="merchant_account" />
+				<result property="merchantName" column="merchant_name" />
+				<result property="merchantNick" column="merchantt_nick" />
+				<result property="merchantCompanyName" column="merchant_company_name" />
+				<result property="merchantRegistAddr" column="merchant_regist_addr" />
+				<result property="merchantBusiLicenseUrl" column="merchant_busi_license_url" />
+				<result property="merchantSupplyLevel" column="merchant_supply_level" />
+				<result property="merchantLinkman" column="merchant_linkman" />
+				<result property="merchantTel" column="merchant_tel" />
+				<result property="merchantAddr" column="merchant_addr" />
+				<result property="merchantRegion" column="merchant_region" />
+				<result property="merchantMode" column="merchant_mode" />
+				<result property="merchantScope" column="merchant_scope" />
+				<result property="merchantRegistDate" column="merchant_regist_date" />
+				<result property="merchantApprovalStatus" column="merchant_approval_status" />
+				<result property="merchantAuditors" column="merchant_auditors" />
+				<result property="merchantAuditResults" column="merchant_audit_results" />
+				<result property="merchantFeedback" column="merchant_feedback" />
+				<result property="merchantDate" column="merchant_date" />
+				<result property="merchantDetails" column="merchant_details" />
+				<result property="createTime" column="create_time" />
+				<result property="updateTime" column="update_time" />
+				<result property="operator" column="operator" />
+			</association>
+			<association property="userEntity" javaType="UserEntity">
+				<result property="userId" column="user_id"/>
+				<result property="username" column="username"/>
+				<result property="userAcct" column="user_acct"/>
+				<result property="userPassword" column="user_password"/>
+				<result property="mobile" column="mobile"/>
+				<result property="email" column="email"/>
+				<result property="userStatus" column="user_status"/>
+				<result property="gender" column="gender"/>
+				<result property="birthday" column="birthday"/>
+				<result property="address" column="address"/>
+				<result property="signature" column="signature"/>
+				<result property="profession" column="profession"/>
+				<result property="img" column="img"/>
+				<result property="favouriteCategory" column="favourite_category"/>
+				<result property="source" column="source"/>
+				<result property="createTime" column="create_time"/>
+				<result property="updateTime" column="update_time"/>
+				<result property="operator" column="operator"/>
+			</association>
+			<association property="commodityEntity" javaType="CommodityEntity">
+				<result property="commodityId" column="ccommodity_id" />
+				<result property="merchantId" column="merchant_id" />
+				<result property="shopId" column="shop_id" />
+				<result property="brandId" column="brand_id" />
+				<result property="commodityCategoryId" column="commodity_category_id" />
+				<result property="commodityAttrId" column="commodity_attr_id" />
+				<result property="commodityRepertoryId" column="commodity_repo_id" />
+				<result property="comodityAlbumId" column="comodity_album_id" />
+				<result property="commodityNo" column="commodity_no" />
+				<result property="commodityName" column="commodity_name" />
+				<result property="commoditySubName" column="commodity_sub_name" />
+				<result property="commodityOrder" column="commodity_order" />
+				<result property="commodityStatus" column="commodity_status" />
+				<result property="countryCode" column="country_code" />
+				<result property="commodityRemark" column="commodity_remark" />
+				<result property="createTime" column="ccreate_time" />
+				<result property="updateTime" column="update_time" />
+				<result property="operator" column="operator" />
+			</association>
+			<association property="commodityPriceEntity" javaType="CommodityPriceEntity">
+				<result property="priceId" column="price_id"/>
+				<result property="commodityId" column="commodity_id"/>
+				<result property="skuId" column="sku_id"/>
+				<result property="salesModel" column="sales_model"/>
+				<result property="price" column="price"/>
+				<result property="priceUnit" column="price_unit"/>
+				<result property="countryCode" column="country_code"/>
+				<result property="salesRule" column="sales_rule"/>
+				<result property="createTime" column="create_time"/>
+				<result property="updateTime" column="update_time"/>
+				<result property="operator" column="operator"/>
+			</association>
+		<association property="commodityPicEntity" javaType="CommodityPicEntity">
+			<result property="picId" column="pic_id"/>
+			<result property="albumId" column="album_id"/>
+			<result property="picUrl" column="pic_url"/>
+			<result property="picDesc" column="pic_desc"/>
+			<result property="createTime" column="create_time"/>
+			<result property="updateTime" column="update_time"/>
+			<result property="operator" column="operator"/>
+		</association>
+		<association property="brandEntity" javaType="BrandEntity">
+			<result property="brandId" column="bbrand_id"/>
+			<result property="brandCategoryId" column="brand_category_id"/>
+			<result property="brandCommentId" column="brand_comment_id"/>
+			<result property="brandNumber" column="brand_number"/>
+			<result property="brandName" column="brand_name"/>
+			<result property="brandLogo" column="brand_logo"/>
+			<result property="brandIntroduction" column="brand_introduction"/>
+			<result property="brandInitials" column="brand_Initials"/>
+			<result property="brandArea" column="brand_area"/>
+			<result property="brandSort" column="brand_sort"/>
+			<result property="brandRecommend" column="brand_recommend"/>
+			<result property="brandManufacturer" column="brand_manufacturer"/>
+			<result property="brandDisplay" column="brand_display"/>
+			<result property="brandTime" column="brand_time"/>
+			<result property="brandRemark" column="brand_remark"/>
+			<result property="brandDelete" column="brand_delete"/>
+		</association>
+		<association property="commodityCategoryEntity" javaType="CommodityCategoryEntity">
+			<result property="categoryId" column="category_id"/>
+			<result property="categoryNo" column="category_no"/>
+			<result property="categoryName" column="category_name"/>
+			<result property="parentCategoryId" column="parent_category_id"/>
+			<result property="categoryOrder" column="category_order"/>
+			<result property="categoryIcon" column="category_icon"/>
+			<result property="categoryDesc" column="category_desc"/>
+			<result property="createTime" column="create_time"/>
+			<result property="updateTime" column="update_time"/>
+			<result property=" operator" column=" operator"/>
+		</association>
+
+	</resultMap>
+
+	<select id="listShop" resultMap="shopVoMap">
+		SELECT
+			s.shop_name,
+			s.shop_logo_url,
+			s.shop_region,
+			s.merchant_name,
+			s.shop_id
+		FROM
+			zlzc_merchant m
+		LEFT JOIN
+			zlzc_user u
+		ON
+			u.username = m.merchant_account
+		LEFT JOIN
+			zlzc_shop  s
+		ON
+			 s.merchant_id= m.merchant_id
+		${ew.customSqlSegment}
+	</select>
+	<select id="shopCommodityByName" resultMap="shopVoMap">
+		SELECT
+			 c.commodity_name,
+			 c.commodity_sub_name,
+			 p.price,
+			 pic.pic_url
+		FROM
+		zlzc_shop s
+		LEFT JOIN
+		zlzc_commodity c
+		ON
+		s.shop_id=c.shop_id
+		LEFT JOIN
+		zlzc_commodity_price_middle pm
+		ON
+		c.commodity_id=pm.commodity_id
+		LEFT JOIN
+		zlzc_commodity_price  p
+		ON
+		p.price_id=pm.price_id
+		LEFT JOIN
+		zlzc_commodity_album a
+		ON
+		c.comodity_album_id =a.album_id
+		LEFT JOIN
+		zlzc_commodity_pic pic
+		ON
+		pic.album_id=a.album_id
+		${ew.customSqlSegment}
+	</select>
+	<select id="shopCommodityList" resultMap="shopVoMap">
+			SELECT
+			 c.commodity_name,
+			 c.commodity_sub_name,
+			 p.price,
+			 pic.pic_url,
+			 c.create_time  ccreate_time
+		FROM
+		zlzc_shop s
+		LEFT JOIN
+		zlzc_commodity c
+		ON
+		s.shop_id=c.shop_id
+		LEFT JOIN
+		zlzc_commodity_price_middle pm
+		ON
+		c.commodity_id=pm.commodity_id
+		LEFT JOIN
+		zlzc_commodity_price  p
+		ON
+		p.price_id=pm.price_id
+		LEFT JOIN
+		zlzc_commodity_album a
+		ON
+		c.comodity_album_id =a.album_id
+		LEFT JOIN
+		zlzc_commodity_pic pic
+		ON
+		pic.album_id=a.album_id
+		${ew.customSqlSegment}
+	</select>
+	<select id="shopBrandList" resultMap="shopVoMap">
+		SELECT
+			b.brand_id bbrand_id,
+			b.brand_name,
+			b.brand_logo
+		FROM
+		zlzc_shop s
+		LEFT JOIN
+		zlzc_shop_brand sb
+		ON
+		sb.shop_id=s.shop_id
+		LEFT JOIN
+		zlzc_brand b
+		ON
+		b.brand_id = sb.brand_id
+		${ew.customSqlSegment}
+	</select>
+	<select id="brandCommodityList" resultMap="shopVoMap">
+	SELECT
+		c.commodity_id  ccommodity_id,
+		c.commodity_name,
+		c.commodity_sub_name,
+		p.price,
+		pic.pic_url
+		FROM
+		zlzc_brand b
+		LEFT JOIN
+		zlzc_shop_brand sb
+		ON
+		sb.brand_id=b.brand_id
+		LEFT JOIN
+		zlzc_commodity c
+		ON
+		sb.brand_id=c.brand_id
+		LEFT JOIN
+		zlzc_commodity_price_middle pm
+		ON
+		c.commodity_id=pm.commodity_id
+		LEFT JOIN
+		zlzc_commodity_price p
+		ON
+		p.price_id=pm.price_id
+		LEFT JOIN
+		zlzc_commodity_album a
+		ON
+		c.comodity_album_id=a.album_id
+		LEFT JOIN
+		zlzc_commodity_pic pic
+		ON
+		a.album_id=pic.album_id
+			${ew.customSqlSegment}
+	</select>
+	<select id="shopCommodityFL" resultMap="shopVoMap">
+		SELECT
+				ca.category_name
+		FROM
+		zlzc_shop  s
+		LEFT JOIN
+		zlzc_commodity  c
+		ON
+		s.shop_id =c.shop_id
+		LEFT JOIN
+		zlzc_commodity_category ca
+		ON
+		c.commodity_category_id=ca.category_id
+		${ew.customSqlSegment}
+	</select>
+	<select id="shopMerchantIntroduction" resultMap="shopVoMap">
+		SELECT
+			s.shop_name,
+			s.merchant_name,
+			s.shop_logo_url,
+			m.merchant_company_name,
+			m.merchant_mode,
+			m.merchant_region,
+			m.merchant_supply_level,
+			m.merchant_tel,
+			m.merchant_addr
+		FROM
+			zlzc_shop  s
+		LEFT JOIN
+		zlzc_merchant  m
+		ON
+		m.merchant_id= s.merchant_id
+		${ew.customSqlSegment}
+	</select>
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<!--店铺实体类相关映射-->
+	<resultMap type="com.zlzc.api.rest.shop.entity.ShopEntity"
+		id="shopMap">
+		<id property="shopId" column="shop_id" />
+		<result property="shopName" column="shop_name" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="merchantName" column="merchant_name" />
+		<result property="shopLogoUrl" column="shop_logo_url" />
+		<result property="shopAddr" column="shop_addr" />
+		<result property="shopRegion" column="shop_region" />
+		<result property="shopLinkman" column="shop_linkman" />
+		<result property="shopTel" column="shop_tel" />
+		<result property="shopScope" column="shop_scope" />
+		<result property="shopStatus" column="shop_status" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+		<result property="shopNo" column="shop_no" />
+	<!-- 商品实体类映射 -->
+		<!--association property="commodityEntity" javaType="CommodityEntity">
+		<result property="commodityId" column="commodity_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="shopId" column="shop_id" />
+		<result property="brandId" column="brand_id" />
+		<result property="commodityCategoryId" column="commodity_category_id" />
+		<result property="commodityAttrId" column="commodity_attr_id" />
+		<result property="commodityRepertoryId" column="commodity_repo_id" />
+		<result property="comodityAlbumId" column="comodity_album_id" />
+		<result property="commodityNo" column="commodity_no" />
+		<result property="commodityName" column="commodity_name" />
+		<result property="commoditySubName" column="commodity_sub_name" />
+		<result property="commodityOrder" column="commodity_order" />
+		<result property="commodityStatus" column="commodity_status" />
+		<result property="countryCode" column="country_code" />
+		<result property="commodityRemark" column="commodity_remark" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+		</association>-->
+	<!--&lt;!&ndash;商户相关映射&ndash;&gt;-->
+
+	<!--<association property="merchantEntity" javaType="MerchantEntity">-->
+		<!--<id property="merchntId" column="merchnt_id" />-->
+		<!--<result property="merchntAccount" column="merchnt_account" />-->
+		<!--<result property="merchntName" column="merchnt_name" />-->
+		<!--<result property="merchntNick" column="merchnt_nick" />-->
+		<!--<result property="merchntCompanyName" column="merchnt_company_name" />-->
+		<!--<result property="merchntRegistAddr" column="merchnt_regist_addr" />-->
+		<!--<result property="merchntBusiLicenseUrl" column="merchnt_busi_license_url" />-->
+		<!--<result property="merchntSupplyLevel" column="merchnt_supply_level" />-->
+		<!--<result property="merchntLinkman" column="merchnt_linkman" />-->
+		<!--<result property="merchntTel" column="merchnt_tel" />-->
+		<!--<result property="merchntAddr" column="merchnt_addr" />-->
+		<!--<result property="merchntRegion" column="merchnt_region" />-->
+		<!--<result property="merchntMode" column="merchnt_mode" />-->
+		<!--<result property="merchntScope" column="merchnt_scope" />-->
+		<!--<result property="merchntRegistDate" column="merchnt_regist_date" />-->
+		<!--<result property="merchntApprovalStatus" column="merchnt_approval_status" />-->
+		<!--<result property="merchntAuditors" column="merchnt_auditors" />-->
+		<!--<result property="merchntAuditResults" column="merchnt_audit_results" />-->
+		<!--<result property="merchntFeedback" column="merchnt_feedback" />-->
+		<!--<result property="merchntDate" column="merchnt_date" />-->
+		<!--<result property="merchntDetails" column="merchnt_details" />-->
+		<!--<result property="createTime" column="create_time" />-->
+		<!--<result property="updateTime" column="update_time" />-->
+		<!--<result property="operator" column="operator" />-->
+
+	<!--</association>-->
+	</resultMap>
+
+
+	<resultMap type="com.zlzc.api.rest.shop.entity.ShopEntity"
+			   id="shopMap2">
+		<id property="shopId" column="shop_id" />
+		<result property="shopName" column="shop_name" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="merchantName" column="merchant_name" />
+		<result property="shopLogoUrl" column="shop_logo_url" />
+		<result property="shopAddr" column="shop_addr" />
+		<result property="shopRegion" column="shop_region" />
+		<result property="shopLinkman" column="shop_linkman" />
+		<result property="shopTel" column="shop_tel" />
+		<result property="shopScope" column="shop_scope" />
+		<result property="shopStatus" column="shop_status" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+		<result property="shopNo" column="shop_no" />
+		<result property="commodityCnt" column="commodity_cnt" />
+	</resultMap>
+
+	<sql id="pageCnt">
+		sp.shop_id,
+		sp.shop_no,
+		sp.shop_name,
+		sp.shop_logo_url,
+		sp.shop_addr,
+		sp.shop_region,
+		sp.shop_linkman,
+		sp.shop_tel,
+		sp.shop_scope,
+		sp.shop_status,
+		COUNT(DISTINCT cy.commodity_id) commodity_cnt
+	</sql>
+
+	<select id="queryPageWithCnt" resultMap="shopMap2">
+	SELECT
+		<include refid="pageCnt"/>
+	FROM
+		zlzc_shop sp
+		LEFT JOIN zlzc_commodity cy ON cy.shop_id = sp.shop_id
+		AND cy.del = 0
+	${ew.customSqlSegment}
+	</select>
+
+
+	<select id="queryShopDetails" resultType="java.util.Map" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="pageCnt"/>
+		FROM
+		zlzc_shop sp
+		LEFT JOIN zlzc_commodity cy ON cy.shop_id = sp.shop_id
+		AND cy.del = 0
+		${ew.customSqlSegment}
+	</select>
+
+	<select id="queryPageShop" resultMap="shopMap2">
+		SELECT
+		<include refid="pageCnt"/>
+		FROM
+		zlzc_shop sp
+		LEFT JOIN zlzc_commodity cy ON cy.shop_id = sp.shop_id
+		AND cy.del = 0
+	</select>
+
+
+
+
+
+
+</mapper>

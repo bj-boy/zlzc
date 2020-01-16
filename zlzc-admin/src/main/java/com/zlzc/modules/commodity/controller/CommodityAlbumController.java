@@ -1,32 +1,18 @@
 package com.zlzc.modules.commodity.controller;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.zlzc.common.annotation.RespTime;
 import com.zlzc.common.utils.FileUpload;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.commodity.entity.CommodityAlbumEntity;
+import com.zlzc.modules.commodity.entity.CommodityPicEntity;
 import com.zlzc.modules.commodity.service.CommodityAlbumService;
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -34,6 +20,11 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author LSR
@@ -122,13 +113,16 @@ public class CommodityAlbumController {
 	 */
 	@RespTime("/commodityAlbum/queryPicList")
 	@ApiOperation(value = "commodityAlbum-5  获取指定相册的图片列表(可分页)")
+	@ApiResponses(value = {
+			@ApiResponse(response = CommodityPicEntity.class, code = 200, message = "获取指定相册的图片列表(可分页)响应字段说明")
+	})
 	@GetMapping("/queryPicList")
 	//@formatter:off
 	@ApiImplicitParams(
 		value = {
 			@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
 			@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query"),
-			@ApiImplicitParam(name = "albumName", value = "相册ID", defaultValue = "1", paramType = "query")
+			@ApiImplicitParam(name = "albumId", value = "相册ID", defaultValue = "1", paramType = "query")
 		} 
 	)
 	//@formatter:on
@@ -143,7 +137,7 @@ public class CommodityAlbumController {
 	 */
 	@RespTime("/commodityAlbum/delCommodityAlbum")
 	@ApiOperation(value = "commodityAlbum-4  删除相册(可批量)")
-	@DeleteMapping("/delCommodityAlbum")
+	@DeleteMapping("/delCommodity  Album")
 	//@formatter:off
 	@ApiImplicitParams(
 		value = {
@@ -186,6 +180,9 @@ public class CommodityAlbumController {
 	 */
 	@RespTime("/commodityAlbum/queryList")
 	@ApiOperation(value = "commodityAlbum-1  获取商品相册列表(分页 + 条件查询)")
+	@ApiResponses(value = {
+			@ApiResponse(response = CommodityAlbumEntity.class, code = 200, message = "获取商品相册列表(分页 + 条件查询)响应字段说明")
+	})
 	@GetMapping("/queryList")
 	//@formatter:off
 	@ApiImplicitParams(

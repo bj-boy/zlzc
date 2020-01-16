@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.api.rest.user.dao.UserDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.api.rest.user.entity.UserEntity" id="userMap">
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="userAcct" column="user_acct"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="mobile" column="mobile"/>
+        <result property="email" column="email"/>
+        <result property="userStatus" column="user_status"/>
+        <result property="gender" column="gender"/>
+        <result property="birthday" column="birthday"/>
+        <result property="address" column="address"/>
+        <result property="signature" column="signature"/>
+        <result property="profession" column="profession"/>
+        <result property="img" column="img"/>
+        <result property="favouriteCategory" column="favourite_category"/>
+        <result property="source" column="source"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="operator" column="operator"/>
+    </resultMap>
+
+
+</mapper>

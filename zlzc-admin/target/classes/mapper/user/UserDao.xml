@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.modules.user.dao.UserDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.zlzc.modules.user.entity.UserEntity" id="userMap">
+		<result property="userId" column="user_id" />
+		<result property="username" column="username" />
+		<result property="userAcct" column="user_acct" />
+		<result property="userPassword" column="user_password" />
+		<result property="mobile" column="mobile" />
+		<result property="email" column="email" />
+		<result property="userStatus" column="user_status" />
+		<result property="gender" column="gender" />
+		<result property="birthday" column="birthday" />
+		<result property="address" column="address" />
+		<result property="signature" column="signature" />
+		<result property="profession" column="profession" />
+		<result property="favouriteCategory" column="favourite_category" />
+		<result property="source" column="source" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="operator" column="operator" />
+	</resultMap>
+
+
+	<!-- 查询用户的所有权限 -->
+	<select id="queryAllPerms" resultType="string">
+		SELECT
+			m.perms 
+		FROM
+			zlzc_user_menu um
+			LEFT JOIN zlzc_menu m ON um.menu_id = m.menu_id 
+		WHERE
+			um.user_id = #{userId}
+	</select>
+	
+	<!-- 查询用户的所有菜单ID --> 
+	<select id="queryAllMenuId" resultType="long">
+		SELECT DISTINCT
+			um.menu_id 
+		FROM
+			zlzc_user_menu um 
+		WHERE
+			um.user_id = #{userId}
+	</select>
+
+	<select id="queryAllApiUrls" resultType="string">
+	SELECT
+			m.api_url 
+		FROM
+			zlzc_user_menu um
+			LEFT JOIN zlzc_menu m ON um.menu_id = m.menu_id 
+		WHERE
+			um.user_id = #{userId}
+	</select>
+
+</mapper>

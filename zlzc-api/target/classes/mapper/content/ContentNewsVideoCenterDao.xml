@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.api.rest.content.dao.ContentNewsVideoCenterDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.api.rest.content.entity.ContentNewsVideoCenterEntity" id="contentNewsVideoCenterMap">
+        <result property="newsVideoCenterId" column="news_video_center_id"/>
+        <result property="informationId" column="Information_id"/>
+        <result property="videoId" column="video_id"/>
+        <result property="commodityId" column="commodity_id"/>
+    </resultMap>
+
+
+</mapper>

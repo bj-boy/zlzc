@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.api.rest.shopping.dao.ShoppingDao">
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.api.rest.shopping.entity.ShoppingEntity" id="shoppingMap">
+        <result property="shoppingId" column="shopping_id"/>
+        <result property="commodityId" column="commodity_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="shoppingTime" column="shopping_time"/>
+        <result property="commoditySku" column="commodity_sku"/>
+        <result property="commodityQuantity" column="commodity_quantity"/>
+    </resultMap>
+    <resultMap type="com.zlzc.api.rest.shopping.vo.ShoppingVo" id="shoppingVoMap" extends="shoppingMap" >
+        <association property="commodityEntity" javaType="CommodityEntity">
+            <result property="commodityId" column="ccommodity_id" />
+            <result property="merchantId" column="merchant_id" />
+            <result property="shopId" column="shop_id" />
+            <result property="brandId" column="brand_id" />
+            <result property="commodityCategoryId" column="commodity_category_id" />
+            <result property="commodityAttrId" column="commodity_attr_id" />
+            <result property="commodityRepoId" column="commodity_repo_id" />
+            <result property="comodityAlbumId" column="comodity_album_id" />
+            <result property="commodityNo" column="commodity_no" />
+            <result property="commodityName" column="commodity_name" />
+            <result property="commoditySubName" column="commodity_sub_name" />
+            <result property="commodityOrder" column="commodity_order" />
+            <result property="commodityStatus" column="commodity_status" />
+            <result property="countryCode" column="country_code" />
+            <result property="commodityRemark" column="commodity_remark" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+            <result property="operator" column="operator" />
+        </association>
+        <association property="commodityPriceMiddleEntity" javaType="CommodityPriceMiddleEntity">
+            <result property="middleId" column="middle_id"/>
+            <result property="priceId" column="price_id"/>
+            <result property="commodityId" column="commodity_id"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+        <association property="commodityPriceEntity" javaType="CommodityPriceEntity">
+            <result property="priceId" column="price_id"/>
+            <result property="commodityId" column="commodity_id"/>
+            <result property="skuId" column="sku_id"/>
+            <result property="salesModel" column="sales_model"/>
+            <result property="price" column="price"/>
+            <result property="priceUnit" column="price_unit"/>
+            <result property="countryCode" column="country_code"/>
+            <result property="salesRule" column="sales_rule"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+        <association property="commodityPicEntity" javaType="CommodityPicEntity">
+            <result property="picId" column="pic_id"/>
+            <result property="albumId" column="album_id"/>
+            <result property="picUrl" column="pic_url"/>
+            <result property="picDesc" column="pic_desc"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+        <association property="commodityRepoEntity" javaType="CommodityRepoEntity">
+            <result property="repoId" column="repo_id"/>
+            <result property="repoStock" column="repo_stock"/>
+            <result property="repoPrewarning" column="repo_prewarning"/>
+            <result property="repoUnit" column="repo_unit"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="operator" column="operator"/>
+        </association>
+    </resultMap>
+    <select id="queryShoppingPage" resultMap="shoppingVoMap">
+         SELECT
+                 c.commodity_id ccommodity_id,
+				 c.commodity_name,
+				 s.commodity_sku,
+				 s.commodity_quantity,
+				 pi.pic_url,
+				 p.price
+        FROM
+        zlzc_shopping  s
+        LEFT JOIN
+        zlzc_commodity  c
+        ON
+        c.commodity_id=s.commodity_id
+        LEFT JOIN
+        zlzc_commodity_price_middle pm
+        ON
+        pm.commodity_id=c.commodity_id
+        LEFT JOIN
+        zlzc_commodity_price p
+        ON
+        p.price_id=pm.price_id
+		LEFT JOIN
+		zlzc_commodity_album  a
+		ON
+		a.album_id=c.comodity_album_id
+		LEFT JOIN
+		zlzc_commodity_pic  pi
+		ON
+		pi.album_id=a.album_id
+      	${ew.customSqlSegment}
+    </select>
+    <select id="ByPriceShopping" resultMap="shoppingVoMap">
+      SELECT
+            c.commodity_id ccommodity_id,
+             p.sales_rule,
+             p.price,
+             r.repo_prewarning
+        FROM
+            zlzc_commodity c
+        LEFT JOIN
+            zlzc_commodity_price_middle pm
+        on
+            c.commodity_id=pm.commodity_id
+        LEFT JOIN
+            zlzc_commodity_price  p
+        ON
+            pm.price_id=p.price_id
+        LEFT JOIN
+        zlzc_commodity_repo r
+        ON
+	    r.repo_id=c.commodity_repo_id
+	    ${ew.customSqlSegment}
+    </select>
+
+
+</mapper>

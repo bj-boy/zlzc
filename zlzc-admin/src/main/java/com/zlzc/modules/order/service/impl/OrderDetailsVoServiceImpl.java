@@ -13,14 +13,13 @@ import com.zlzc.modules.commodity.service.CommodityService;
 import com.zlzc.modules.logistics.service.LogisticsService;
 import com.zlzc.modules.order.dao.OrderDao;
 import com.zlzc.modules.order.entity.OrderEntity;
-import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
 import com.zlzc.modules.order.service.OrderDetailsVoService;
+import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -51,17 +50,22 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao,OrderEntity>
                 .eq(ordeAndLogisticsVo.getOrderSubmissionTime()!=null,
                         "o.order_submission_time",ordeAndLogisticsVo.getOrderSubmissionTime())
                 //订单状态
-                .eq(StringUtils.isNotBlank(ordeAndLogisticsVo.getOrderStatus().toString()),
+                .eq(ordeAndLogisticsVo.getOrderStatus()!=null,
                         "o.order_status",ordeAndLogisticsVo.getOrderStatus())
                 //订单来源
-                .eq(StringUtils.isNotBlank(ordeAndLogisticsVo.getOrderSource().toString()),
-                        "o.order_source",ordeAndLogisticsVo.getOrderStatus())
-               //收货人
-                .like(StringUtils.isNotBlank(ordeAndLogisticsVo.getLogisticsEntity().getLogisticsRecipient()),
-                        "l.logistics_recipient",ordeAndLogisticsVo.getLogisticsEntity().getLogisticsRecipient())
-                //店铺名称
-                .like(StringUtils.isNotBlank(ordeAndLogisticsVo.getShopEntity().getShopName()),
-                        "s.shop_name",ordeAndLogisticsVo.getShopEntity().getShopName());
+                .eq(ordeAndLogisticsVo.getOrderSource()!=null,
+                        "o.order_source",ordeAndLogisticsVo.getOrderStatus());
+                if(ordeAndLogisticsVo!=null){
+                    //收货人
+                    if(Objects.nonNull(ordeAndLogisticsVo.getLogisticsEntity())){
+                        wq.like("l.logistics_recipient",ordeAndLogisticsVo.getLogisticsEntity().getLogisticsRecipient());
+                    }
+                    //店铺名称
+                    if(Objects.nonNull(ordeAndLogisticsVo.getLogisticsEntity())){
+                        wq.like(Objects.nonNull(ordeAndLogisticsVo.getLogisticsEntity()),"s.shop_name",ordeAndLogisticsVo.getShopEntity().getShopName());
+                    }
+                }
+
         IPage<OrderDetailsVo> page =
                 baseMapper.queryPageByCondition(new Query<OrderDetailsVo>().getPage(params), wq);
 

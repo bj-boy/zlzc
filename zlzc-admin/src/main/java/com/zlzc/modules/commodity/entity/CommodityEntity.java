@@ -68,56 +68,56 @@ public class CommodityEntity implements Serializable {
 	/**
 	 * 商品货号
 	 */
-	@ApiModelProperty(name = "commodityNo", value = "商品货号", example = "12121")
+	@ApiModelProperty(name = "commodityNo", value = "商品货号", example = "商品货号")
 	private Long commodityNo;
 	/**
 	 * 商品名称
 	 */
-	@ApiModelProperty(name = "commodityName", value = "商品名称", example = "商品01")
+	@ApiModelProperty(name = "commodityName", value = "商品名称", example = "商品名称")
 	private String commodityName;
 	/**
 	 * 商品副标题
 	 */
-	@ApiModelProperty(name = "commoditySubName", value = "商品副标题", example = "商品sub01")
+	@ApiModelProperty(name = "commoditySubName", value = "商品副标题", example = "商品副标题")
 	private String commoditySubName;
 	/**
 	 * 排序
 	 */
-	@ApiModelProperty(name = "commodityOrder", value = "排序", example = "1")
+	@ApiModelProperty(name = "commodityOrder", value = "排序", example = "排序")
 	private Integer commodityOrder;
 	/**
 	 * 商品状态
 	 */
-	@ApiModelProperty(name = "commodityStatus", value = "商品状态", example = "1")
+	@ApiModelProperty(name = "commodityStatus", value = "商品状态", example = "商品状态")
 	private Integer commodityStatus;
 	/**
 	 * 国别
 	 */
-	@ApiModelProperty(name = "countryCode", value = "国别", example = "中国")
+	@ApiModelProperty(name = "countryCode", value = "国别", example = "国别")
 	private String countryCode;
 	/**
 	 * 商品备注
 	 */
-	@ApiModelProperty(name = "commodityRemark", value = "商品备注", example = "商品01备注")
+	@ApiModelProperty(name = "commodityRemark", value = "商品备注", example = "商品备注")
 	private String commodityRemark;
 	/**
 	 * 创建时间
 	 */
-	@ApiModelProperty(name = "createTime", value = "创建时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "createTime", value = "创建时间", example = "创建时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	 * 更新时间
 	 */
-	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "更新时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 	/**
 	 * 操作人
 	 */
-	@ApiModelProperty(name = "operator", value = "操作人", example = "admin")
+	@ApiModelProperty(name = "operator", value = "操作人", example = "操作人")
 	private String operator;
 	
 	/**

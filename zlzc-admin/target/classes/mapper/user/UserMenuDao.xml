@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.modules.user.dao.UserMenuDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.zlzc.modules.user.entity.UserMenuEntity" id="userMenuMap">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="menuId" column="menu_id" />
+	</resultMap>
+
+
+	<select id="queryMenuIdList" resultType="long">
+		select menu_id from zlzc_user_menu where user_id = #{value}
+	</select>
+
+	<delete id="deleteBatch">
+		delete from zlzc_user_menu where user_id in
+		<foreach item="userId" collection="array" open="(" separator="," close=")">
+			#{userId}
+		</foreach>
+	</delete>
+
+</mapper>

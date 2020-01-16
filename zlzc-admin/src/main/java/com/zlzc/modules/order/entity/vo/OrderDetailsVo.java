@@ -1,7 +1,6 @@
 package com.zlzc.modules.order.entity.vo;
 
 import com.zlzc.modules.commodity.entity.CommodityEntity;
-import com.zlzc.modules.commodity.entity.CommodityPicEntity;
 import com.zlzc.modules.commodity.entity.CommodityRepoEntity;
 import com.zlzc.modules.logistics.entity.LogisticsEntity;
 import com.zlzc.modules.merchant.entity.MerchantEntity;
@@ -13,7 +12,7 @@ import java.io.Serializable;
 
 
 @Data
-public class OrderDetailsVo extends OrderEntity implements Serializable {
+public class  OrderDetailsVo extends OrderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
