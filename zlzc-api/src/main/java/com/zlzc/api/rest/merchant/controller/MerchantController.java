@@ -17,9 +17,9 @@ import java.util.Map;
  * @email zlzc@example.com
  * @date 2019-11-30 14:01:13
  */
-@Api(value = "后台-商户", tags = { "V1.0 merchant：后台-商户操作相关接口" })
+@Api(value = "app-商户", tags = { "V1.0 merchant：app-商户操作相关接口" })
 @RestController
-@RequestMapping("merchant")
+@RequestMapping("app/merchant")
 public class MerchantController {
 	@Autowired
 	private MerchantService merchantService;
@@ -27,7 +27,7 @@ public class MerchantController {
 	/**
 	 * 根据条件查询商户列表(分页)
 	 */
-	@ApiResponses(value = {
+	/*@ApiResponses(value = {
 		@ApiResponse(response = MerchantEntity.class, code = 200, message = "商户列表响应字段说明")
 	})	
 	@ApiOperation(value = "merchant-6 根据筛选条件获取商户列表（可分页）")
@@ -38,7 +38,7 @@ public class MerchantController {
 			@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
 			@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query")
 		}
-	)
+	)*/
 	public Result listByCondition(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
 			// 自定义requestbody描述，使用map作为参数
 //			@ApiJsonObject(
@@ -57,7 +57,7 @@ public class MerchantController {
 
 	/**
 	 * 列表
-	 */
+
 	@ApiResponses(value = {
 		@ApiResponse(response = MerchantEntity.class, code = 200, message = "商户列表响应字段说明")
 	})	
@@ -69,7 +69,7 @@ public class MerchantController {
 			@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
 			@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query")
 		}
-	)
+	) */
 	//@formatter:on
 	public Result list(@ApiParam(hidden = true) @RequestParam Map<String, Object> params) {
 		PageUtils page = merchantService.queryPage(params);
@@ -79,15 +79,16 @@ public class MerchantController {
 
 	/**
 	 * 信息
-	 */
+
 	@ApiOperation(value = "merchant-2 根据商户ID获取商户信息")
 	@GetMapping("/info/{merchantId}")
+
 	//@formatter:off
 	@ApiImplicitParams(
 		value = {
 			@ApiImplicitParam(name = "merchantId", value = "商户ID", defaultValue = "1", paramType = "path"),
 		}
-	)
+	) */
 	//@formatter:on
 	public Result info(@PathVariable("merchantId") String merchantId) {
 		MerchantEntity merchant = merchantService.getById(merchantId);
@@ -108,9 +109,9 @@ public class MerchantController {
 
 	/**
 	 * 修改
-	 */
+
 	@ApiOperation(value = "merchant-4 修改商户信息")
-	@PutMapping("/update")
+	@PutMapping("/update")*/
 	public Result update(@RequestBody MerchantEntity merchant) {
 		ValidatorUtils.validateEntity(merchant);
 		merchantService.updateById(merchant);
@@ -120,9 +121,9 @@ public class MerchantController {
 
 	/**
 	 * 删除
-	 */
+
 	@ApiOperation(value = "merchant-5 删除指定ID的商户")
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete") */
 	//@formatter:off
 	@ApiImplicitParams(
 		value = {

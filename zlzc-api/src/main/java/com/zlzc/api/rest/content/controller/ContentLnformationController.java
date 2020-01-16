@@ -43,6 +43,7 @@ public class ContentLnformationController {
     @ApiResponses(value ={
             @ApiResponse(response=ContentLnformationEntity.class,code = 200, message = "getInformation-1 查询所有资讯")})
     public Result getInformation(){
+
         List<ContentLnformationEntity> informationService = contentLnformationService.getInformationService();
 
         return Result.ok().put("informationService", informationService);

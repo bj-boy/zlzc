@@ -29,8 +29,6 @@ import com.zlzc.common.utils.Result;
 public class ContentClassController {
     @Autowired
     private ContentClassService contentClassService;
-
-
     /**
      * 保存
      */

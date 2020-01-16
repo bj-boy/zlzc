@@ -1,9 +1,10 @@
 package com.zlzc.api.rest.shop.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zlzc.api.rest.shop.entity.ShopEntity;
 import com.zlzc.api.rest.shop.service.ShopService;
-import com.zlzc.common.utils.PageUtils;
+import com.zlzc.api.rest.shop.vo.ShopVo;
 import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,20 +34,167 @@ public class ShopController {
 	@Autowired
 	private ShopService shopService;
 
+	/**
+	 * 店铺列表
+	 */
+	@ApiOperation(value = "listShop-1 根据userName 查询所对应店铺列表（可分页）")
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopVo.class, code = 200, message = "根据userName 查询所对应店铺列表（可分页）")
+	})
+	@PostMapping("/listShop")
+	//@formatter:off
+	@ApiImplicitParams(
+			value = {
+					@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
+					@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query"),
+					@ApiImplicitParam(name = "userName", value = "用户名", defaultValue = "10", paramType = "query")
+			}
+	)
+	public Result listShop(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
+						   @RequestParam String userName){
+		IPage<ShopVo> shopVoIPage = shopService.listShop(params, userName);
+		return Result.ok().put("shopVoIPage", shopVoIPage);
+	}
 
-    @ApiOperation(value = "shop-6 根据筛选条件获取店铺列表（可分页）")
-     /**
-       * @描述:merchant-6 根据筛选条件获取商户列表（可分页）
-       * @Method: listByCondition
-       * @Author: LBB
-       * @E-mail: biaobiao999@163.com
-       * @Version: 1.0
-       * @param params
-      * @param merchant
-       * @return: com.zlzc.common.utils.Result
-       * @Exception
-       * @Date:  2019/12/5 23:46
-       */
+	/**
+	 *根据id查询店铺信息
+	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopEntity.class, code = 200, message = "根据id查询店铺信息")
+	})
+	@ApiOperation(value = "ShopById-2  根据id查询当前店铺信息")
+	@GetMapping("/ShopById/{shopId}")
+	public Result ShopById(@PathVariable("shopId") Long shopId ){
+		ShopEntity byId = shopService.getById(shopId);
+		return Result.ok().put("byId", byId);
+	}
+
+	/**
+	 *店铺搜索
+	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopEntity.class, code = 200, message = "根据店铺名称搜索店铺信息")
+	})
+	@ApiOperation(value = "ShopByName-3  根据店铺名称搜索店铺信息")
+	@GetMapping("/ShopByName/{byName}")
+	public Result ShopByName(@PathVariable("byName") String byName){
+		List<ShopEntity> shopEntity = shopService.ShopByName(byName);
+		return Result.ok().put("shopEntity", shopEntity);
+	}
+
+
+	/**
+	 *店铺内部商品搜索
+	 */
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopVo.class, code = 200, message = "店铺内部商品搜索")
+	})
+	@ApiOperation(value = "shopCommodityByName-4  店铺内部商品搜索")
+	@GetMapping("/shopCommodityByName/{commodityName}")
+	public Result shopCommodityByName(@PathVariable("commodityName") String commodityName){
+		List<ShopVo> shopVos = shopService.shopCommodityByName(commodityName);
+		return Result.ok().put("shopVos", shopVos);
+	}
+
+	/**
+	 *首页商品
+	 */
+	@ApiImplicitParams(
+			value = {
+					@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
+					@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query")
+			}
+	)
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopVo.class, code = 200, message = "首页商品列表")
+	})
+	@ApiOperation(value = "shopCommodityByName-5  首页商品列表")
+	@GetMapping("/shopCommodityList")
+	public Result shopCommodityList(@ApiParam(hidden = true) @RequestParam Map<String, Object> params){
+		IPage<ShopVo> shopVoIPage = shopService.shopCommodityList(params);
+		return Result.ok().put("shopVoIPage", shopVoIPage);
+	}
+
+	/**
+	 *店铺品牌列表
+	 */
+	@ApiImplicitParams(
+			value = {
+					@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
+					@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query"),
+					@ApiImplicitParam(name = "shopId", value = "店铺id", defaultValue = "10", paramType = "query")
+			}
+	)
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopVo.class, code = 200, message = "店铺品牌列表")
+	})
+	@ApiOperation(value = "shopBrandList-6  店铺品牌列表")
+	@GetMapping("/shopBrandList")
+	public Result shopBrandList(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
+								@RequestParam Long shopId){
+		IPage<ShopVo> shopVoIPage = shopService.shopBrandList(params,shopId);
+		return Result.ok().put("shopVoIPage", shopVoIPage);
+	}
+
+	/**
+	 *店铺品牌下的商品
+	 */
+	@ApiImplicitParams(
+			value = {
+					@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
+					@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query"),
+					@ApiImplicitParam(name = "brandId", value = "品牌id", defaultValue = "10", paramType = "query")
+			}
+	)
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopVo.class, code = 200, message = "店铺品牌下的商品列表")
+	})
+	@ApiOperation(value = "brandCommodityList-7  店铺品牌下的商品列表")
+	@GetMapping("/brandCommodityList")
+	public Result brandCommodityList(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
+									 @RequestParam Long brandId){
+		IPage<ShopVo> shopVoIPage = shopService.brandCommodityList(params, brandId);
+		return Result.ok().put("shopVoIPage", shopVoIPage);
+	}
+
+	/**
+	 * 查询店铺商品的分类
+	 */
+	@ApiImplicitParams(
+			value = {
+					@ApiImplicitParam(name = "shopId", value = "店铺id", defaultValue = "10", paramType = "query")
+			}
+	)
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopVo.class, code = 200, message = "查询店铺商品的分类")
+	})
+	@ApiOperation(value = "shopCommodityFL-8  查询店铺商品的分类")
+	@GetMapping("/shopCommodityFL")
+	public Result shopCommodityFL(@ApiParam(hidden = true) @RequestParam Long shopId){
+		List<ShopVo> shopVos = shopService.shopCommodityFL(shopId);
+		return Result.ok().put("shopVos", shopVos);
+	}
+
+	/**
+	 *查询店铺简介
+	 */
+	@ApiImplicitParams(
+			value = {
+					@ApiImplicitParam(name = "shopId", value = "查询店铺简介", defaultValue = "10", paramType = "query")
+			}
+	)
+	@ApiResponses(value = {
+			@ApiResponse(response = ShopVo.class, code = 200, message = "查询店铺简介")
+	})
+	@ApiOperation(value = "shopMerchantIntroduction-9  查询店铺简介")
+	@GetMapping("/shopMerchantIntroduction")
+	public Result  shopMerchantIntroduction(@ApiParam(hidden = true) @RequestParam Long shopId){
+		ShopVo shopVo = shopService.shopMerchantIntroduction(shopId);
+		return Result.ok().put("shopVo", shopVo);
+	}
+
+
+    /*@ApiOperation(value = "shop-6 根据筛选条件获取店铺列表（可分页）")
 	@ApiResponses(value = {
 			@ApiResponse(response = ShopEntity.class, code = 200, message = "根据筛选条件获取商户列表（可分页）响应字段说明")
 	})
@@ -63,32 +212,24 @@ public class ShopController {
 		PageUtils page=shopService.queryPageWithCnt(params, shop);
        // PageUtils page = shopService.queryPageByCondition(params, shop);
         return Result.ok().put("page", page);
-    }
+    }*/
 
-	@ApiOperation(value = "shop-5 删除指定ID的店铺")
-     /**
-       * @描述:shop-5 删除指定ID的店铺
-       * @Method: delete
-       * @Author: LBB
-       * @E-mail: biaobiao999@163.com
-       * @Version: 1.0
-       * @param shopIds
-       * @return: com.zlzc.common.utils.Result
-       * @Exception
-       * @Date:  2019/12/5 23:07
-       */
+
+
+	/*@ApiOperation(value = "shop-5 删除指定ID的店铺")
+ate:  2019/12/5 23:07
 	@DeleteMapping("/delete")
-	// @formatter:off
+
 	@ApiImplicitParams(value = {
 			@ApiImplicitParam(name = "shopIds", value = "店铺ID[]; [1,2,3]", paramType = "body", dataTypeClass = String.class, allowMultiple = true) })
-	// @formatter:on
+	*/
 	public Result delete(@RequestBody String[] shopIds) {
 		shopService.removeByIds(Arrays.asList(shopIds));
 
 		return Result.ok();
 	}
 
-	@ApiOperation(value = "shop-4 修改店铺信息")
+	//@ApiOperation(value = "shop-4 修改店铺信息")
       /**
         * @描述:shop-4 修改店铺信息
         * @Method: update
@@ -100,7 +241,7 @@ public class ShopController {
         * @Exception
         * @Date:  2019/12/5 23:06
         */
-	@PutMapping("/update")
+	//@PutMapping("/update")
 	public Result update(@RequestBody ShopEntity shop) {
 		ValidatorUtils.validateEntity(shop);
 
@@ -109,7 +250,7 @@ public class ShopController {
 		return Result.ok();
 	}
 
-	@ApiOperation(value = "shop-3 添加店铺")
+	//@ApiOperation(value = "shop-3 添加店铺")
      /**
        * @描述:shop-3 添加店铺
        * @Method: save
@@ -121,14 +262,14 @@ public class ShopController {
        * @Exception
        * @Date:  2019/12/5 23:08
        */
-	@PostMapping("/save")
+	//@PostMapping("/save")
 	public Result save(@RequestBody ShopEntity shop) {
 		shopService.save(shop);
 
 		return Result.ok();
 	}
 
-	@ApiOperation(value = "shop-2 根据店铺ID获取商户信息")
+	//@ApiOperation(value = "shop-2 根据店铺ID获取商户信息")
      /**
        * @描述:shop-2 根据店铺ID获取商户信息
        * @Method: info
@@ -140,7 +281,7 @@ public class ShopController {
        * @Exception
        * @Date:  2019/12/5 23:10
        */
-	@ApiResponses(value = {
+	/*@ApiResponses(value = {
 			@ApiResponse(response = ShopEntity.class, code = 200, message = "根据店铺ID获取商户信息响应字段说明")
 	})
 	@GetMapping("/queryShopDetails/{shopId}")
@@ -151,14 +292,11 @@ public class ShopController {
 	public Result queryShopDetails(@PathVariable("shopId") Integer shopId) {
 		Map<String, Object> rsMap =shopService.queryShopDetails(shopId);
 		return Result.ok().put("rs", rsMap);
-	}
+	}*/
 
 
-	@ApiOperation(value = "shop-1 获取店铺列表(可分页)")
+	//@ApiOperation(value = "shop-1 获取店铺列表(可分页)")
      /**
-      *
-      *
-      *
        * @描述:shop-1 获取店铺列表(可分页)
        * @Method: list
        * @Author: LBB
@@ -169,7 +307,7 @@ public class ShopController {
        * @Exception
        * @Date:  2019/12/5 23:10
        */
-	@ApiResponses(value = {
+	/*@ApiResponses(value = {
 			@ApiResponse(response = ShopEntity.class, code = 200, message = "获取店铺列表(可分页)响应字段说明")
 	})
 	@GetMapping("/list")
@@ -181,22 +319,9 @@ public class ShopController {
 		PageUtils page = shopService.queryPage(params);
 
 		return Result.ok().put("page", page);
-	}
+	}*/
+	/*
 	@ApiOperation(value = "shop-0 获取店铺列表(可分页)")
-	/**
-	 *
-	 *
-	 *
-	 * @描述:shop-1 获取店铺列表(可分页)
-	 * @Method: list
-	 * @Author: LBB
-	 * @E-mail: biaobiao999@163.com
-	 * @Version: 1.0
-	 * @param params
-	 * @return: com.zlzc.common.utils.Result
-	 * @Exception
-	 * @Date:  2019/12/5 23:10
-	 */
 	@ApiResponses(value = {
 			@ApiResponse(response = ShopEntity.class, code = 200, message = "获取店铺列表(可分页)响应字段说明")
 	})
@@ -204,11 +329,10 @@ public class ShopController {
 	@ApiImplicitParams(value = {
 			@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
 			@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query") })
-	// @formatter:on
 	public Result queryPageShop(@ApiParam(hidden = true) @RequestParam Map<String, Object> params) {
 		PageUtils page = shopService.queryPage(params);
 
 		return Result.ok().put("page", page);
-	}
+	}*/
 
 }

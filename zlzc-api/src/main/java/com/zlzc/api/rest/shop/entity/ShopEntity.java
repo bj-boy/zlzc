@@ -46,6 +46,7 @@ public class ShopEntity implements Serializable{
 	 */
 	@ApiModelProperty(name = "merchantName", value = "商户名称", example = "大志")
 	private String merchantName;
+
 	/**
 	 * 店铺logo url
 	 */

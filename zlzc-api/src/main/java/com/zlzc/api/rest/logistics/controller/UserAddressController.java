@@ -5,6 +5,8 @@ import com.zlzc.api.rest.dict.entity.DictEntity;
 import com.zlzc.api.rest.logistics.entity.LogisticsEntity;
 import com.zlzc.api.rest.logistics.entity.UserAddressEntity;
 import com.zlzc.api.rest.logistics.service.UserAddressService;
+import com.zlzc.api.rest.shopping.entity.ShoppingEntity;
+import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "App-地址管理", tags = { "V1.0 UserAddress：App-地址管理操作相关接口" })
 @RestController
@@ -24,31 +27,35 @@ public class UserAddressController {
     /**
      * 根据地址id查询详细信息
      */
-    @ApiOperation(value = "UserAddress-1 根据地址id查询地址")
-    @GetMapping("/info/{id}")
+    @ApiOperation(value = "UserAddress-1 根据用户id查询地址")
+    @GetMapping("/info/{userId}")
     @ApiImplicitParams(
             value = {
-                    @ApiImplicitParam(name = "id", value = "地址id", defaultValue = "001", paramType = "path"),
+                    @ApiImplicitParam(name = "userId", value = "用户id", defaultValue = "001", paramType = "path"),
+                    @ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
+                    @ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query")
             }
     )
-    public Result info(@PathVariable("id") String id){
-        UserAddressEntity userAddress = userAddressService.getById(id);
-        return Result.ok().put("userAddress",userAddress);
+    public Result infoByUserId(@ApiParam(hidden = true)
+            @RequestParam Map<String, Object> params
+            , @PathVariable("userId") String userId){
+        PageUtils pageUtils = userAddressService.infoByUserId(params, userId);
+        return Result.ok().put("userAddress",pageUtils);
     }
 
     /**
-     * 根据地址用户id查询全部地址
+     * 根据地址id查询地址
      */
-    @ApiOperation(value = "UserAddress-2 根据地址用户id查询全部地址")
-    @GetMapping("/userInfo/{id}")
+    @ApiOperation(value = "UserAddress-2 根据地址id查询地址")
+    @GetMapping("/addressInfo/{addressId}")
     @ApiImplicitParams(
             value = {
-                    @ApiImplicitParam(name = "id", value = "用户id", defaultValue = "001", paramType = "path"),
+                    @ApiImplicitParam(name = "addressId", value = "地址id", defaultValue = "001", paramType = "path"),
             }
     )
-    public Result userInfo(@PathVariable("id") String id){
-        List<UserAddressEntity> userAddress = userAddressService.getListUserByID(id);
-        return Result.ok().put("userAddress",userAddress);
+    public Result addressInfo(@PathVariable("addressId") Long addressId){
+        UserAddressEntity byId = userAddressService.getById(addressId);
+        return Result.ok().put("byId",byId);
     }
 
 
