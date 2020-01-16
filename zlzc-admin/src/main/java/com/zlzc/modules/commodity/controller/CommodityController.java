@@ -35,6 +35,7 @@ import com.zlzc.modules.commodity.entity.CommodityParamEntity;
 import com.zlzc.modules.commodity.entity.CommodityPicEntity;
 import com.zlzc.modules.commodity.entity.CommodityPriceEntity;
 import com.zlzc.modules.commodity.entity.CommodityRepoEntity;
+import com.zlzc.modules.commodity.respType.CommodityStatisticsByStatusRT;
 import com.zlzc.modules.commodity.service.CommodityService;
 import com.zlzc.modules.commodity.vo.CommodityAlbumVo;
 import com.zlzc.modules.commodity.vo.CommodityAttrVo;
@@ -82,7 +83,9 @@ public class CommodityController {
 	/**
 	 * 商品各状态数量统计
 	 */
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "商品各状态数量统计响应字段说明") })
+	@ApiResponses(value = { 
+		@ApiResponse(response = CommodityStatisticsByStatusRT.class, code = 200, message = "商品各状态数量统计响应字段说明") 
+	})
 	@ApiOperation(value = "commodity-5 商品各状态数量统计")
 	@RespTime("/commodity/statisticsByStatus")
 	@GetMapping("/statisticsByStatus")

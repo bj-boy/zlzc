@@ -17,7 +17,7 @@ public class ApiApplication {
 
 	@GetMapping("/hello/{name}")
 	public Result helloworld(@PathVariable(name = "name") String name) {
-
+		System.out.println("========> test " + name);
 		return Result.ok(name);
 	}
 }

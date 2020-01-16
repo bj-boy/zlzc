@@ -13,6 +13,26 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.8.RELEASE</version>
 	</parent>
+	
+	<!-- <dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>Brussels-SR4</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Dalston.SR2</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement> -->
+	
 
 	<modules>
 		<module>zlzc-admin</module>
@@ -51,22 +71,37 @@
 		<hutool.version>4.1.1</hutool.version>
 		<lombok.version>1.18.4</lombok.version>
 		
-		<oauth.version>2.3.4.RELEASE</oauth.version>        
-        <oauth-auto.version>2.0.1.RELEASE</oauth-auto.version>    
+		<security.jwt>1.0.8.RELEASE</security.jwt>
+		<oauth2.version>2.3.4.RELEASE</oauth2.version>        
+		<oauth2.starter.version>1.2.1.RELEASE</oauth2.starter.version>   
         <spring.social>1.1.6.RELEASE</spring.social>
 	</properties>
 
 	<dependencies>
 		<!-- 
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-oauth2</artifactId>
+		</dependency>
+		 -->
+	
+		<!-- 
+		 -->
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-jwt</artifactId>
+			<version>${security.jwt}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
-			<version>${oauth.version}</version>
+			<version>${oauth2.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-core</artifactId>
@@ -87,7 +122,6 @@
 			<artifactId>spring-social-security</artifactId>
 			<version>${spring.social}</version>
 		</dependency>
-		 -->
 		
 		
 

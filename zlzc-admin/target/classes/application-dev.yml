@@ -52,4 +52,12 @@ spring:
 #      username: root
 #      password: 123456
 
+
+
+zlzc:
+  security:
+    oauth2: 
+      clients:
+        - clientId: zlzc_admin
+          clientSecret: zlzc_admin_secret
   
