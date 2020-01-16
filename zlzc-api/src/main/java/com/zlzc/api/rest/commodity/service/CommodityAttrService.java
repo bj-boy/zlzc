@@ -2,7 +2,7 @@ package com.zlzc.api.rest.commodity.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zlzc.common.utils.PageUtils;
-import com.zlzc.api.rest.commodity.entity.*;;
+import com.zlzc.api.rest.commodity.entity.*;
 
 import java.util.List;
 import java.util.Map;
