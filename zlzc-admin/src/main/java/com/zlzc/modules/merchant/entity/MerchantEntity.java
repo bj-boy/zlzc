@@ -1,16 +1,15 @@
 package com.zlzc.modules.merchant.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 商户表
@@ -26,101 +25,101 @@ public class MerchantEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ID
+	 * 商户ID
 	 */
-	@ApiModelProperty(name = "merchantId", value = "商户ID", example = "001")
+	@ApiModelProperty(name = "merchantId", value = "商户ID", example = "商户ID")
 	@TableId
 	private Long merchantId;
 	/**
 	 * 商户账号(系统用户账号)
 	 */
-	@ApiModelProperty(name = "merchantAccount", value = "商户账号", example = "123556822")
+	@ApiModelProperty(name = "merchantAccount", value = "商户账号", example = "商户账号")
 	private String merchantAccount;
 	/**
 	 * 商户名称
 	 */
-	@ApiModelProperty(name = "merchantName", value = "商户名称", example = "张三")
+	@ApiModelProperty(name = "merchantName", value = "商户名称", example = "商户名称")
 	private String merchantName;
 	/**
 	 * 商户昵称
 	 */
-	@ApiModelProperty(name = "merchantNick", value = "商户昵称", example = "大仙儿")
+	@ApiModelProperty(name = "merchantNick", value = "商户昵称", example = "商户昵称")
 	private String merchantNick;
 	/**
 	 * 公司名称
 	 */
-	@ApiModelProperty(name = "merchantCompanyName", value = "公司名称", example = "xxx公司")
+	@ApiModelProperty(name = "merchantCompanyName", value = "公司名称", example = "公司名称")
 	private String merchantCompanyName;
 	/**
 	 * 公司注册地址
 	 */
-	@ApiModelProperty(name = "merchantRegistAddr", value = "公司注册地址", example = "北京市-昌平区-回龙观")
+	@ApiModelProperty(name = "merchantRegistAddr", value = "公司注册地址", example = "公司注册地址")
 	private String merchantRegistAddr;
 	/**
 	 * 营业执照
 	 */
-	@ApiModelProperty(name = "merchantBusiLicenseUrl", value = "营业执照URL", example = "http://sss.com/xxx.jpg")
+	@ApiModelProperty(name = "merchantBusiLicenseUrl", value = "营业执照URL", example = "营业执照URL")
 	private String merchantBusiLicenseUrl;
 	/**
 	 * 供应等级
 	 */
-	@ApiModelProperty(name = "merchantSupplyLevel", value = "供应等级", example = "1")
+	@ApiModelProperty(name = "merchantSupplyLevel", value = "供应等级", example = "供应等级")
 	private Integer merchantSupplyLevel;
 	/**
 	 * 联系人
 	 */
-	@ApiModelProperty(name = "merchantLinkman", value = "联系人", example = "佘仙儿")
+	@ApiModelProperty(name = "merchantLinkman", value = "联系人", example = "联系人")
 	private String merchantLinkman;
 	/**
 	 * 联系方式
 	 */
-	@ApiModelProperty(name = "merchantTel", value = "联系方式", example = "15200000000")
+	@ApiModelProperty(name = "merchantTel", value = "联系方式", example = "联系方式")
 	private String merchantTel;
 	/**
 	 * 联系地址
 	 */
-	@ApiModelProperty(name = "merchantAddr", value = "联系地址", example = "xxx家园201号")
+	@ApiModelProperty(name = "merchantAddr", value = "联系地址", example = "联系地址")
 	private String merchantAddr;
 	/**
 	 * 所在区域
 	 */
-	@ApiModelProperty(name = "merchantRegion", value = "所在区域", example = "北京市-昌平区-回龙观")
+	@ApiModelProperty(name = "merchantRegion", value = "所在区域", example = "所在区域")
 	private String merchantRegion;
 	/**
 	 * 经营模式
 	 */
-	@ApiModelProperty(name = "merchantMode", value = "经营模式", example = "1")
+	@ApiModelProperty(name = "merchantMode", value = "经营模式", example = "经营模式")
 	private Integer merchantMode;
 	/**
 	 * 经营范围
 	 */
-	@ApiModelProperty(name = "merchantScope", value = "经营范围", example = "2")
+	@ApiModelProperty(name = "merchantScope", value = "经营范围", example = "经营范围")
 	private Integer merchantScope;
 	/**
 	 * 入驻时间
 	 */
-	@ApiModelProperty(name = "merchantRegistDate", value = "入驻时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "merchantRegistDate", value = "入驻时间", example = "入驻时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date merchantRegistDate;
 	/**
 	 * 创建时间
 	 */
-	@ApiModelProperty(name = "createTime", value = "创建时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "createTime", value = "创建时间", example = "创建时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	 * 更新时间
 	 */
-	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "更新时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 	/**
 	 * 操作人
 	 */
-	@ApiModelProperty(name = "operator", value = "操作人", example = "admin")
+	@ApiModelProperty(name = "operator", value = "操作人", example = "操作人")
 	private String operator;
 
 }

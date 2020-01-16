@@ -27,47 +27,47 @@ public class CommodityAttrEntity implements Serializable {
 	/**
 	 * 属性ID
 	 */
-	@ApiModelProperty(name = "attrId", value = "属性ID", example = "1")
+	@ApiModelProperty(name = "attrId", value = "属性ID", example = "属性ID")
 	@TableId
 	private Long attrId;
 	/**
 	 * 商户ID
 	 */
-	@ApiModelProperty(name = "merchantId", value = "商户ID", example = "1")
+	@ApiModelProperty(name = "merchantId", value = "商户ID", example = "商户ID")
 	private Long merchantId;
 	/**
 	 * 店铺ID
 	 */
-	@ApiModelProperty(name = "shopId", value = "店铺ID", example = "1")
+	@ApiModelProperty(name = "shopId", value = "店铺ID", example = "店铺ID")
 	private Long shopId;
 	/**
 	 * 商品属性编号
 	 */
-	@ApiModelProperty(name = "attrNo", value = "商品属性编号", example = "121213")
+	@ApiModelProperty(name = "attrNo", value = "商品属性编号", example = "商品属性编号")
 	private Long attrNo;
 	/**
 	 * 商品属性名称
 	 */
-	@ApiModelProperty(name = "attrName", value = "商品属性名称", example = "商品属性01")
+	@ApiModelProperty(name = "attrName", value = "商品属性名称", example = "商品属性名称")
 	private String attrName;
 	/**
 	 * 创建时间
 	 */
-	@ApiModelProperty(name = "createTime", value = "创建时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "createTime", value = "创建时间", example = "创建时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	 * 更新时间
 	 */
-	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "2019-12-01 12:12:45")
+	@ApiModelProperty(name = "updateTime", value = "更新时间", example = "更新时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 	/**
 	 * 操作人
 	 */
-	@ApiModelProperty(name = "operator", value = "操作人", example = "admin")
+	@ApiModelProperty(name = "operator", value = "操作人", example = "操作人")
 	private String operator;
 
 }

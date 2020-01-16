@@ -25279,7 +25279,7 @@ SwaggerUi.Views.SignatureView = Backbone.View.extend({
     $('.description-link', $(this.el)).removeClass('selected');
   },
 
-  // handler for snippet to text area
+  // handler for snippet to text dictArea
   snippetToTextArea: function(val) {
     var textArea = $('textarea', $(this.el.parentNode.parentNode.parentNode));
 

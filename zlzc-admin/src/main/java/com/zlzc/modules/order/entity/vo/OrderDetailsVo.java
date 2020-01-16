@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 
 @Data
-public class OrderDetailsVo extends OrderEntity implements Serializable {
+public class  OrderDetailsVo extends OrderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
