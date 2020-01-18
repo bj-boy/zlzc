@@ -1,12 +1,8 @@
 package com.zlzc.api.rest.ad.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
 import com.zlzc.api.rest.ad.entity.AdEntity;
 import com.zlzc.api.rest.ad.service.AdService;
-import com.zlzc.api.rest.brand.entity.BrandCategoryEntity;
+import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,8 +10,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.zlzc.common.utils.PageUtils;
-import com.zlzc.common.utils.Result;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -47,7 +44,8 @@ public class AdController {
     /**
      * 保存
      */
-    //@RequestMapping("/save")
+    @ApiOperation(value = "appGetAdCarousel-1 添加轮播广告位 （1 轮播 2其他）")
+    @PutMapping("/save")
     public Result save(@RequestBody AdEntity ad){
         adService.save(ad);
 

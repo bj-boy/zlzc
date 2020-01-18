@@ -4,6 +4,7 @@ package com.zlzc.modules.shop.controller;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
+import com.zlzc.modules.randomNumber.GenerateRandomNumber;
 import com.zlzc.modules.shop.entity.ShopEntity;
 import com.zlzc.modules.shop.respType.queryPageShopRT;
 import com.zlzc.modules.shop.service.ShopService;
@@ -123,8 +124,8 @@ public class ShopController {
        */
 	@PostMapping("/save")
 	public Result save(@RequestBody ShopEntity shop) {
+		shop.setShopNo(GenerateRandomNumber.getGUID());
 		shopService.save(shop);
-
 		return Result.ok();
 	}
 
