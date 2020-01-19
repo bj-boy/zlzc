@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlzc.modules.ad.dao.AdDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zlzc.modules.ad.entity.AdEntity" id="adMap">
+        <result property="adId" column="ad_id"/>
+        <result property="adNumber" column="ad_number"/>
+        <result property="adName" column="ad_name"/>
+        <result property="adPosition" column="ad_position"/>
+        <result property="adImage" column="ad_image"/>
+        <result property="adCount" column="ad_count"/>
+        <result property="adOddNumber" column="ad_odd_number"/>
+        <result property="adConnection" column="ad_connection"/>
+        <result property="adRemark" column="ad_remark"/>
+        <result property="adStart" column="ad_start"/>
+        <result property="adEnd" column="ad_end"/>
+        <result property="adCreate" column="ad_create"/>
+        <result property="adDelete" column="ad_delete"/>
+    </resultMap>
+
+    <sql id="pageCnt">
+        ad.ad_id,
+        ad.ad_number,
+        ad.ad_name,
+        ad.ad_position,
+        ad.ad_image,
+        ad.ad_count,
+        ad.ad_odd_number,
+        ad.ad_connection,
+        ad.ad_remark,
+        ad.ad_start,
+        ad.ad_end,
+        ad.ad_create,
+        ad.ad_delete
+    </sql>
+
+    <select id="queryPageAd" resultMap="adMap">
+        SELECT
+        <include refid="pageCnt"/>
+        FROM
+        zlzc_ad ad
+        GROUP BY
+        ad_start
+    </select>
+
+
+</mapper>
