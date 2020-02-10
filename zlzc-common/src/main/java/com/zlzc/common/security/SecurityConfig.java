@@ -17,9 +17,11 @@ import com.zlzc.common.security.properties.SecurityProperties;
  */
 @Configuration
 @EnableConfigurationProperties(SecurityProperties.class)
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	
+	
 	/**
 	 * 默认认证管理器
 	 */

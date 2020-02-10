@@ -41,14 +41,13 @@ public class ZlzcAdminUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException(username + " ：没有查询到匹配用户。");
 		}
 		
-		// 根据数据库用户状态填充返回User对象状态
+		// 根据数据库用户状态填充返回User对象状态   
 		Integer status = dbUser.getUserStatus();
 		
 		// 查询当前用户的权限集合
 		List<String> permsList = userService.queryAllPerms(dbUser.getUserId());		
 		// 集合去重转换为字符串
 		String authorityStr = StringUtils.join(permsList.stream().distinct().collect(Collectors.toList()), ",");
-		authorityStr = "zlzc:admin:menu:list";
 		// 构建返回用户
 		AuthUser returnUser = new AuthUser(dbUser.getUsername(), dbUser.getUserPassword(), 
 				true, true, true, true,

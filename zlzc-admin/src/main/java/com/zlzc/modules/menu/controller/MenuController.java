@@ -67,7 +67,6 @@ public class MenuController extends AbstractController {
 		@ApiResponse(response = MenuEntity.class, code = 200, message = "菜单列表响应字段说明") 
 	})
 	@GetMapping("/list")
-//	@PreAuthorize("hasAuthority('zlzc:admin:menu:list')")
 	public List<MenuEntity> list() {
 		List<MenuEntity> menuList = menuService.list();
 		for (MenuEntity menuEntity : menuList) {
@@ -139,7 +138,6 @@ public class MenuController extends AbstractController {
 	 * 修改
 	 */
 	@ApiOperation(value = "menu-6 修改菜单")
-	@RequestMapping("/update")
 	@PutMapping("/update")
 	public Result update(@RequestBody MenuEntity menu) {
 		// 数据校验

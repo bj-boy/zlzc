@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -50,6 +51,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, MenuEntity> implements
 		return baseMapper.queryNotButtonList();
 	}
 
+//	@PreAuthorize("hasAuthority('zlzc:admin:nav')")
 	@Override
 	public List<MenuEntity> getUserMenuList(Long userId) {
 		// 系统管理员，拥有最高权限
