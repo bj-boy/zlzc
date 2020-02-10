@@ -9,7 +9,6 @@ import com.zlzc.modules.user.entity.UserEntity;
 
 /**
  * 用户表
- * 
  * @author LSR
  * @email zlzc@example.com
  * @date 2020-01-13 18:02:03
@@ -34,5 +33,6 @@ public interface UserDao extends BaseMapper<UserEntity> {
 	 * 
 	 */
 	List<String> queryAllApiUrls(Long userId);
+
 
 }
