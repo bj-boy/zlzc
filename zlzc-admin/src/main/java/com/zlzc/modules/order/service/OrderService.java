@@ -13,4 +13,6 @@ public interface OrderService extends IService<OrderEntity> {
 
     public PageUtils ListGetDetails(Map<String, Object> params, OrderEntity orderEntity);
 
+	public Map<String, Object> statisticsByUserId(Long userId);
+
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +22,8 @@ import com.zlzc.common.security.AbstractController;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.Assert;
-import com.zlzc.modules.commodity.respType.CommodityStatisticsByStatusRT;
+import com.zlzc.modules.order.entity.vo.OrderUserStatisticsVo;
+import com.zlzc.modules.order.service.OrderService;
 import com.zlzc.modules.user.entity.UserEntity;
 import com.zlzc.modules.user.service.UserMenuService;
 import com.zlzc.modules.user.service.UserService;
@@ -60,6 +60,9 @@ public class UserController extends AbstractController {
 
 	@Autowired
 	private UserMenuService userMenuService;
+	
+	@Autowired
+	private OrderService orderService;
 
 	/**
 	 * 所有用户列表
@@ -78,7 +81,12 @@ public class UserController extends AbstractController {
 	@GetMapping("/list")
 	//@formatter:on
 	public Result list(@ApiParam(hidden = true) @RequestParam Map<String, Object> params) {
-		PageUtils page = userService.queryPage(params);
+		PageUtils page = null;
+		try {
+			page = userService.queryPage(params);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return Result.ok().put("page", page);
 	}
@@ -195,4 +203,27 @@ public class UserController extends AbstractController {
 		return Result.ok();
 	}
 
+	/**
+	 * 用户统计指标信息
+	 */
+	@ApiOperation(value = "user-7 获取用户统计指标表格相关信息")
+	@ApiImplicitParams(
+  		value = {
+  			@ApiImplicitParam(name = "userId", value = "用户ID", defaultValue = "1", paramType = "path"),
+  		}
+  	)
+	@ApiResponses(value = { 
+		@ApiResponse(response = OrderUserStatisticsVo.class, code = 200, message = "用户统计表格响应字段说明") 
+	})
+	@GetMapping("/userStatistics/{userId}")
+	public Result userStatistics(@PathVariable("userId") Long userId) {
+		UserEntity user = userService.getById(userId);
+		
+		Map<String, Object> statisticsMap = orderService.statisticsByUserId(user.getUserId());
+		
+		return Result.ok().put("user", statisticsMap);
+	}
+	
+	
+	
 }

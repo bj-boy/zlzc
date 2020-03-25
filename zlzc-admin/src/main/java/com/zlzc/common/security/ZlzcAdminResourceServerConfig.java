@@ -1,35 +1,21 @@
 package com.zlzc.common.security;
 
-import java.util.Enumeration;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.authentication.BearerTokenExtractor;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
-import org.springframework.security.oauth2.provider.authentication.TokenExtractor;
 import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
-import com.zlzc.common.security.authentication.FormAuthenticationConfig;
-import com.zlzc.common.security.authentication.filter.mobile.SmsCodeAuthenticationSecurityConfig;
-import com.zlzc.common.security.authentication.filter.validateCode.ValidateCodeSecurityConfig;
-import com.zlzc.common.security.authorize.AuthorizeConfigManager;
-
-import lombok.extern.slf4j.Slf4j;
+import com.zlzc.security.authentication.FormAuthenticationConfig;
+import com.zlzc.security.authentication.filter.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.zlzc.security.authentication.filter.validateCode.ValidateCodeSecurityConfig;
+import com.zlzc.security.authorize.AuthorizeConfigManager;
 
 /**
  * 资源服务器配置

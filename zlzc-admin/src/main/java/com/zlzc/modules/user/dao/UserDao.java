@@ -3,8 +3,13 @@ package com.zlzc.modules.user.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zlzc.modules.user.entity.UserEntity;
 
 /**
@@ -35,4 +40,5 @@ public interface UserDao extends BaseMapper<UserEntity> {
 	List<String> queryAllApiUrls(Long userId);
 
 
+	IPage<UserEntity> getPage(IPage<UserEntity> iPage, @Param(Constants.WRAPPER) Wrapper wrapper);
 }

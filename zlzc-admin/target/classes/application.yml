@@ -8,6 +8,10 @@ server:
   servlet:
     context-path: /zlzc_admin
 
+# logging:
+#   level: 
+#     root: debug
+
 spring:
   profiles:
     active: dev

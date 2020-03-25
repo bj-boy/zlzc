@@ -46,9 +46,13 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
 	public PageUtils queryPage(Map<String, Object> params) {
 		String username = (String) params.get("username");
 
-		IPage<UserEntity> page = this.page(new Query<UserEntity>().getPage(params),
+		IPage<UserEntity> page = baseMapper.getPage(new Query<UserEntity>().getPage(params),
 				new QueryWrapper<UserEntity>().like(StringUtils.isNotBlank(username), "username", username));
+		
+//		IPage<UserEntity> page = this.page(new Query<UserEntity>().getPage(params),
+//				new QueryWrapper<UserEntity>().like(StringUtils.isNotBlank(username), "username", username));
 
+		
 		return new PageUtils(page);
 	}
 

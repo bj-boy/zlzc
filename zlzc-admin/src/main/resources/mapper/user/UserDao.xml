@@ -22,6 +22,7 @@
 		<result property="createTime" column="create_time" />
 		<result property="updateTime" column="update_time" />
 		<result property="operator" column="operator" />
+		<result property="orderTotalAmount" column="order_total_amount" />
 	</resultMap>
 
 
@@ -55,5 +56,16 @@
 		WHERE
 			um.user_id = #{userId}
 	</select>
+
+	<select id="getPage" resultMap="userMap">
+	SELECT
+		zu.*,
+		SUM(DISTINCT zo.order_total_amount) order_total_amount,
+		COUNT(DISTINCT zo.order_id) order_cnt
+	FROM
+		(SELECT * FROM `zlzc_user` z ${ew.customSqlSegment}) zu
+		LEFT JOIN `zlzc_order` zo ON zu.user_id = zo.user_id
+	</select>
+
 
 </mapper>

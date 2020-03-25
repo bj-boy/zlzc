@@ -8,6 +8,9 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.zlzc.modules.commodity.entity.CommodityEntity;
 import com.zlzc.modules.order.entity.OrderEntity;
 import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
+
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,5 +24,7 @@ public interface OrderDao extends BaseMapper<OrderEntity> {
 
     public OrderDetailsVo queryApprovalDetails(
             @Param(Constants.WRAPPER) Wrapper<OrderDetailsVo> queryWrapper);
+
+	Map<String, Object> statisticsByUserId(Long userId);
 
 }

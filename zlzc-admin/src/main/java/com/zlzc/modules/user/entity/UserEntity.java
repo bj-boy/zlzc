@@ -1,6 +1,7 @@
 package com.zlzc.modules.user.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -112,5 +113,17 @@ public class UserEntity implements Serializable {
      */
     @ApiModelProperty(name = "operator", value = "操作人", example = "李某某")
     private String operator;
+    /**
+     * 菜单ID集合
+     */
+	@TableField(exist = false)
+	private List<Long> menuIdList;
+	
+	 /**
+     * 用户消费金额
+     */
+	@ApiModelProperty(name = "orderTotalAmount", value = "消费金额", example = "200.00")
+	@TableField(exist = false)
+	private BigDecimal orderTotalAmount;
 
 }

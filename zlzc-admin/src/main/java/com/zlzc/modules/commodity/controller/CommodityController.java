@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ import com.zlzc.modules.commodity.respType.CommodityStatisticsByStatusRT;
 import com.zlzc.modules.commodity.service.CommodityService;
 import com.zlzc.modules.commodity.vo.CommodityAlbumVo;
 import com.zlzc.modules.commodity.vo.CommodityAttrVo;
+import com.zlzc.modules.commodity.vo.CommodityLabelVo;
 import com.zlzc.modules.commodity.vo.CommodityListCondition;
 import com.zlzc.modules.commodity.vo.CommoditySkuVo;
 import com.zlzc.modules.commodity.vo.CommodityVo;
@@ -115,7 +117,7 @@ public class CommodityController {
 					@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query")
 			}
 	)
-	public Result queryList(@ApiParam(hidden = true) @RequestParam Map<String, Object> params, @RequestBody CommodityListCondition condition) {
+	public Result queryList(@ApiParam(hidden = true) @RequestParam Map<String, Object> params, @RequestBody(required = false) CommodityListCondition condition) {
 		PageUtils page = commodityService.queryCommodity(params, condition);
 		return Result.ok().put("rs", page);
 	}
@@ -128,7 +130,7 @@ public class CommodityController {
 		@ApiResponse(response =CommodityEntity.class, code = 200, message = "获取商品列表（可分页）响应字段说明")
 	})
 	//@formatter:on
-	@ApiOperation(value = "commodity-1 获取商品列表（可分页）")
+//	@ApiOperation(value = "commodity-1 获取商品列表（可分页）")
 	@GetMapping("/list")
 	//@formatter:off
   	@ApiImplicitParams(
@@ -152,310 +154,317 @@ public class CommodityController {
 	@PostMapping("/save")
 	public Result save(@RequestBody CommodityVo comm) {
 		//@formatter:off
-		CommodityVo commodity = new CommodityVo();
-		commodity
-			.setMerchantId(7L)
-			.setShopId(2L)
-			.setCommodityName("商品01")
-			.setCommoditySubName("商品01-sub-title")
-			.setCommodityNo(12121L)
-			.setCommodityOrder(1)
-			.setCommodityRemark("商品01remark")
-			.setCommodityStatus(1)
-			.setCountryCode("中国")
-			.setCreateTime(new Date())
-			.setUpdateTime(new Date())
-			.setOperator("admin");
-		
-		// 绑定分类
-		commodity.setCommodityCategory(new CommodityCategoryEntity()
-				.setCategoryName("分类01")
-				.setCategoryIcon("分类icon01")
-				.setCategoryNo(223311L)
-				.setCategoryOrder(1)
-				.setCategoryDesc("分类01-desc")
-				.setCreateTime(new Date())
-				.setUpdateTime(new Date())
-				.setOperator("admin"));
-		
-		// 绑定商品详情
-		commodity.setCommodityDetails(new ArrayList<CommodityDetailEntity>(){{
-			add(new CommodityDetailEntity()
-					.setCountryCode("中国")
-					.setDetailType(1)
-					.setDetailUrl("www.zlzc.com/commodity_details.html")
-					.setCreateTime(new Date())
-					.setUpdateTime(new Date())
-					.setOperator("admin")
-			);
-			add(new CommodityDetailEntity()
-					.setCountryCode("美国")
-					.setDetailType(1)
-					.setDetailUrl("www.zlzc.com/commodity_details.html")
-					.setCreateTime(new Date())
-					.setUpdateTime(new Date())
-					.setOperator("admin")
-					);
-		}});
-		
-		// 绑定商品库存
-		commodity.setCommodityRepo(new CommodityRepoEntity()
-					.setRepoStock(1000)
-					.setRepoPrewarning(100)
-					.setRepoUnit("个")
-					.setCreateTime(new Date())
-					.setUpdateTime(new Date())
-					.setOperator("admin"));
-		
-		// 绑定商品价格
-		commodity.setCommodityPrices(new ArrayList<CommodityPriceEntity>(){{
-			add(new CommodityPriceEntity()
-					.setCountryCode("中国")
-					.setPrice(new BigDecimal(99.99))
-					.setPriceUnit("元")
-					.setSalesModel(1)
-					.setSalesRule("=1")
-					.setCreateTime(new Date())
-					.setUpdateTime(new Date())
-					.setOperator("admin"));
-			add(new CommodityPriceEntity()
-					.setCountryCode("中国")
-					.setPrice(new BigDecimal(88.88))
-					.setPriceUnit("元")
-					.setSalesModel(2)
-					.setSalesRule("≥100")
-					.setCreateTime(new Date())
-					.setUpdateTime(new Date())
-					.setOperator("admin"));
-			add(new CommodityPriceEntity()
-					.setCountryCode("美国")
-					.setPrice(new BigDecimal(22.22))
-					.setPriceUnit("美元")
-					.setSalesModel(2)
-					.setSalesRule("≥100")
-					.setCreateTime(new Date())
-					.setUpdateTime(new Date())
-					.setOperator("admin"));
-		}});
-		
-		// 绑定商品相册
-		commodity.setCommodityAlbumVo((CommodityAlbumVo) new CommodityAlbumVo()
-				.setCommodityPics(new ArrayList<CommodityPicEntity>(){{
-					add(new CommodityPicEntity()
-							.setPicName("商品相册图片01")
-							.setPicUrl("www.zlzc.com/commodity_album_pic.html")
-							.setPicDesc("商品相册图片01-desc")
-							.setCreateTime(new Date())
-							.setUpdateTime(new Date())
-							.setOperator("admin"));
-					add(new CommodityPicEntity()
-							.setPicName("商品相册图片02")
-							.setPicUrl("www.zlzc.com/commodity_album_pic.html")
-							.setPicDesc("商品相册图片02-desc")
-							.setCreateTime(new Date())
-							.setUpdateTime(new Date())
-							.setOperator("admin"));
-				}})
-				.setAlbumName("商品相册01")
-				.setAlbumNo(123123L)
-				.setAlbumCoverUrl("www.zlzc.com/commodity_album.html")
-				.setAlbumDesc("商品相册01-desc")
-				.setMerchantId(7L)
-				.setShopId(2L)
-				.setCreateTime(new Date())
-				.setUpdateTime(new Date())
-				.setOperator("admin")
-		);
-		
-		// 绑定商品属性
-		commodity.setCommodityAttrVo((CommodityAttrVo) new CommodityAttrVo()
-				.setCommodityParams(new ArrayList<CommodityParamEntity>(){{
-					add(new CommodityParamEntity()
-							.setCountryCode("中国")
-							.setParamName("商品01-属性01-参数01")
-							.setParamVals("val1,val2,val3")
-							.setParamOrder(1)
-							.setCreateTime(new Date())
-							.setUpdateTime(new Date())
-							.setOperator("admin"));
-					add(new CommodityParamEntity()
-							.setCountryCode("美国")
-							.setParamName("商品01-属性01-参数02")
-							.setParamVals("val1,val2,val3")
-							.setParamOrder(2)
-							.setCreateTime(new Date())
-							.setUpdateTime(new Date())
-							.setOperator("admin"));
-				}})
-				.setCommoditySkuVos(new ArrayList<CommoditySkuVo>(){{
-					add((CommoditySkuVo) new CommoditySkuVo()
-							.setCommodityRepoSku(
-								new CommodityRepoEntity()
-									.setRepoStock(200)
-									.setRepoPrewarning(20)
-									.setRepoUnit("个")
-									.setCreateTime(new Date())
-									.setUpdateTime(new Date())
-									.setOperator("admin")
-							)
-							.setCommodityAlbumVoSku(
-								(CommodityAlbumVo) new CommodityAlbumVo()
-									.setCommodityPics(new ArrayList<CommodityPicEntity>(){{
-										add(new CommodityPicEntity()
-												.setPicName("sku相册01图片01")
-												.setPicUrl("www.zlzc.com/commodity_album_sku_pic.html")
-												.setPicDesc("sku相册01图片01-desc")
-												.setCreateTime(new Date())
-												.setUpdateTime(new Date())
-												.setOperator("admin"));
-										add(new CommodityPicEntity()
-												.setPicName("sku相册01图片02")
-												.setPicUrl("www.zlzc.com/commodity_album_sku_pic.html")
-												.setPicDesc("sku相册01图片02-desc")
-												.setCreateTime(new Date())
-												.setUpdateTime(new Date())
-												.setOperator("admin"));
-									}})
-									.setAlbumName("sku相册01")
-									.setAlbumNo(31313L)
-									.setAlbumCoverUrl("www.zlzc.com/commodity_album_sku.html")
-									.setAlbumDesc("sku相册01-desc")
-									.setMerchantId(7L)
-									.setShopId(2L)
-									.setCreateTime(new Date())
-									.setUpdateTime(new Date())
-									.setOperator("admin")
-							)
-							.setCommodityPricesSku(
-								new ArrayList<CommodityPriceEntity>(){{
-									add(new CommodityPriceEntity()
-											.setCountryCode("中国")
-											.setPrice(new BigDecimal(99.99))
-											.setPriceUnit("元")
-											.setSalesModel(1)
-											.setSalesRule("=1")
-											.setCreateTime(new Date())
-											.setUpdateTime(new Date())
-											.setOperator("admin"));
-									add(new CommodityPriceEntity()
-											.setCountryCode("中国")
-											.setPrice(new BigDecimal(88.88))
-											.setPriceUnit("元")
-											.setSalesModel(2)
-											.setSalesRule("≥100")
-											.setCreateTime(new Date())
-											.setUpdateTime(new Date())
-											.setOperator("admin"));
-									add(new CommodityPriceEntity()
-											.setCountryCode("美国")
-											.setPrice(new BigDecimal(22.22))
-											.setPriceUnit("美元")
-											.setSalesModel(2)
-											.setSalesRule("≥100")
-											.setCreateTime(new Date())
-											.setUpdateTime(new Date())
-											.setOperator("admin"));
-								}}
-							)
-							.setCountryCode("中国")
-							.setSkuName("商品01-属性01-sku01")
-							.setSkuVals("v1,v2,v3")
-							.setSkuNo(100001L)
-							.setSkuOrder(1)
-							.setCreateTime(new Date())
-							.setUpdateTime(new Date())
-							.setOperator("admin"));
-					
-					add((CommoditySkuVo) new CommoditySkuVo()
-							.setCommodityRepoSku(
-								new CommodityRepoEntity()
-									.setRepoStock(100)
-									.setRepoPrewarning(10)
-									.setRepoUnit("个")
-									.setCreateTime(new Date())
-									.setUpdateTime(new Date())
-									.setOperator("admin")
-							)
-							.setCommodityAlbumVoSku(
-								(CommodityAlbumVo) new CommodityAlbumVo()
-									.setCommodityPics(new ArrayList<CommodityPicEntity>(){{
-										add(new CommodityPicEntity()
-												.setPicName("sku相册02图片01")
-												.setPicUrl("www.zlzc.com/commodity_album_sku_pic.html")
-												.setPicDesc("sku相册02图片01-desc")
-												.setCreateTime(new Date())
-												.setUpdateTime(new Date())
-												.setOperator("admin"));
-										add(new CommodityPicEntity()
-												.setPicName("sku相册02图片02")
-												.setPicUrl("www.zlzc.com/commodity_album_sku_pic.html")
-												.setPicDesc("sku相册02图片02-desc")
-												.setCreateTime(new Date())
-												.setUpdateTime(new Date())
-												.setOperator("admin"));
-									}})
-									.setAlbumName("sku相册02")
-									.setAlbumNo(31314L)
-									.setAlbumCoverUrl("www.zlzc.com/commodity_album_sku.html")
-									.setAlbumDesc("sku相册02-desc")
-									.setMerchantId(7L)
-									.setShopId(2L)
-									.setCreateTime(new Date())
-									.setUpdateTime(new Date())
-									.setOperator("admin")
-							)
-							.setCommodityPricesSku(
-								new ArrayList<CommodityPriceEntity>(){{
-									add(new CommodityPriceEntity()
-											.setCountryCode("中国")
-											.setPrice(new BigDecimal(99.99))
-											.setPriceUnit("元")
-											.setSalesModel(1)
-											.setSalesRule("=1")
-											.setCreateTime(new Date())
-											.setUpdateTime(new Date())
-											.setOperator("admin"));
-									add(new CommodityPriceEntity()
-											.setCountryCode("中国")
-											.setPrice(new BigDecimal(88.88))
-											.setPriceUnit("元")
-											.setSalesModel(2)
-											.setSalesRule("≥100")
-											.setCreateTime(new Date())
-											.setUpdateTime(new Date())
-											.setOperator("admin"));
-									add(new CommodityPriceEntity()
-											.setCountryCode("美国")
-											.setPrice(new BigDecimal(22.22))
-											.setPriceUnit("美元")
-											.setSalesModel(2)
-											.setSalesRule("≥100")
-											.setCreateTime(new Date())
-											.setUpdateTime(new Date())
-											.setOperator("admin"));
-								}}
-							)
-							.setCountryCode("中国")
-							.setSkuName("商品01-属性01-sku02")
-							.setSkuVals("v1,v2,v3")
-							.setSkuNo(100002L)
-							.setSkuOrder(2)
-							.setCreateTime(new Date())
-							.setUpdateTime(new Date())
-							.setOperator("admin"));
-				}})
-				.setAttrName("商品属性01")
-				.setAttrNo(123456L)
-				.setMerchantId(7L)
-				.setShopId(2L)
-				.setCreateTime(new Date())
-				.setUpdateTime(new Date())
-				.setOperator("admin")
-		);
-		//@formatter:on
-		System.out.println(JSON.toJSONString(commodity));
+//		CommodityVo commodity = new CommodityVo();
+//		commodity
+//			.setMerchantId(7L)
+//			.setShopId(2L)
+//			.setCommodityName("商品01")
+//			.setCommoditySubName("商品01-sub-title")
+//			.setCommodityNo(12121L)
+//			.setCommodityOrder(1)
+//			.setCommodityRemark("商品01remark")
+//			.setCommodityStatus(1)
+//			.setCountryCode("中国")
+//			.setCreateTime(new Date())
+//			.setUpdateTime(new Date())
+//			.setOperator("admin");
+////			.setCommodityLabel(comm);
+//		
+//		// 添加商品标签
+//		commodity.setCommodityLabelVo(new CommodityLabelVo().setLabelList(new ArrayList<String>(){{
+//			add("1");
+//			add("2");
+//		}}));
+//		
+//		// 绑定分类
+//		commodity.setCommodityCategory(new CommodityCategoryEntity()
+//				.setCategoryName("分类01")
+//				.setCategoryIcon("分类icon01")
+//				.setCategoryNo(223311L)
+//				.setCategoryOrder(1)
+//				.setCategoryDesc("分类01-desc")
+//				.setCreateTime(new Date())
+//				.setUpdateTime(new Date())
+//				.setOperator("admin"));
+//		
+//		// 绑定商品详情
+//		commodity.setCommodityDetails(new ArrayList<CommodityDetailEntity>(){{
+//			add(new CommodityDetailEntity()
+//					.setCountryCode("中国")
+//					.setDetailType(1)
+//					.setDetailUrl("www.zlzc.com/commodity_details.html")
+//					.setCreateTime(new Date())
+//					.setUpdateTime(new Date())
+//					.setOperator("admin")
+//			);
+//			add(new CommodityDetailEntity()
+//					.setCountryCode("美国")
+//					.setDetailType(1)
+//					.setDetailUrl("www.zlzc.com/commodity_details.html")
+//					.setCreateTime(new Date())
+//					.setUpdateTime(new Date())
+//					.setOperator("admin")
+//					);
+//		}});
+//		
+//		// 绑定商品库存
+//		commodity.setCommodityRepo(new CommodityRepoEntity()
+//					.setRepoStock(1000)
+//					.setRepoPrewarning(100)
+//					.setRepoUnit("个")
+//					.setCreateTime(new Date())
+//					.setUpdateTime(new Date())
+//					.setOperator("admin"));
+//		
+//		// 绑定商品价格
+//		commodity.setCommodityPrices(new ArrayList<CommodityPriceEntity>(){{
+//			add(new CommodityPriceEntity()
+//					.setCountryCode("中国")
+//					.setPrice(new BigDecimal(99.99))
+//					.setPriceUnit("元")
+//					.setSalesModel(1)
+//					.setSalesRule("=1")
+//					.setCreateTime(new Date())
+//					.setUpdateTime(new Date())
+//					.setOperator("admin"));
+//			add(new CommodityPriceEntity()
+//					.setCountryCode("中国")
+//					.setPrice(new BigDecimal(88.88))
+//					.setPriceUnit("元")
+//					.setSalesModel(2)
+//					.setSalesRule("≥100")
+//					.setCreateTime(new Date())
+//					.setUpdateTime(new Date())
+//					.setOperator("admin"));
+//			add(new CommodityPriceEntity()
+//					.setCountryCode("美国")
+//					.setPrice(new BigDecimal(22.22))
+//					.setPriceUnit("美元")
+//					.setSalesModel(2)
+//					.setSalesRule("≥100")
+//					.setCreateTime(new Date())
+//					.setUpdateTime(new Date())
+//					.setOperator("admin"));
+//		}});
+//		
+//		// 绑定商品相册
+//		commodity.setCommodityAlbumVo((CommodityAlbumVo) new CommodityAlbumVo()
+//				.setCommodityPics(new ArrayList<CommodityPicEntity>(){{
+//					add(new CommodityPicEntity()
+//							.setPicName("商品相册图片01")
+//							.setPicUrl("www.zlzc.com/commodity_album_pic.html")
+//							.setPicDesc("商品相册图片01-desc")
+//							.setCreateTime(new Date())
+//							.setUpdateTime(new Date())
+//							.setOperator("admin"));
+//					add(new CommodityPicEntity()
+//							.setPicName("商品相册图片02")
+//							.setPicUrl("www.zlzc.com/commodity_album_pic.html")
+//							.setPicDesc("商品相册图片02-desc")
+//							.setCreateTime(new Date())
+//							.setUpdateTime(new Date())
+//							.setOperator("admin"));
+//				}})
+//				.setAlbumName("商品相册01")
+//				.setAlbumNo(123123L)
+//				.setAlbumCoverUrl("www.zlzc.com/commodity_album.html")
+//				.setAlbumDesc("商品相册01-desc")
+//				.setMerchantId(7L)
+//				.setShopId(2L)
+//				.setCreateTime(new Date())
+//				.setUpdateTime(new Date())
+//				.setOperator("admin")
+//		);
+//		
+//		// 绑定商品属性
+//		commodity.setCommodityAttrVo((CommodityAttrVo) new CommodityAttrVo()
+//				.setCommodityParams(new ArrayList<CommodityParamEntity>(){{
+//					add(new CommodityParamEntity()
+//							.setCountryCode("中国")
+//							.setParamName("商品01-属性01-参数01")
+//							.setParamVals("val1,val2,val3")
+//							.setParamOrder(1)
+//							.setCreateTime(new Date())
+//							.setUpdateTime(new Date())
+//							.setOperator("admin"));
+//					add(new CommodityParamEntity()
+//							.setCountryCode("美国")
+//							.setParamName("商品01-属性01-参数02")
+//							.setParamVals("val1,val2,val3")
+//							.setParamOrder(2)
+//							.setCreateTime(new Date())
+//							.setUpdateTime(new Date())
+//							.setOperator("admin"));
+//				}})
+//				.setCommoditySkuVos(new ArrayList<CommoditySkuVo>(){{
+//					add((CommoditySkuVo) new CommoditySkuVo()
+//							.setCommodityRepoSku(
+//								new CommodityRepoEntity()
+//									.setRepoStock(200)
+//									.setRepoPrewarning(20)
+//									.setRepoUnit("个")
+//									.setCreateTime(new Date())
+//									.setUpdateTime(new Date())
+//									.setOperator("admin")
+//							)
+//							.setCommodityAlbumVoSku(
+//								(CommodityAlbumVo) new CommodityAlbumVo()
+//									.setCommodityPics(new ArrayList<CommodityPicEntity>(){{
+//										add(new CommodityPicEntity()
+//												.setPicName("sku相册01图片01")
+//												.setPicUrl("www.zlzc.com/commodity_album_sku_pic.html")
+//												.setPicDesc("sku相册01图片01-desc")
+//												.setCreateTime(new Date())
+//												.setUpdateTime(new Date())
+//												.setOperator("admin"));
+//										add(new CommodityPicEntity()
+//												.setPicName("sku相册01图片02")
+//												.setPicUrl("www.zlzc.com/commodity_album_sku_pic.html")
+//												.setPicDesc("sku相册01图片02-desc")
+//												.setCreateTime(new Date())
+//												.setUpdateTime(new Date())
+//												.setOperator("admin"));
+//									}})
+//									.setAlbumName("sku相册01")
+//									.setAlbumNo(31313L)
+//									.setAlbumCoverUrl("www.zlzc.com/commodity_album_sku.html")
+//									.setAlbumDesc("sku相册01-desc")
+//									.setMerchantId(7L)
+//									.setShopId(2L)
+//									.setCreateTime(new Date())
+//									.setUpdateTime(new Date())
+//									.setOperator("admin")
+//							)
+//							.setCommodityPricesSku(
+//								new ArrayList<CommodityPriceEntity>(){{
+//									add(new CommodityPriceEntity()
+//											.setCountryCode("中国")
+//											.setPrice(new BigDecimal(99.99))
+//											.setPriceUnit("元")
+//											.setSalesModel(1)
+//											.setSalesRule("=1")
+//											.setCreateTime(new Date())
+//											.setUpdateTime(new Date())
+//											.setOperator("admin"));
+//									add(new CommodityPriceEntity()
+//											.setCountryCode("中国")
+//											.setPrice(new BigDecimal(88.88))
+//											.setPriceUnit("元")
+//											.setSalesModel(2)
+//											.setSalesRule("≥100")
+//											.setCreateTime(new Date())
+//											.setUpdateTime(new Date())
+//											.setOperator("admin"));
+//									add(new CommodityPriceEntity()
+//											.setCountryCode("美国")
+//											.setPrice(new BigDecimal(22.22))
+//											.setPriceUnit("美元")
+//											.setSalesModel(2)
+//											.setSalesRule("≥100")
+//											.setCreateTime(new Date())
+//											.setUpdateTime(new Date())
+//											.setOperator("admin"));
+//								}}
+//							)
+//							.setCountryCode("中国")
+//							.setSkuName("商品01-属性01-sku01")
+//							.setSkuVals("v1,v2,v3")
+//							.setSkuNo(100001L)
+//							.setSkuOrder(1)
+//							.setCreateTime(new Date())
+//							.setUpdateTime(new Date())
+//							.setOperator("admin"));
+//					
+//					add((CommoditySkuVo) new CommoditySkuVo()
+//							.setCommodityRepoSku(
+//								new CommodityRepoEntity()
+//									.setRepoStock(100)
+//									.setRepoPrewarning(10)
+//									.setRepoUnit("个")
+//									.setCreateTime(new Date())
+//									.setUpdateTime(new Date())
+//									.setOperator("admin")
+//							)
+//							.setCommodityAlbumVoSku(
+//								(CommodityAlbumVo) new CommodityAlbumVo()
+//									.setCommodityPics(new ArrayList<CommodityPicEntity>(){{
+//										add(new CommodityPicEntity()
+//												.setPicName("sku相册02图片01")
+//												.setPicUrl("www.zlzc.com/commodity_album_sku_pic.html")
+//												.setPicDesc("sku相册02图片01-desc")
+//												.setCreateTime(new Date())
+//												.setUpdateTime(new Date())
+//												.setOperator("admin"));
+//										add(new CommodityPicEntity()
+//												.setPicName("sku相册02图片02")
+//												.setPicUrl("www.zlzc.com/commodity_album_sku_pic.html")
+//												.setPicDesc("sku相册02图片02-desc")
+//												.setCreateTime(new Date())
+//												.setUpdateTime(new Date())
+//												.setOperator("admin"));
+//									}})
+//									.setAlbumName("sku相册02")
+//									.setAlbumNo(31314L)
+//									.setAlbumCoverUrl("www.zlzc.com/commodity_album_sku.html")
+//									.setAlbumDesc("sku相册02-desc")
+//									.setMerchantId(7L)
+//									.setShopId(2L)
+//									.setCreateTime(new Date())
+//									.setUpdateTime(new Date())
+//									.setOperator("admin")
+//							)
+//							.setCommodityPricesSku(
+//								new ArrayList<CommodityPriceEntity>(){{
+//									add(new CommodityPriceEntity()
+//											.setCountryCode("中国")
+//											.setPrice(new BigDecimal(99.99))
+//											.setPriceUnit("元")
+//											.setSalesModel(1)
+//											.setSalesRule("=1")
+//											.setCreateTime(new Date())
+//											.setUpdateTime(new Date())
+//											.setOperator("admin"));
+//									add(new CommodityPriceEntity()
+//											.setCountryCode("中国")
+//											.setPrice(new BigDecimal(88.88))
+//											.setPriceUnit("元")
+//											.setSalesModel(2)
+//											.setSalesRule("≥100")
+//											.setCreateTime(new Date())
+//											.setUpdateTime(new Date())
+//											.setOperator("admin"));
+//									add(new CommodityPriceEntity()
+//											.setCountryCode("美国")
+//											.setPrice(new BigDecimal(22.22))
+//											.setPriceUnit("美元")
+//											.setSalesModel(2)
+//											.setSalesRule("≥100")
+//											.setCreateTime(new Date())
+//											.setUpdateTime(new Date())
+//											.setOperator("admin"));
+//								}}
+//							)
+//							.setCountryCode("中国")
+//							.setSkuName("商品01-属性01-sku02")
+//							.setSkuVals("v1,v2,v3")
+//							.setSkuNo(100002L)
+//							.setSkuOrder(2)
+//							.setCreateTime(new Date())
+//							.setUpdateTime(new Date())
+//							.setOperator("admin"));
+//				}})
+//				.setAttrName("商品属性01")
+//				.setAttrNo(123456L)
+//				.setMerchantId(7L)
+//				.setShopId(2L)
+//				.setCreateTime(new Date())
+//				.setUpdateTime(new Date())
+//				.setOperator("admin")
+//		);
+//		//@formatter:on
+//		System.out.println(JSON.toJSONString(commodity));
 
-		boolean isSave = commodityService.saveCommodity(commodity);
+		boolean isSave = commodityService.saveCommodity(comm);
 
 		return Result.ok().put("rs", isSave);
 	}

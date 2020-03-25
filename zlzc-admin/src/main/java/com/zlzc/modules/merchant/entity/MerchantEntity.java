@@ -103,6 +103,41 @@ public class MerchantEntity implements Serializable {
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	private Date merchantRegistDate;
 	/**
+	 * 审核状态
+	 */
+	@ApiModelProperty(name = "merchantApprovalStatus", value = "审核状态", example = "审核状态")
+	private Integer merchantApprovalStatus;
+	/**
+	 * 商户审核人员
+	 */
+	@ApiModelProperty(name = "merchantAuditors", value = "商户审核人员", example = "商户审核人员")
+	private String merchantAuditors;
+	/**
+	 * 商户审核结果
+	 */
+	@ApiModelProperty(name = "merchantAuditResults", value = "商户审核结果", example = "商户审核结果")
+	private Integer merchantAuditResults;
+	/**
+	 * 商户审核反馈
+	 */
+	@ApiModelProperty(name = "merchantFeedback", value = "商户审核反馈", example = "商户审核反馈")
+	private String merchantFeedback;
+
+	/**
+	 * 商户审核时间
+	 */
+	@ApiModelProperty(name = "merchantDate", value = "商户审核时间", example = "商户审核时间")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
+	private Date merchantDate;
+	
+	/**
+	 * 商户审核详情
+	 */
+	@ApiModelProperty(name = "merchantDetails", value = "商户审核详情", example = "商户审核详情")
+	private String merchantDetails;
+	
+	/**
 	 * 创建时间
 	 */
 	@ApiModelProperty(name = "createTime", value = "创建时间", example = "创建时间")

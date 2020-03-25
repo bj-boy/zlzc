@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.zlzc.modules.order.dao.OrderDao">
+	<resultMap type="com.zlzc.modules.order.entity.OrderEntity"
+		id="statisticsMap">
+		<id property="orderId" column="order_id" />
+		<result property="commobityId" column="commobity_id" />
+		<result property="shopId" column="shop_id" />
+		<result property="userId" column="user_id" />
+		<result property="merchantId" column="merchant_id" />
+		<result property="orderNumber" column="order_number" />
+		<result property="orderAmount" column="order_amount" />
+		<result property="orderPayable" column="order_payable" />
+		<result property="orderCommodityTotalAmount" column="order_commodity_total_amount" />
+		<result property="orderTotalAmount" column="order_total_amount" />
+		<result property="orderNumberPieces" column="order_number_pieces" />
+		<result property="orderPaymentStatus" column="order_payment_status" />
+		<result property="orderPaymentMethod" column="order_payment_method" />
+		<result property="orderSource" column="order_source" />
+		<result property="orderStatus" column="order_status" />
+		<result property="orderOrderType" column="order_order_type" />
+		<result property="orderRemark" column="order_remark" />
+		<result property="orderSubmissionTime" column="order_submission_time" />
+		<result property="orderEndTime" column="order_end_time" />
+		<result property="orderCompleteTime" column="order_complete_time" />
+		<result property="orderRemove" column="order_remove" />
+	</resultMap>
+
+
 	<!-- 可根据自己的需求，是否要使用 -->
 	<resultMap type="com.zlzc.modules.order.entity.OrderEntity"
 		id="merchantMap">
@@ -9,7 +35,7 @@
 		<result property="commobityId" column="commobity_id" />
 		<result property="shopId" column="shop_id" />
 		<result property="userId" column="user_id" />
-		<result property="merchntId" column="merchant_id" />
+		<result property="merchantId" column="merchant_id" />
 		<result property="orderNumber" column="order_number" />
 		<result property="orderAmount" column="order_amount" />
 		<result property="orderPayable" column="order_payable" />
@@ -29,7 +55,7 @@
 	</resultMap>
 	<resultMap id="OrdeAndLogisticsVoRst"  type="com.zlzc.modules.order.entity.vo.OrderDetailsVo"
 	extends="merchantMap">
-		<association property="logisticsEntity" javaType="LogisticsEntity">
+		<association property="logisticsEntity" javaType="com.zlzc.modules.logistics.entity.LogisticsEntity">
 			<id property="logisticsId" column="logistics_id" />
 			<result property="orderNumber" column="order_number_l" />
 			<result property="logisticsName" column="logistics_name" />
@@ -53,7 +79,7 @@
 			<result property="logisticsDeliveryTime" column="logistics_delivery_time" />
 			<result property="logisticsTimeReceipt" column="logistics_time_receipt" />
 		</association>
-		<association property="commodityEntity" javaType="CommodityEntity">
+		<association property="commodityEntity" javaType="com.zlzc.modules.commodity.entity.CommodityEntity">
 			<result property="commodityId" column="commodity_id"/>
 			<result property="merchantId" column="merchant_id"/>
 			<result property="shopId" column="shop_id_l"/>
@@ -73,37 +99,37 @@
 			<result property="updateTime" column="update_time"/>
 			<result property="operator" column="operator"/>
 		</association>
-		<association property="merchantEntity" javaType="MerchantEntity">
-			<id property="merchntId" column="merchnt_id_l" />
-			<result property="merchntAccount" column="merchnt_account" />
-			<result property="merchntName" column="merchnt_name" />
-			<result property="merchntNick" column="merchnt_nick" />
-			<result property="merchntCompanyName" column="merchnt_company_name" />
-			<result property="merchntRegistAddr" column="merchnt_regist_addr" />
-			<result property="merchntBusiLicenseUrl" column="merchnt_busi_license_url" />
-			<result property="merchntSupplyLevel" column="merchnt_supply_level" />
-			<result property="merchntLinkman" column="merchnt_linkman" />
-			<result property="merchntTel" column="merchnt_tel" />
-			<result property="merchntAddr" column="merchnt_addr" />
-			<result property="merchntRegion" column="merchnt_region" />
-			<result property="merchntMode" column="merchnt_mode" />
-			<result property="merchntScope" column="merchnt_scope" />
-			<result property="merchntRegistDate" column="merchnt_regist_date" />
-			<result property="merchntApprovalStatus" column="merchnt_approval_status" />
-			<result property="merchntAuditors" column="merchnt_auditors" />
-			<result property="merchntAuditResults" column="merchnt_audit_results" />
-			<result property="merchntFeedback" column="merchnt_feedback" />
-			<result property="merchntDate" column="merchnt_date" />
-			<result property="merchntDetails" column="merchnt_details" />
+		<association property="merchantEntity" javaType="com.zlzc.modules.merchant.entity.MerchantEntity">
+			<id property="merchantId" column="merchant_id_l" />
+			<result property="merchantAccount" column="merchant_account" />
+			<result property="merchantName" column="merchant_name" />
+			<result property="merchantNick" column="merchant_nick" />
+			<result property="merchantCompanyName" column="merchant_company_name" />
+			<result property="merchantRegistAddr" column="merchant_regist_addr" />
+			<result property="merchantBusiLicenseUrl" column="merchant_busi_license_url" />
+			<result property="merchantSupplyLevel" column="merchant_supply_level" />
+			<result property="merchantLinkman" column="merchant_linkman" />
+			<result property="merchantTel" column="merchant_tel" />
+			<result property="merchantAddr" column="merchant_addr" />
+			<result property="merchantRegion" column="merchant_region" />
+			<result property="merchantMode" column="merchant_mode" />
+			<result property="merchantScope" column="merchant_scope" />
+			<result property="merchantRegistDate" column="merchant_regist_date" />
+			<result property="merchantApprovalStatus" column="merchant_approval_status" />
+			<result property="merchantAuditors" column="merchant_auditors" />
+			<result property="merchantAuditResults" column="merchant_audit_results" />
+			<result property="merchantFeedback" column="merchant_feedback" />
+			<result property="merchantDate" column="merchant_date" />
+			<result property="merchantDetails" column="merchant_details" />
 			<result property="createTime" column="create_time" />
 			<result property="updateTime" column="update_time" />
 			<result property="operator" column="operator" />
 		</association>
-		<association property="shopEntity" javaType="ShopEntity">
+		<association property="shopEntity" javaType="com.zlzc.modules.shop.entity.ShopEntity">
 			<id property="shopId" column="shop_id_m" />
 			<result property="shopName" column="shop_name" />
-			<result property="merchntId" column="merchant_id_m" />
-			<result property="merchntName" column="merchnt_name" />
+			<result property="merchantId" column="merchant_id_m" />
+			<result property="merchantName" column="merchant_name" />
 			<result property="shopLogoUrl" column="shop_logo_url" />
 			<result property="shopAddr" column="shop_addr" />
 			<result property="shopRegion" column="shop_region" />
@@ -115,7 +141,7 @@
 			<result property="updateTime" column="update_time" />
 			<result property="operator" column="operator" />
 		</association>
-		<association property="commodityRepoEntity" javaType="CommodityRepoEntity">
+		<association property="commodityRepoEntity" javaType="com.zlzc.modules.commodity.entity.CommodityRepoEntity">
 			<result property="repoId" column="repo_id"/>
 			<result property="repoStock" column="repo_stock"/>
 			<result property="repoPrewarning" column="repo_prewarning"/>
@@ -204,7 +230,7 @@
 		LEFT
 		JOIN zlzc_merchant m
 		on
-		o.merchnt_id = m.merchant_id
+		o.merchant_id = m.merchant_id
 		LEFT
 		JOIN
 		zlzc_shop s
@@ -226,6 +252,15 @@
 		s.shop_id   shop_id_m
 	</sql>
 
-
+	<select id="statisticsByUserId" resultType="map">
+	SELECT
+		SUM(zo.order_total_amount ) total_amount,
+		COUNT( DISTINCT zo.order_id ) order_cnt 
+	FROM
+		zlzc_order zo 
+	WHERE
+		zo.user_id = #{userId}
+	GROUP BY zo.user_id
+	</select>
 
 </mapper>

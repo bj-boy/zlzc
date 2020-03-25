@@ -34,4 +34,6 @@ public class CommodityVo extends CommodityEntity implements Serializable {
 	private List<CommodityPriceEntity> commodityPrices;
 
 	private List<CommodityDetailEntity> commodityDetails;
+	
+	private CommodityLabelVo commodityLabelVo;
 }

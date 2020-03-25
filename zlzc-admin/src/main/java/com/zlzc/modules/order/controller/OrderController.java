@@ -114,8 +114,13 @@ public class OrderController {
     @PostMapping("/save")
     public Result saveOrder(@RequestBody OrderDetailsVo orderDetailsVo){
         //orderService.save(orderEntity);
-        ordeAndLogisticsService.saveOrder(orderDetailsVo);
-        return Result.ok();
+    	try {
+    		ordeAndLogisticsService.saveOrder(orderDetailsVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.error("订单创建失败，请检查订单相关参数是否正确。");
+		}
+    	return Result.ok("订单创建成功");
     }
 
 

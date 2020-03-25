@@ -8,10 +8,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import com.zlzc.common.security.support.ValidateCodeType;
-import com.zlzc.common.security.validate.code.ValidateCode;
-import com.zlzc.common.security.validate.code.ValidateCodeException;
-import com.zlzc.common.security.validate.code.ValidateCodeRepository;
+import com.zlzc.security.support.ValidateCodeType;
+import com.zlzc.security.validate.code.ValidateCode;
+import com.zlzc.security.validate.code.ValidateCodeException;
+import com.zlzc.security.validate.code.ValidateCodeRepository;
 
 /**
  * 基于redis的验证码存取器，避免由于没有session导致无法存取验证码的问题

@@ -17,6 +17,11 @@
 			<artifactId>zlzc-common</artifactId>
 			<version>${zlzc.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.zlzc</groupId>
+			<artifactId>zlzc-security</artifactId>
+			<version>${zlzc.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

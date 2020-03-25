@@ -83,4 +83,14 @@ public class OrderServiceImpl  extends ServiceImpl<OrderDao,OrderEntity> impleme
         return new PageUtils(page);
     }
 
+
+	@Override
+	public Map<String, Object> statisticsByUserId(Long userId) {
+		
+		Map<String, Object> statisticsMap = baseMapper.statisticsByUserId(userId);
+		
+		
+		return statisticsMap;
+	}
+
 }

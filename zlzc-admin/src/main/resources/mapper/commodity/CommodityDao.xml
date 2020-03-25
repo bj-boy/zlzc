@@ -26,6 +26,7 @@
 		<result property="createTime" column="create_time" />
 		<result property="updateTime" column="update_time" />
 		<result property="operator" column="operator" />
+		<result property="commodityLabel" column="commodity_label" />
 	</resultMap>
 	
 	<!-- 商品分类实体映射 -->
@@ -231,6 +232,7 @@
 		zc.commodity_order,
 		zc.commodity_remark,
 		zc.commodity_status,
+		zc.commodity_label,
 		zc.country_code,
 		zcd.detail_id,
 		zcd.country_code country_code_detail,

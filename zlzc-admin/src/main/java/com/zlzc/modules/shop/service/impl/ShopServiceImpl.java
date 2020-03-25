@@ -7,10 +7,14 @@ import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
 import com.zlzc.modules.shop.dao.ShopDao;
 import com.zlzc.modules.shop.entity.ShopEntity;
+import com.zlzc.modules.shop.paramType.SaveShopEntity;
+import com.zlzc.modules.shop.paramType.ShopParam;
+import com.zlzc.modules.shop.paramType.UpdShopEntity;
 import com.zlzc.modules.shop.service.ShopService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -32,9 +36,51 @@ import java.util.Map;
         return rsMap;
     }
 
+    @Override
+	public boolean save(SaveShopEntity shopEntity) {
+    	ShopEntity entity = new ShopEntity()
+    			.setCommodityCnt(shopEntity.getCommodityCnt())
+    			.setCreateTime(new Date())
+    			.setMerchantId(shopEntity.getMerchantId())
+    			.setMerchantName(shopEntity.getMerchantName())
+//    			.setOperator(operator)
+    			.setShopAddr(shopEntity.getShopAddr())
+    			.setShopId(shopEntity.getShopId())
+    			.setShopLinkman(shopEntity.getShopLinkman())
+    			.setShopLogoUrl(shopEntity.getShopLogoUrl())
+    			.setShopName(shopEntity.getShopName())
+    			.setShopNo(shopEntity.getShopNo())
+    			.setShopRegion(shopEntity.getShopRegion())
+    			.setShopScope(shopEntity.getShopScope())
+    			.setShopStatus(shopEntity.getShopStatus())
+    			.setShopTel(shopEntity.getShopTel())
+    			.setUpdateTime(new Date());
+		return this.save(entity);
+	}
+    
+    @Override
+	public boolean updateById(UpdShopEntity shopEntity) {
+    	ShopEntity entity = new ShopEntity()
+    			.setCommodityCnt(shopEntity.getCommodityCnt())
+    			.setMerchantId(shopEntity.getMerchantId())
+    			.setMerchantName(shopEntity.getMerchantName())
+//    			.setOperator(operator)
+    			.setShopAddr(shopEntity.getShopAddr())
+    			.setShopId(shopEntity.getShopId())
+    			.setShopLinkman(shopEntity.getShopLinkman())
+    			.setShopLogoUrl(shopEntity.getShopLogoUrl())
+    			.setShopName(shopEntity.getShopName())
+    			.setShopRegion(shopEntity.getShopRegion())
+    			.setShopScope(shopEntity.getShopScope())
+    			.setShopStatus(shopEntity.getShopStatus())
+    			.setShopTel(shopEntity.getShopTel())
+    			.setUpdateTime(new Date());
+		return this.updateById(entity);
+	}
+
 
     @Override
-    public PageUtils queryPageWithCnt(Map<String, Object> params, ShopEntity shop) {
+    public PageUtils queryPageWithCnt(Map<String, Object> params, ShopParam shop) {
         QueryWrapper<ShopEntity> qw = new QueryWrapper<ShopEntity>()
                 .eq(StringUtils.isNotBlank(shop.getShopLogoUrl()),"sp.shop_logo_url",shop.getShopLogoUrl())
                 .eq(StringUtils.isNotBlank(shop.getMerchantName()),"sp.merchant_name",shop.getMerchantName())
@@ -53,6 +99,5 @@ import java.util.Map;
         IPage<ShopEntity> page = baseMapper.queryPageShop(new Query<ShopEntity>().getPage(params));
         return new PageUtils(page);
     }
-
 
 }

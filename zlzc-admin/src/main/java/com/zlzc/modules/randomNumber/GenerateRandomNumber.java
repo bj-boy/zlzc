@@ -27,6 +27,7 @@ public class GenerateRandomNumber {
         for (int i = 0; i < 16; i++) {
             //产生0-2的3位随机数
             int type = rd.nextInt(3);
+            type = 0;
             switch (type) {
                 case 0:
                     //0-9的随机数

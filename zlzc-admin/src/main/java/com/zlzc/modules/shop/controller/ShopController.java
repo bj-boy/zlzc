@@ -1,19 +1,37 @@
 package com.zlzc.modules.shop.controller;
 
 
+import java.util.Arrays;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
 import com.zlzc.modules.randomNumber.GenerateRandomNumber;
-import com.zlzc.modules.shop.entity.ShopEntity;
+import com.zlzc.modules.shop.paramType.SaveShopEntity;
+import com.zlzc.modules.shop.paramType.ShopParam;
+import com.zlzc.modules.shop.paramType.UpdShopEntity;
 import com.zlzc.modules.shop.respType.queryPageShopRT;
 import com.zlzc.modules.shop.service.ShopService;
-import io.swagger.annotations.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Map;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * 功能描述:
@@ -44,7 +62,7 @@ public class ShopController {
        * @param params
       * @param merchant
        * @return: com.zlzc.common.utils.Result
-       * @Exception
+       * @Excepti
        * @Date:  2019/12/5 23:46
        */
 	@ApiResponses(value = {
@@ -60,7 +78,7 @@ public class ShopController {
     )
     //@formatter:on
     public Result listByCondition(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
-                                  @RequestBody ShopEntity shop) {
+                                  @RequestBody ShopParam shop) {
 		PageUtils page=shopService.queryPageWithCnt(params, shop);
        // PageUtils page = shopService.queryPageByCondition(params, shop);
         return Result.ok().put("page", page);
@@ -102,8 +120,8 @@ public class ShopController {
         * @Date:  2019/12/5 23:06
         */
 	@PutMapping("/update")
-	public Result update(@RequestBody ShopEntity shop) {
-		ValidatorUtils.validateEntity(shop);
+	public Result update(@RequestBody UpdShopEntity shop) {
+//		ValidatorUtils.validateEntity(shop);
 
 		shopService.updateById(shop);
 
@@ -123,7 +141,8 @@ public class ShopController {
        * @Date:  2019/12/5 23:08
        */
 	@PostMapping("/save")
-	public Result save(@RequestBody ShopEntity shop) {
+	public Result save(@RequestBody SaveShopEntity shop) {
+		// 该生成编号方法有问题，生成出来的包含了字符，然而这里接受的是一个数字
 		shop.setShopNo(GenerateRandomNumber.getGUID());
 		shopService.save(shop);
 		return Result.ok();

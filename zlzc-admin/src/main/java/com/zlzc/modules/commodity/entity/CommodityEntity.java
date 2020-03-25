@@ -88,7 +88,7 @@ public class CommodityEntity implements Serializable {
 	/**
 	 * 商品状态
 	 */
-	@ApiModelProperty(name = "commodityStatus", value = "商品状态", example = "商品状态")
+	@ApiModelProperty(name = "commodityStatus", value = "商品状态  0 : 未审核；1 : 审核通过", example = "商品状态")
 	private Integer commodityStatus;
 	/**
 	 * 国别
@@ -125,4 +125,12 @@ public class CommodityEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "del", value = "删除标识", example = "0", hidden = true)
 	private Integer del;
+	
+	/**
+	 * <pre>
+	 * 商品标签，可以为多个，用逗号分隔
+	 * </pre>
+	 */
+	@ApiModelProperty(name = "commodityLabel", value = "商品标签  0：上架；1：下架；2：新品；3：推荐", example = "0,1,2", hidden = true)
+	private String commodityLabel;
 }

@@ -355,6 +355,11 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityDao, CommodityEnt
 		}
 
 		List<CommodityVo> commodityVos = baseMapper.queryCommodity(qw, page.offset(), page.getSize());
+		
+		commodityVos.forEach(commodityVo -> {
+			List<String> labelList = Arrays.asList(commodityVo.getCommodityLabel().split(","));
+			commodityVo.setCommodityLabelVo(new CommodityLabelVo().setLabelList(labelList));
+		});
 
 		page.setRecords(commodityVos);
 		page.setTotal(baseMapper.queryCommodityCnt(qw, page.offset(), page.getSize()));
@@ -370,7 +375,10 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityDao, CommodityEnt
 	@Override
 	public boolean saveCommodity(CommodityVo commodity) {
 		// 商品插入(首次插入获取自增ID)
-		boolean commodityFlag = save(commodity.setDel(1));
+		commodity
+			.setDel(1)
+			.setCommodityLabel(String.join(",", commodity.getCommodityLabelVo().getLabelList()));
+		boolean commodityFlag = save(commodity);
 		// 分类插入
 		Result categoryRs = tryInsertCommodityCategory(commodity);
 		// 库存插入

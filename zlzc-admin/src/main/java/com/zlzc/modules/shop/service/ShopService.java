@@ -1,10 +1,13 @@
 package com.zlzc.modules.shop.service;
 
+import java.util.Map;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.modules.shop.entity.ShopEntity;
-
-import java.util.Map;
+import com.zlzc.modules.shop.paramType.SaveShopEntity;
+import com.zlzc.modules.shop.paramType.ShopParam;
+import com.zlzc.modules.shop.paramType.UpdShopEntity;
 
 /**
  * 
@@ -19,9 +22,11 @@ public interface ShopService extends IService<ShopEntity>{
 
 	Map<String, Object> queryShopDetails(Integer shopId);
 
-	PageUtils queryPageWithCnt(Map<String, Object> params, ShopEntity shop);
+	PageUtils queryPageWithCnt(Map<String, Object> params, ShopParam shop);
 
 	PageUtils queryPageShop(Map<String, Object> params);
+	
+	boolean save(SaveShopEntity shopEntity);
 
-
+	boolean updateById(UpdShopEntity shopEntity);
 }

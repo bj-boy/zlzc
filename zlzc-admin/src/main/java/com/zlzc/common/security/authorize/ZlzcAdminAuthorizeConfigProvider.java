@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.stereotype.Component;
 
 import com.zlzc.modules.user.service.UserService;
+import com.zlzc.security.authorize.AuthorizeConfigProvider;
 
 @Component
 @Order(Integer.MAX_VALUE)
