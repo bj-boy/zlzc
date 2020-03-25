@@ -14,7 +14,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<security.jwt>1.0.8.RELEASE</security.jwt>
-		<oauth2.version>2.3.4.RELEASE</oauth2.version>
+		<oauth2.version>2.3.6.RELEASE</oauth2.version>
 		<oauth2.starter.version>1.2.1.RELEASE</oauth2.starter.version>
 		<spring.social>1.1.6.RELEASE</spring.social>
 	</properties>
