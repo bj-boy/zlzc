@@ -5,10 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zlzc.api.rest.shop.entity.ShopEntity;
 import com.zlzc.api.rest.shop.service.ShopService;
 import com.zlzc.api.rest.shop.vo.ShopVo;
-import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.common.validator.ValidatorUtils;
-
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -302,5 +300,4 @@ public class ShopController {
 		Map<String, Object> rsMap =shopService.queryShopDetails(shopId);
 		return Result.ok().put("rs", rsMap);
 	}
-
 }
