@@ -52,7 +52,7 @@ public class SaveShopEntity implements Serializable {
 	/**
 	 * 店铺区域
 	 */
-	@ApiModelProperty(name = "shopRegion", value = "店铺区域", example = "店铺区域")
+	@ApiModelProperty(name = "shopRegion", value = "店铺区域", example = "店铺区域", hidden = true)
 	private String shopRegion;
 	/**
 	 * 店铺联系人
@@ -68,7 +68,7 @@ public class SaveShopEntity implements Serializable {
 	 * 店铺经营范围
 	 */
 	@ApiModelProperty(name = "shopScope", value = "店铺经营范围", example = "店铺经营范围")
-	private Integer shopScope;
+	private String shopScope;
 	/**
 	 * 店铺状态
 	 */
@@ -102,6 +102,12 @@ public class SaveShopEntity implements Serializable {
 	@ApiModelProperty(name = "commodityCnt", value = "商品数量", example = "商品数量", hidden = true)
 	@TableField(exist = false)
 	private Integer commodityCnt;
+	
+	/**
+	 * 店铺描述
+	 */
+	@ApiModelProperty(name = "shopDesc", value = "店铺描述", example = "店铺描述")
+	private String shopDesc;
 
 
 }

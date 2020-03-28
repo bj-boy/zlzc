@@ -78,7 +78,7 @@ public class ShopController {
     )
     //@formatter:on
     public Result listByCondition(@ApiParam(hidden = true) @RequestParam Map<String, Object> params,
-                                  @RequestBody ShopParam shop) {
+                                  @RequestBody(required = false) ShopParam shop) {
 		PageUtils page=shopService.queryPageWithCnt(params, shop);
        // PageUtils page = shopService.queryPageByCondition(params, shop);
         return Result.ok().put("page", page);
@@ -123,6 +123,10 @@ public class ShopController {
 	public Result update(@RequestBody UpdShopEntity shop) {
 //		ValidatorUtils.validateEntity(shop);
 
+		if(shop.getShopId() == null) {
+			return Result.error("请指定要修改的店铺ID.");
+		}
+		
 		shopService.updateById(shop);
 
 		return Result.ok();
@@ -147,7 +151,7 @@ public class ShopController {
 		shopService.save(shop);
 		return Result.ok();
 	}
-
+	
 	@ApiOperation(value = "shop-2 根据店铺ID获取商户信息")
      /**
        * @描述:shop-2 根据店铺ID获取商户信息
@@ -166,10 +170,11 @@ public class ShopController {
 	@GetMapping("/queryShopDetails/{shopId}")
 	// @formatter:off
 	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "shopId", value = "店铺ID", defaultValue = "1", paramType = "path"), })
+			@ApiImplicitParam(name = "shopId", value = "店铺ID", defaultValue = "1", paramType = "path")
+	})
 	// @formatter:on
 	public Result queryShopDetails(@PathVariable("shopId") Integer shopId) {
-		Map<String, Object> rsMap =shopService.queryShopDetails(shopId);
+		Map<String, Object> rsMap = shopService.queryShopDetails(shopId);
 		return Result.ok().put("rs", rsMap);
 	}
 
@@ -190,7 +195,7 @@ public class ShopController {
 	@ApiResponses(value = {
 			@ApiResponse(response = queryPageShopRT.class, code = 200, message = "获取店铺列表(可分页)响应字段说明")
 	})
-	@GetMapping("/queryPageShop")
+//	@GetMapping("/queryPageShop")
 	@ApiImplicitParams(value = {
 			@ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "1", paramType = "query"),
 			@ApiImplicitParam(name = "limit", value = "每页条数", defaultValue = "10", paramType = "query") })

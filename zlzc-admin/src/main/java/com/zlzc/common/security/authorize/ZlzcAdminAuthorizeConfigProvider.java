@@ -25,6 +25,8 @@ public class ZlzcAdminAuthorizeConfigProvider implements AuthorizeConfigProvider
 		
 		//@formatter:off
 		config
+			.antMatchers("/zlzc_file/**")
+			.permitAll()
 			.anyRequest()
 			.access("@methodService.hasPermission(request, authentication)");
 		//@formatter:on

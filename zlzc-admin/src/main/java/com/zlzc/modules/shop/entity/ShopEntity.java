@@ -27,6 +27,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class ShopEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 店铺ID
 	 */
@@ -77,7 +78,7 @@ public class ShopEntity implements Serializable{
 	 * 店铺经营范围
 	 */
 	@ApiModelProperty(name = "shopScope", value = "店铺经营范围", example = "店铺经营范围")
-	private Integer shopScope;
+	private String shopScope;
 	/**
 	 * 店铺状态
 	 */
@@ -108,6 +109,12 @@ public class ShopEntity implements Serializable{
 	@ApiModelProperty(name = "shopNo", value = "店铺编号", example = "店铺编号")
 	private String shopNo;
 
+	/**
+	 * 店铺描述
+	 */
+	@ApiModelProperty(name = "shopDesc", value = "店铺描述", example = "店铺描述")
+	private String shopDesc;
+	
 	@ApiModelProperty(name = "commodityCnt", value = "商品数量", example = "商品数量")
 	@TableField(exist = false)
 	private Integer commodityCnt;

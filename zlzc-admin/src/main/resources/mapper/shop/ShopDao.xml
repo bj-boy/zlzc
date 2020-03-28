@@ -71,6 +71,7 @@
 		<result property="operator" column="operator" />
 		<result property="shopNo" column="shop_no" />
 		<result property="commodityCnt" column="commodity_cnt" />
+		<result property="shopDesc" column="shop_desc" />
 	</resultMap>
 
 	<resultMap type="com.zlzc.modules.shop.entity.ShopEntity"
@@ -91,6 +92,7 @@
 		<result property="operator" column="operator" />
 		<result property="shopNo" column="shop_no" />
 		<result property="commodityCnt" column="commodity_cnt" />
+		<result property="shopDesc" column="shop_desc" />
 	</resultMap>
 
 	<sql id="pageCnt">
@@ -99,11 +101,14 @@
 		sp.shop_name,
 		sp.shop_logo_url,
 		sp.shop_addr,
-		sp.shop_region,
 		sp.shop_linkman,
 		sp.shop_tel,
 		sp.shop_scope,
 		sp.shop_status,
+		sp.shop_desc,
+		sp.merchant_id,
+		sp.merchant_name,
+		sp.create_time,
 		COUNT(DISTINCT cy.commodity_id) commodity_cnt
 	</sql>
 

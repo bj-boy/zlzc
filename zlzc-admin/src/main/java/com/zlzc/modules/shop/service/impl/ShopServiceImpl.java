@@ -30,16 +30,13 @@ import java.util.Map;
     public Map<String, Object> queryShopDetails(Integer shopId) {
         QueryWrapper<ShopEntity> wq = new QueryWrapper<ShopEntity>()
                 .eq("sp.shop_id",shopId);
-
         Map<String, Object> rsMap = baseMapper.queryShopDetails(wq);
-
         return rsMap;
     }
 
     @Override
 	public boolean save(SaveShopEntity shopEntity) {
     	ShopEntity entity = new ShopEntity()
-    			.setCommodityCnt(shopEntity.getCommodityCnt())
     			.setCreateTime(new Date())
     			.setMerchantId(shopEntity.getMerchantId())
     			.setMerchantName(shopEntity.getMerchantName())
@@ -50,31 +47,27 @@ import java.util.Map;
     			.setShopLogoUrl(shopEntity.getShopLogoUrl())
     			.setShopName(shopEntity.getShopName())
     			.setShopNo(shopEntity.getShopNo())
-    			.setShopRegion(shopEntity.getShopRegion())
     			.setShopScope(shopEntity.getShopScope())
-    			.setShopStatus(shopEntity.getShopStatus())
+    			.setShopStatus(1) // 创建店铺时店铺状态默认为通过
     			.setShopTel(shopEntity.getShopTel())
-    			.setUpdateTime(new Date());
+    			.setUpdateTime(new Date())
+    			.setShopDesc(shopEntity.getShopDesc());
 		return this.save(entity);
 	}
     
     @Override
 	public boolean updateById(UpdShopEntity shopEntity) {
     	ShopEntity entity = new ShopEntity()
-    			.setCommodityCnt(shopEntity.getCommodityCnt())
-    			.setMerchantId(shopEntity.getMerchantId())
-    			.setMerchantName(shopEntity.getMerchantName())
 //    			.setOperator(operator)
     			.setShopAddr(shopEntity.getShopAddr())
     			.setShopId(shopEntity.getShopId())
     			.setShopLinkman(shopEntity.getShopLinkman())
     			.setShopLogoUrl(shopEntity.getShopLogoUrl())
     			.setShopName(shopEntity.getShopName())
-    			.setShopRegion(shopEntity.getShopRegion())
     			.setShopScope(shopEntity.getShopScope())
-    			.setShopStatus(shopEntity.getShopStatus())
     			.setShopTel(shopEntity.getShopTel())
-    			.setUpdateTime(new Date());
+    			.setUpdateTime(new Date())
+    			.setShopDesc(shopEntity.getShopDesc());
 		return this.updateById(entity);
 	}
 
