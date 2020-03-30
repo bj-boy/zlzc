@@ -6,6 +6,7 @@ import com.zlzc.common.config.swagger.ApiJsonProperty;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Result;
 import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
+import com.zlzc.modules.order.entity.vo.saveOrderVo;
 import com.zlzc.modules.order.service.OrderDetailsVoService;
 import com.zlzc.modules.order.service.OrderService;
 import io.swagger.annotations.*;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 @Api(value = "后台-订单", tags = { "V1.0 order：后台-订单操作相关接口" })
@@ -49,31 +51,19 @@ public class OrderController {
                  @ApiJsonProperty(key = "logisticsRecipient",example = "收货人"),
                  @ApiJsonProperty(key = "orderSubmissionTime",example = "提交时间"),
                  @ApiJsonProperty(key = "orderStatus",example = "订单状态"),
-                 @ApiJsonProperty(key = "orderOrderType",example = "订单分类"),
+//                 @ApiJsonProperty(key = "orderOrderType",example = "订单分类"),
                  @ApiJsonProperty(key = "orderSource",example = "订单来源")
              })
-             @RequestBody Map<String, Object> paramMap /*@RequestBody OrderDetailsVo ordeAndLogisticsVo*/) {
-        OrderDetailsVo ordeAndLogisticsVo = JSONObject.parseObject(JSONObject.toJSONString(paramMap), OrderDetailsVo.class);
-        PageUtils page = ordeAndLogisticsService.ListGetDetails(paramMap,ordeAndLogisticsVo);
-        return Result.ok().put("page", page);
-    }
-
-    /**
-     * 根据订单或者编号查询订单有关的全部数据
-     */
-    @ApiResponses(value = {
-            @ApiResponse(response = OrderDetailsVo.class, code = 200, message = "根据订单或者编号查询订单有关的全部数据响应字段说明")
-    })
-    @ApiOperation(value = "orderDetails-1 根据订单或者编号查询订单有关的全部数据")
-    @GetMapping("/orderDetails/{id}")
-    @ApiImplicitParams(
-            value = {
-                    @ApiImplicitParam(name = "id", value = "订单id", defaultValue = "1", paramType = "path"),
-            }
-    )
-    public Result orderDetails(@PathVariable("id") String id ) {
-        OrderDetailsVo ordeAndLogisticsVoDetails = ordeAndLogisticsService.getOrdeAndLogisticsVoDetails(id);
-        return Result.ok().put("ordeAndLogisticsVoDetails", ordeAndLogisticsVoDetails);
+             @RequestBody Map<String, Object> paramMap /*@RequestBody OrderDetailsVo ordeAndLogisticsVo*/, String page, String limit) {
+		OrderDetailsVo ordeAndLogisticsVo = JSONObject.parseObject(JSONObject.toJSONString(paramMap),
+				OrderDetailsVo.class);
+		Map<String, Object> param = new HashMap<String, Object>(){{
+			put("page", page);
+			put("limit", limit);
+		}};
+		
+		PageUtils pageRs = ordeAndLogisticsService.ListGetDetails(param, ordeAndLogisticsVo);
+		return Result.ok().put("page", pageRs);
     }
 
 
@@ -109,19 +99,6 @@ public class OrderController {
         return Result.ok().put("page", page);
     }
      */
-
-    @ApiOperation(value = "order-3 新建订单")
-    @PostMapping("/save")
-    public Result saveOrder(@RequestBody OrderDetailsVo orderDetailsVo){
-        //orderService.save(orderEntity);
-    	try {
-    		ordeAndLogisticsService.saveOrder(orderDetailsVo);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error("订单创建失败，请检查订单相关参数是否正确。");
-		}
-    	return Result.ok("订单创建成功");
-    }
 
 
     /**
@@ -165,7 +142,68 @@ public class OrderController {
         return Result.ok();
     }
 
-
-
+    /**
+     * 后台的订单新增只用于测试，订单新增接口应该只存在于app中。
+     * @param orderDetailsVo
+     * @return
+     */
+//    @ApiOperation(value = "order-3 新建订单")
+//    @PostMapping("/save")
+//    public Result saveOrder(@RequestBody OrderDetailsVo orderDetailsVo){
+//        //orderService.save(orderEntity);
+//    	try {
+//    		ordeAndLogisticsService.saveOrder(orderDetailsVo);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return Result.error("订单创建失败，请检查订单相关参数是否正确。");
+//		}
+//    	return Result.ok("订单创建成功");
+//    }
+    @ApiOperation(value = "order-3 新建订单")
+    @PostMapping("/save")
+    public Result addOrder(@RequestBody saveOrderVo saveOrderVo){
+        //orderService.save(orderEntity);
+    	try {
+    		ordeAndLogisticsService.addOrder(saveOrderVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.error("订单创建失败，请检查订单相关参数是否正确。");
+		}
+    	return Result.ok("订单创建成功");
+    }
+    
+    /**
+     * 根据订单或者编号查询订单有关的全部数据
+     */
+//    @ApiResponses(value = {
+//            @ApiResponse(response = OrderDetailsVo.class, code = 200, message = "根据订单或者编号查询订单有关的全部数据响应字段说明")
+//    })
+//    @ApiOperation(value = "orderDetails-1 根据订单或者编号查询订单有关的全部数据")
+//    @GetMapping("/orderDetails/{id}")
+//    @ApiImplicitParams(
+//            value = {
+//                    @ApiImplicitParam(name = "id", value = "订单id", defaultValue = "1", paramType = "path"),
+//            }
+//    )
+//    public Result orderDetails(@PathVariable("id") String id ) {
+//        OrderDetailsVo ordeAndLogisticsVoDetails = ordeAndLogisticsService.getOrdeAndLogisticsVoDetails(id);
+//        return Result.ok().put("ordeAndLogisticsVoDetails", ordeAndLogisticsVoDetails);
+//    }
+    @ApiResponses(value = {
+            @ApiResponse(response = OrderDetailsVo.class, code = 200, message = "根据订单或者编号查询订单有关的全部数据响应字段说明")
+    })
+    @ApiOperation(value = "orderDetails-1 根据订单或者编号查询订单有关的全部数据")
+    @GetMapping("/orderDetails/{id}")
+    @ApiImplicitParams(
+            value = {
+                    @ApiImplicitParam(name = "id", value = "订单id", defaultValue = "1", paramType = "path"),
+            }
+    )
+    public Result orderDetails(@PathVariable("id") Long id ) {
+    	com.zlzc.modules.order.vo.OrderDetailsVo orderDetails = ordeAndLogisticsService.getOrderDetails(id);
+        return Result.ok().put("orderDetails", orderDetails);
+    }
+    
+    /* 订单详情中修改订单相关信息接口开发 */
 
 }

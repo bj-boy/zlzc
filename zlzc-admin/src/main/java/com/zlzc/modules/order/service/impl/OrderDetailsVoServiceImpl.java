@@ -1,6 +1,20 @@
 package com.zlzc.modules.order.service.impl;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zlzc.common.utils.CodeFactory;
@@ -8,22 +22,28 @@ import com.zlzc.common.utils.PageUtils;
 import com.zlzc.common.utils.Query;
 import com.zlzc.modules.commodity.entity.CommodityEntity;
 import com.zlzc.modules.commodity.entity.CommodityRepoEntity;
+import com.zlzc.modules.commodity.entity.CommoditySkuEntity;
 import com.zlzc.modules.commodity.service.CommodityRepoService;
 import com.zlzc.modules.commodity.service.CommodityService;
+import com.zlzc.modules.commodity.service.CommoditySkuService;
+import com.zlzc.modules.logistics.entity.LogisticsEntity;
 import com.zlzc.modules.logistics.service.LogisticsService;
+import com.zlzc.modules.merchant.entity.MerchantEntity;
+import com.zlzc.modules.merchant.service.MerchantService;
 import com.zlzc.modules.order.dao.OrderDao;
 import com.zlzc.modules.order.entity.OrderEntity;
-import com.zlzc.modules.order.service.OrderDetailsVoService;
 import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
+import com.zlzc.modules.order.entity.vo.saveOrderVo;
+import com.zlzc.modules.order.order_commodity_middle.entity.OrderCommodityMiddleEntity;
+import com.zlzc.modules.order.order_commodity_middle.service.OrderCommodityMiddleService;
+import com.zlzc.modules.order.service.OrderDetailsVoService;
+import com.zlzc.modules.order.vo.OrderDetailsCommodity;
+import com.zlzc.modules.order.vo.OrderDetailsLogisticsVo;
+import com.zlzc.modules.order.vo.UpdRecipientVo;
+import com.zlzc.modules.shop.entity.ShopEntity;
+import com.zlzc.modules.shop.service.ShopService;
+
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Service("ordeAndLogisticsService")
 @Slf4j
@@ -36,6 +56,17 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 
 	@Autowired
 	private CommodityService commodityService;
+
+	@Autowired
+	private CommoditySkuService commoditySkuService;
+
+	@Autowired
+	private OrderCommodityMiddleService orderCommodityMiddleService;
+
+	@Autowired
+	private MerchantService merchantService;
+	@Autowired
+	private ShopService shopService;
 
 	@Override
 	public PageUtils ListGetDetails(Map<String, Object> params, OrderDetailsVo ordeAndLogisticsVo) {
@@ -74,9 +105,10 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 	public OrderDetailsVo getOrdeAndLogisticsVoDetails(String id) {
 		OrderDetailsVo ordeAndLogisticsVo = null;
 
-		if (!StringUtils.isNotBlank(id)) {
+		if (StringUtils.isBlank(id)) {
 			return new OrderDetailsVo();
 		}
+
 		QueryWrapper<OrderDetailsVo> wq = new QueryWrapper<OrderDetailsVo>();
 		wq.eq(id != null, "o.order_number", id).eq("o.order_remove", 0);
 
@@ -88,6 +120,97 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 			ordeAndLogisticsVo = baseMapper.queryApprovalDetails(wq1);
 		}
 		return ordeAndLogisticsVo;
+
+	}
+
+	@Override
+	public com.zlzc.modules.order.vo.OrderDetailsVo getOrderDetails(Long orderId) {
+		// @formatter:off
+		com.zlzc.modules.order.vo.OrderDetailsVo orderDetailsVo = new com.zlzc.modules.order.vo.OrderDetailsVo();
+
+		if (orderId == null) {
+			return orderDetailsVo;
+		}
+
+		// 查询订单基本信息
+		OrderEntity orderEntity = getById(orderId);
+		if (orderEntity == null) {
+			return orderDetailsVo;
+		}
+		orderDetailsVo
+			.setOrderId(orderEntity.getOrderId())
+			.setOrderNumber(orderEntity.getOrderNumber())
+			.setOrderRemark(orderEntity.getOrderRemark())
+			.setOrderPayable(orderEntity.getOrderPayable())
+			.setOrderTotalAmount(orderEntity.getOrderTotalAmount())
+			.setOrderCommodityTotalAmount(orderEntity.getOrderCommodityTotalAmount())
+			.setOrderPaymentStatus(orderEntity.getOrderPaymentStatus())
+			.setOrderPaymentMethod(orderEntity.getOrderPaymentMethod())
+			.setOrderSource(orderEntity.getOrderSource())
+			.setOrderStatus(orderEntity.getOrderStatus());
+
+		// 查询订单所属商户和店铺信息
+		MerchantEntity merchantEntity = merchantService.getById(orderEntity.getMerchantId());
+		ShopEntity shopEntity = shopService.getById(orderEntity.getShopId());
+		if (merchantEntity != null) {
+			orderDetailsVo
+				.setMerchantId(orderEntity.getMerchantId())
+				.setMerchantName(merchantEntity.getMerchantName());
+		}
+		if (shopEntity != null) {
+			orderDetailsVo
+				.setShopId(orderEntity.getShopId())
+				.setShopName(shopEntity.getShopName());
+		}
+		
+		// 查询物流相关信息
+		QueryWrapper<LogisticsEntity> logisticsQW = new QueryWrapper<>();
+		logisticsQW.eq("order_number", orderEntity.getOrderNumber());
+		LogisticsEntity logisticsEntity = logisticsService.getOne(logisticsQW);
+		orderDetailsVo
+			.setLogisticsFreight(logisticsEntity.getLogisticsFreight())
+			.setOrderDetailsLogistics(new OrderDetailsLogisticsVo()
+						.setLogisticsId(logisticsEntity.getLogisticsId())
+						.setLogisticsName(logisticsEntity.getLogisticsName())
+						.setLogisticsSingleNumber(logisticsEntity.getLogisticsSingleNumber())
+						.setLogisticsDelivery(logisticsEntity.getLogisticsDelivery())
+						.setLogisticsSerialNumber(logisticsEntity.getLogisticsSerialNumber())
+						.setLogisticsRecipient(logisticsEntity.getLogisticsRecipient())
+						.setLogisticsRecipientPhone(logisticsEntity.getLogisticsRecipientPhone())
+						.setLogisticsRecipientAddress(logisticsEntity.getLogisticsRecipientAddress())
+						.setLogisticsRecipientPostcode(logisticsEntity.getLogisticsRecipientPostcode())
+					);
+
+		// 查询订单商品相关信息
+		QueryWrapper<OrderCommodityMiddleEntity> ocmQW = new QueryWrapper<>();
+		ocmQW.eq("order_id", orderEntity.getOrderId());
+		List<OrderCommodityMiddleEntity> ocmList = orderCommodityMiddleService.list(ocmQW);
+		ocmList.forEach(orderCommodityMiddleEntity -> {
+			orderDetailsVo.setDiscountAmount(orderCommodityMiddleEntity.getDiscountAmount()); // 设置优惠价格
+			Long commodityId = orderCommodityMiddleEntity.getCommodityId();
+			Long skuId = orderCommodityMiddleEntity.getSkuId();
+			CommodityEntity commodityEntity = commodityService.getById(commodityId);
+			CommoditySkuEntity skuEntity = commoditySkuService.getById(skuId);
+			List<OrderDetailsCommodity> orderDetailsCommodities = orderDetailsVo.getOrderDetailsCommodities();
+			OrderDetailsCommodity orderDetailsCommodity = new OrderDetailsCommodity()
+					.setId(orderCommodityMiddleEntity.getId()).setCommodityId(commodityId)
+					.setCommodityName(commodityEntity.getCommodityName())
+					.setCommodityNo(commodityEntity.getCommodityNo()).setSkuId(skuId).setSkuName(skuEntity.getSkuName())
+					.setCommodityNumber(orderCommodityMiddleEntity.getCommodityNumber())
+					.setCommodityPrice(orderCommodityMiddleEntity.getCommodityPrice());
+			if (orderDetailsCommodities == null) {
+				orderDetailsCommodities = new ArrayList<OrderDetailsCommodity>() {
+					{
+						add(orderDetailsCommodity);
+					}
+				};
+			} else {
+				orderDetailsCommodities.add(orderDetailsCommodity);
+			}
+			orderDetailsVo.setOrderDetailsCommodities(orderDetailsCommodities);
+		});
+		// @formatter:on
+		return orderDetailsVo;
 	}
 
 	/**
@@ -142,6 +265,119 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 		return 0;
 	}
 
+	/**
+	 * 
+	 * @param saveOrderVo
+	 * @return
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean addOrder(saveOrderVo saveOrderVo) {
+		if (Objects.isNull(saveOrderVo)) {
+			return false;
+		}
+		// @formatter:off
+		
+		// 设置订单中各个字段的值
+		String orderCode = new CodeFactory().getOrderCode(saveOrderVo.getUserId());
+		OrderEntity order = new OrderEntity()
+				.setShopId(saveOrderVo.getShopId())
+				.setUserId(saveOrderVo.getUserId())
+				.setMerchantId(saveOrderVo.getMerchantId())
+				.setOrderPaymentStatus(0)
+				.setOrderSource(saveOrderVo.getOrderSource())
+				.setOrderStatus(0)
+				.setOrderRemark(saveOrderVo.getOrderRemark())
+				.setOrderSubmissionTime(new Date())
+				.setOrderRemove(0)
+				.setOrderNumber(orderCode);
+		
+		// 获取订单中的商品并计算价格,保存中间表数据
+		List<OrderCommodityMiddleEntity> commodities = saveOrderVo.getCommodities();
+		for (OrderCommodityMiddleEntity orderCommodityMiddleEntity : commodities) {
+			Long commodityId = orderCommodityMiddleEntity.getCommodityId();
+			Long skuId = orderCommodityMiddleEntity.getSkuId();
+			Integer number = orderCommodityMiddleEntity.getCommodityNumber();
+			BigDecimal price = orderCommodityMiddleEntity.getCommodityPrice();
+			BigDecimal discountAmount = orderCommodityMiddleEntity.getDiscountAmount(); // // 优惠金额
+			
+			/* 缺少参数验证环节 */
+			
+			// 设置订单应付金额
+			if (order.getOrderPayable() != null) {
+				order.setOrderPayable(price.multiply(BigDecimal.valueOf(number))
+						   .add(order.getOrderPayable())
+					 );				
+			} else {
+				order.setOrderPayable(price.multiply(BigDecimal.valueOf(number)));
+			}
+
+			// 设置订单实付金额
+			if (order.getOrderTotalAmount() != null) {
+				order.setOrderTotalAmount(price.multiply(BigDecimal.valueOf(number))
+						   .add(order.getOrderTotalAmount())
+						   .subtract(discountAmount)
+					 );
+			} else {
+				order.setOrderTotalAmount(price.multiply(BigDecimal.valueOf(number))
+						   .subtract(discountAmount)
+					 );
+			}
+
+			// 商品合计金额
+			if (order.getOrderCommodityTotalAmount() != null) {
+				order.setOrderCommodityTotalAmount(price.multiply(BigDecimal.valueOf(number))
+						   .add(order.getOrderCommodityTotalAmount())
+					 );
+			} else {
+				order.setOrderCommodityTotalAmount(price.multiply(BigDecimal.valueOf(number)));
+			}
+
+			// 订单商品件数
+			if (order.getOrderNumberPieces() != null) {
+				order.setOrderNumberPieces(order.getOrderNumberPieces() + number);
+			} else {
+				order.setOrderNumberPieces(number);
+			}
+		}
+		order.setOrderPayable(saveOrderVo.getLogisticsFreight().add(order.getOrderPayable())); // 订单应付金额 + 运费
+		order.setOrderTotalAmount(saveOrderVo.getLogisticsFreight().add(order.getOrderTotalAmount())); // 订单实付金额 + 运费
+		
+		
+		// 设置订单关联的物流信息
+		LogisticsEntity logisticsEntity = new LogisticsEntity()
+				.setLogisticsRecipient(saveOrderVo.getLogisticsRecipient())
+				.setLogisticsRecipientPhone(saveOrderVo.getLogisticsRecipientPhone())
+				.setLogisticsRecipientAddress(saveOrderVo.getLogisticsRecipientAddress())
+				.setLogisticsRecipientPostcode(saveOrderVo.getLogisticsRecipientPostcode())
+				.setOrderNumber(order.getOrderNumber())
+				.setLogisticsFreight(saveOrderVo.getLogisticsFreight());
+		
+		/* 暂不考虑商品库存问题（库存是否足够，减库存等操作） */
+		
+		// 保存订单表，获取orderId
+		if (!save(order)) {
+			throw new RuntimeException("订单保存异常。");
+		}
+		// 保存订单商品中间表
+		commodities.forEach(commodity -> {
+			commodity.setOrderId(order.getOrderId());
+		});
+		if (!orderCommodityMiddleService.saveBatch(commodities)) {
+			throw new RuntimeException("订单中商品信息保存异常。");
+		}
+		
+		
+		// 设置物流记录的orderId，保存物流表
+		if (!logisticsService.save(logisticsEntity)) {
+			throw new RuntimeException("订单物流信息保存异常。");
+		}
+
+		// @formatter:on
+
+		return true;
+	}
+
 	@Transactional
 	@Override
 	public boolean updateStatus(OrderDetailsVo orderDetailsVo) {
@@ -173,6 +409,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 		return true;
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public boolean removeStatus(List<String> orderIds) {
 		for (int i = 0; i < orderIds.size(); i++) {
@@ -184,5 +421,165 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 			this.updateById(orderEntity);
 		}
 		return false;
+	}
+
+	/* ################################### 2020年3月30日15点35分 添加订单相关接口 ################################### */
+	
+	/**
+	 * 修改订单收货人信息
+	 * 
+	 * @param updRecipientVo
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public boolean updRecipientInfo(UpdRecipientVo updRecipientVo) {
+		if (updRecipientVo.getLogisticsId() == null) {
+			log.error("要修改的收件人的物流id不能为空。");
+			return false;
+		}
+
+		LogisticsEntity logisticsEntity = new LogisticsEntity().setLogisticsId(updRecipientVo.getLogisticsId())
+				.setLogisticsRecipient(updRecipientVo.getLogisticsRecipient())
+				.setLogisticsRecipientPhone(updRecipientVo.getLogisticsRecipientPhone())
+				.setLogisticsRecipientAddress(updRecipientVo.getLogisticsRecipientAddress())
+				.setLogisticsRecipientPostcode(updRecipientVo.getLogisticsRecipientPostcode());
+
+		return logisticsService.updateById(logisticsEntity);
+	}
+
+	/**
+	 * 关闭订单
+	 * 
+	 * @param orderId
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public boolean closeOrder(Long orderId) {
+		if (orderId == null) {
+			log.error("关闭订单需要参数OrderId");
+			return false;
+		}
+		OrderEntity entity = new OrderEntity();
+		entity.setOrderId(orderId);
+		entity.setOrderStatus(5); // 关闭订单
+		return updateById(entity);
+	}
+
+	/**
+	 * 获取订单备注
+	 * 
+	 * @param orderId
+	 * @return
+	 */
+	public String getOrderRemark(Long orderId) {
+		OrderEntity orderEntity = this.getById(orderId);
+		return orderEntity.getOrderRemark();
+	}
+
+	/**
+	 * 修改订单备注
+	 * 
+	 * @param orderId
+	 * @param orderRemark
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public boolean updOrderRemark(Long orderId, String orderRemark) {
+		OrderEntity entity = new OrderEntity();
+		entity.setOrderId(orderId).setOrderRemark(orderRemark);
+		return updateById(entity);
+	}
+	
+	/**
+	 * 修改订单商品信息
+	 * 
+	 * @param orderId
+	 * @param commodityId
+	 * @param skuId
+	 * @param commodityNumber
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public boolean updCommodityInfo(Long orderId, Long commodityId, Long skuId, Integer commodityNumber) {
+		// @formatter:off
+		if (orderId == null) {
+			log.error("要修改的订单商品的orderId不能为空。");
+			return false;
+		}
+		if (commodityId == null) {
+			log.error("要修改的订单商品的commodityId不能为空。");
+			return false;
+		}
+		if (skuId == null) {
+			log.error("要修改的订单商品的skuId不能为空。");
+			return false;
+		}
+		// 获取原先订单商品
+//		orderCommodityMiddleService.getOne(queryWrapper)
+		
+		// 修改订单中指定商品数量
+		UpdateWrapper<OrderCommodityMiddleEntity> updQW = new UpdateWrapper<>();
+		updQW
+			.eq("order_id", orderId)
+			.eq("commodity_id", commodityId)
+			.eq("sku_id", skuId);
+		OrderCommodityMiddleEntity orderCommodityMiddleEntity = new OrderCommodityMiddleEntity()
+				.setCommodityNumber(commodityNumber);
+		boolean update = orderCommodityMiddleService.update(orderCommodityMiddleEntity, updQW);
+		
+		// 重新计算订单相关价格
+		
+		
+		
+		return true;
+		// @formatter:on
+	}
+
+	/**
+	 * 暂只支持修改运费和优惠价格
+	 * 
+	 * @param orderId
+	 * @param logisticsId
+	 * @param discountAmount
+	 * @param logisticsFreight
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public boolean updCost(Long orderId, Long logisticsId, BigDecimal discountAmount, BigDecimal logisticsFreight) {
+		if (orderId == null) {
+			log.error("要修改订单费用信息的orderId不能为空。");
+			return false;
+		}
+		if (logisticsId == null) {
+			log.error("要修改订单费用信息的logisticsId不能为空。");
+			return false;
+		}
+
+		// 修改运费
+		LogisticsEntity logisticsEntity = new LogisticsEntity().setLogisticsId(logisticsId);
+		if (logisticsFreight != null) {
+			logisticsEntity.setLogisticsFreight(logisticsFreight);
+		}
+		logisticsService.updateById(logisticsEntity);
+
+		// 修改优惠价格
+		UpdateWrapper<OrderCommodityMiddleEntity> updOCMQW = new UpdateWrapper<>();
+		updOCMQW.eq("order_id", orderId);
+		OrderCommodityMiddleEntity orderCommodityMiddleEntity = new OrderCommodityMiddleEntity();
+		if (discountAmount != null) {
+			orderCommodityMiddleEntity.setDiscountAmount(discountAmount);
+		}
+		orderCommodityMiddleService.update(updOCMQW);
+
+		// 重新计算订单价格
+
+		return true;
+	}
+	
+	/**
+	 * 重新计算订单价格
+	 */
+	private void recalculatePrice ( ) {
+		
 	}
 }

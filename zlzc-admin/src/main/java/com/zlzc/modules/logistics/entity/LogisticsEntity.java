@@ -7,8 +7,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 快递物流表
@@ -16,6 +18,7 @@ import java.io.Serializable;
 @ApiModel(description = "快递物流实体")
 @Data
 @TableName("zlzc_logistics")
+@Accessors(chain = true)
 public class LogisticsEntity implements Serializable{
 
     /**
@@ -115,7 +118,7 @@ public class LogisticsEntity implements Serializable{
     @ApiModelProperty(name = "logisticsRecipientIdNumber", value = "收件人证件号", example = "收件人证件号")
     private String  logisticsRecipientIdNumber;
     /**
-     * 备注
+     * 物流备注
      */
     @ApiModelProperty(name = "logisticsNote", value = "备注", example = "备注")
     private String  logisticsNote;
@@ -133,4 +136,10 @@ public class LogisticsEntity implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private String  logisticsTimeReceipt;
+    
+    /**
+     * 运费
+     */
+    @ApiModelProperty(name = "logisticsFreight", value = "运费", example = "运费")
+    private BigDecimal  logisticsFreight;
 }

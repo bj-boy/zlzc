@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zlzc.common.utils.PageUtils;
 import com.zlzc.modules.order.entity.OrderEntity;
 import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
+import com.zlzc.modules.order.entity.vo.saveOrderVo;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,5 +23,9 @@ public interface OrderDetailsVoService  extends IService<OrderEntity> {
     public   boolean  updateStatus(OrderDetailsVo orderDetailsVo);
 
     public   boolean  removeStatus(List<String> strings);
+
+    public boolean addOrder(saveOrderVo saveOrderVo);
+
+    public com.zlzc.modules.order.vo.OrderDetailsVo getOrderDetails(Long orderId);
 
 }

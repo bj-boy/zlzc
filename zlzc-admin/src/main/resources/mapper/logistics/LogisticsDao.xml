@@ -30,6 +30,7 @@
 		<result property="logisticsNote" column="logistics_note" />
 		<result property="logisticsDeliveryTime" column="logistics_delivery_time" />
 		<result property="logisticsTimeReceipt" column="logistics_time_receipt" />
+		<result property="logisticsFreight" column="logistics_freight" />
 	</resultMap>
 
 </mapper>
