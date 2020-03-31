@@ -596,6 +596,10 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 
 		// 修改运费
 		LogisticsEntity logisticsEntity = logisticsService.getById(logisticsId);
+		if (logisticsEntity == null) {
+			throw new RuntimeException("logisticsId有误：" + logisticsId);
+		}
+		
 		BigDecimal originLogisticsFreight = logisticsEntity.getLogisticsFreight(); // 查询之前运费
 		
 		boolean updLogisticsFreight = false;
@@ -614,6 +618,9 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 			.eq("commodity_id", commodityId)
 			.eq("sku_id", skuId);
 		Map<String, Object> discountAmountMap = orderCommodityMiddleService.getMap(queryOCMQW);
+		if (discountAmountMap == null || discountAmountMap.get("discount_amount") == null) {
+			throw new RuntimeException("查询优惠价格有误，order_id=" + orderId + " : commodity_id=" + commodityId + " : sku_id=" + skuId);
+		}
 		BigDecimal originDiscountAmount = (BigDecimal) discountAmountMap.get("discount_amount"); // 查询之前优惠
 		
 		UpdateWrapper<OrderCommodityMiddleEntity> updOCMQW = new UpdateWrapper<>();
