@@ -9,10 +9,13 @@ import com.zlzc.modules.order.entity.vo.OrderDetailsVo;
 import com.zlzc.modules.order.entity.vo.saveOrderVo;
 import com.zlzc.modules.order.service.OrderDetailsVoService;
 import com.zlzc.modules.order.service.OrderService;
+import com.zlzc.modules.order.vo.UpdRecipientVo;
+
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -113,8 +116,8 @@ public class OrderController {
     /**
      *修改
      */
-    @ApiOperation(value = "order-4 根据id修改订单")
-    @PutMapping("/update")
+//    @ApiOperation(value = "order-4 根据id修改订单")
+//    @PutMapping("/update")
     public Result update(@RequestBody OrderDetailsVo orderDetailsVo){
         ordeAndLogisticsService.updateStatus(orderDetailsVo);
         return Result.ok();
@@ -204,6 +207,95 @@ public class OrderController {
         return Result.ok().put("orderDetails", orderDetails);
     }
     
-    /* 订单详情中修改订单相关信息接口开发 */
-
+    /* ==================== 订单详情中修改订单相关信息接口开发 ==================== */
+    
+    @ApiOperation(value = "updRecipientInfo-6 修改收货人信息")
+    @PostMapping("/updRecipientInfo")
+    public Result updRecipientInfo(@RequestBody UpdRecipientVo updRecipientVo) {
+    	boolean updRecipientInfo = ordeAndLogisticsService.updRecipientInfo(updRecipientVo);
+    	return Result.ok("success");
+    }
+    
+    @ApiOperation(value = "closeOrder-7 关闭指定订单")
+    @PostMapping("/closeOrder/{id}")
+    @ApiImplicitParams(
+            value = {
+                    @ApiImplicitParam(name = "id", value = "订单id", defaultValue = "1", paramType = "path"),
+            }
+    )
+    public Result closeOrder(@PathVariable("id") Long orderId) {
+    	boolean closeOrder = ordeAndLogisticsService.closeOrder(orderId);
+    	return Result.ok("success");
+    }
+    
+    @ApiOperation(value = "getOrderRemark-8 获取订单备注")
+    @GetMapping("/getOrderRemark/{id}")
+    @ApiImplicitParams(
+            value = {
+                    @ApiImplicitParam(name = "id", value = "订单id", defaultValue = "1", paramType = "path"),
+            }
+    )
+    public Result getOrderRemark(@PathVariable("id") Long orderId) {
+    	String orderRemark = ordeAndLogisticsService.getOrderRemark(orderId);
+    	return Result.ok().put("orderRemark", orderRemark);
+    }
+    
+    @ApiOperation(value = "updOrderRemark-9 修改订单备注")
+    @PostMapping("/updOrderRemark/{id}")
+    @ApiImplicitParams(
+            value = {
+                    @ApiImplicitParam(name = "id", value = "订单id", defaultValue = "1", paramType = "path"),
+                    @ApiImplicitParam(name = "orderRemark", value = "订单备注", defaultValue = "备注", paramType = "query"),
+            }
+    )
+	public Result updOrderRemark(@PathVariable("id") Long orderId, @RequestParam("orderRemark") String orderRemark) {
+		ordeAndLogisticsService.updOrderRemark(orderId, orderRemark);
+		return Result.ok("success");
+	}
+    
+    @ApiOperation(value = "updCommodityInfo-10 修改订单商品信息（暂只支持修改数量）")
+    @PostMapping("/updCommodityInfo/{orderId}/{commodityId}/{skuId}/{commodityNumber}")
+    @ApiImplicitParams(
+            value = {
+                    @ApiImplicitParam(name = "orderId", value = "订单id", defaultValue = "1", paramType = "path"),
+                    @ApiImplicitParam(name = "commodityId", value = "商品id", defaultValue = "1", paramType = "path"),
+                    @ApiImplicitParam(name = "skuId", value = "skuId", defaultValue = "1", paramType = "path"),
+                    @ApiImplicitParam(name = "commodityNumber", value = "商品数量", defaultValue = "1", paramType = "path"),
+            }
+    )
+	public Result updCommodityInfo(@PathVariable("orderId") Long orderId, @PathVariable("commodityId") Long commodityId,
+			@PathVariable("skuId") Long skuId, @PathVariable("commodityNumber") Integer commodityNumber) {
+    	ordeAndLogisticsService.updCommodityInfo(orderId, commodityId, skuId, commodityNumber);
+		return Result.ok("success");
+	}
+    
+    // @formatter:off
+    @ApiOperation(value = "updCostInfo-12 修改订单费用信息")
+    @PostMapping("/updCostInfo/{orderId}/{commodityId}/{skuId}/{logisticsId}")
+    @ApiImplicitParams(
+            value = {
+                    @ApiImplicitParam(name = "orderId", value = "订单id", defaultValue = "1", paramType = "path"),
+                    @ApiImplicitParam(name = "commodityId", value = "商品id", defaultValue = "1", paramType = "path"),
+                    @ApiImplicitParam(name = "skuId", value = "skuId", defaultValue = "1", paramType = "path"),
+                    @ApiImplicitParam(name = "logisticsId", value = "物流id", defaultValue = "1", paramType = "path"),
+                    @ApiImplicitParam(name = "discountAmount", value = "优惠金额", defaultValue = "1", paramType = "query"),
+                    @ApiImplicitParam(name = "logisticsFreight", value = "运费", defaultValue = "1", paramType = "query"),
+            }
+    )
+	public Result updCostInfo(
+			@PathVariable("orderId") Long orderId, 
+			@PathVariable("commodityId") Long commodityId,
+			@PathVariable("skuId") Long skuId, 
+			@PathVariable("logisticsId") Long logisticsId,
+			@RequestParam("discountAmount") BigDecimal discountAmount,
+			@RequestParam("logisticsFreight") BigDecimal logisticsFreight
+			
+	) {
+    	ordeAndLogisticsService.updCost(orderId, commodityId, skuId, logisticsId, discountAmount, logisticsFreight);
+		return Result.ok("success");
+	}
+    // @formatter:on
+    
+    
 }
+

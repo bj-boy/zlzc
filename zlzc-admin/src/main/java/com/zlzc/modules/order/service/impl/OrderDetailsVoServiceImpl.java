@@ -423,8 +423,11 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 		return false;
 	}
 
-	/* ################################### 2020年3月30日15点35分 添加订单相关接口 ################################### */
-	
+	/*
+	 * ################################### 2020年3月30日15点35分 添加订单相关接口
+	 * ###################################
+	 */
+
 	/**
 	 * 修改订单收货人信息
 	 * 
@@ -432,6 +435,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 	 * @return
 	 */
 	@Transactional(rollbackFor = Exception.class)
+	@Override
 	public boolean updRecipientInfo(UpdRecipientVo updRecipientVo) {
 		if (updRecipientVo.getLogisticsId() == null) {
 			log.error("要修改的收件人的物流id不能为空。");
@@ -454,6 +458,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 	 * @return
 	 */
 	@Transactional(rollbackFor = Exception.class)
+	@Override
 	public boolean closeOrder(Long orderId) {
 		if (orderId == null) {
 			log.error("关闭订单需要参数OrderId");
@@ -471,6 +476,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 	 * @param orderId
 	 * @return
 	 */
+	@Override
 	public String getOrderRemark(Long orderId) {
 		OrderEntity orderEntity = this.getById(orderId);
 		return orderEntity.getOrderRemark();
@@ -484,12 +490,13 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 	 * @return
 	 */
 	@Transactional(rollbackFor = Exception.class)
+	@Override
 	public boolean updOrderRemark(Long orderId, String orderRemark) {
 		OrderEntity entity = new OrderEntity();
 		entity.setOrderId(orderId).setOrderRemark(orderRemark);
 		return updateById(entity);
 	}
-	
+
 	/**
 	 * 修改订单商品信息
 	 * 
@@ -500,6 +507,7 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 	 * @return
 	 */
 	@Transactional(rollbackFor = Exception.class)
+	@Override
 	public boolean updCommodityInfo(Long orderId, Long commodityId, Long skuId, Integer commodityNumber) {
 		// @formatter:off
 		if (orderId == null) {
@@ -514,8 +522,22 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 			log.error("要修改的订单商品的skuId不能为空。");
 			return false;
 		}
-		// 获取原先订单商品
-//		orderCommodityMiddleService.getOne(queryWrapper)
+		if (commodityNumber == null) {
+			return false;
+		}
+		
+		// 获取原先订单和订单商品信息
+		OrderEntity orderEntity = getById(orderId);
+		OrderCommodityMiddleEntity ocmeEntity = orderCommodityMiddleService.getOne(new QueryWrapper<OrderCommodityMiddleEntity>()
+					.eq("order_id", orderId)
+					.eq("commodity_id", commodityId)
+					.eq("sku_id", skuId)
+				);
+		BigDecimal originOrderPayable = orderEntity.getOrderPayable(); // 订单应付款金额（所有商品的数量*单价的总和 + 运费 + ...）
+		BigDecimal originOrderTotalAmount = orderEntity.getOrderTotalAmount(); // 订单总金额（实付金额，可能免运费，优惠券）
+		BigDecimal originOrderCommodityTotalAmount = orderEntity.getOrderCommodityTotalAmount(); // 商品合计金额（所有商品的数量*单价的总和）
+		BigDecimal originCommodityPrice = ocmeEntity.getCommodityPrice();
+		Integer originCommodityNumber = ocmeEntity.getCommodityNumber();
 		
 		// 修改订单中指定商品数量
 		UpdateWrapper<OrderCommodityMiddleEntity> updQW = new UpdateWrapper<>();
@@ -525,11 +547,25 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 			.eq("sku_id", skuId);
 		OrderCommodityMiddleEntity orderCommodityMiddleEntity = new OrderCommodityMiddleEntity()
 				.setCommodityNumber(commodityNumber);
-		boolean update = orderCommodityMiddleService.update(orderCommodityMiddleEntity, updQW);
+		boolean updOrderCommodityMiddleEntity = orderCommodityMiddleService.update(orderCommodityMiddleEntity, updQW);
 		
 		// 重新计算订单相关价格
+		BigDecimal recalcOrderPayable = originOrderPayable // 重新计算订单应付款金额
+			.subtract(originCommodityPrice.multiply(BigDecimal.valueOf(originCommodityNumber)))
+			.add(originCommodityPrice.multiply(BigDecimal.valueOf(commodityNumber)));
+		BigDecimal recalcOrderTotalAmount = originOrderTotalAmount // 重新计算订单总金额（实付金额）
+			.subtract(originCommodityPrice.multiply(BigDecimal.valueOf(originCommodityNumber)))
+			.add(originCommodityPrice.multiply(BigDecimal.valueOf(commodityNumber)));
+		BigDecimal recalcOrderCommodityTotalAmount = originOrderCommodityTotalAmount // 重新计算商品合计金额
+			.subtract(originCommodityPrice.multiply(BigDecimal.valueOf(originCommodityNumber)))
+			.add(originCommodityPrice.multiply(BigDecimal.valueOf(commodityNumber)));
 		
+		orderEntity
+			.setOrderPayable(recalcOrderPayable)
+			.setOrderTotalAmount(recalcOrderTotalAmount)
+			.setOrderCommodityTotalAmount(recalcOrderCommodityTotalAmount);
 		
+		boolean updRecalc = updateById(orderEntity);
 		
 		return true;
 		// @formatter:on
@@ -545,7 +581,10 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 	 * @return
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public boolean updCost(Long orderId, Long logisticsId, BigDecimal discountAmount, BigDecimal logisticsFreight) {
+	@Override
+	public boolean updCost(Long orderId, Long commodityId, Long skuId, Long logisticsId, BigDecimal discountAmount,
+			BigDecimal logisticsFreight) {
+		// @formatter:off
 		if (orderId == null) {
 			log.error("要修改订单费用信息的orderId不能为空。");
 			return false;
@@ -556,30 +595,55 @@ public class OrderDetailsVoServiceImpl extends ServiceImpl<OrderDao, OrderEntity
 		}
 
 		// 修改运费
-		LogisticsEntity logisticsEntity = new LogisticsEntity().setLogisticsId(logisticsId);
+		LogisticsEntity logisticsEntity = logisticsService.getById(logisticsId);
+		BigDecimal originLogisticsFreight = logisticsEntity.getLogisticsFreight(); // 查询之前运费
+		
+		boolean updLogisticsFreight = false;
+		logisticsEntity
+			.setLogisticsId(logisticsId);
 		if (logisticsFreight != null) {
 			logisticsEntity.setLogisticsFreight(logisticsFreight);
+			updLogisticsFreight = logisticsService.updateById(logisticsEntity); // 修改现在运费
 		}
-		logisticsService.updateById(logisticsEntity);
 
 		// 修改优惠价格
+		QueryWrapper<OrderCommodityMiddleEntity> queryOCMQW = new QueryWrapper<>();
+		queryOCMQW
+			.select("discount_amount")
+			.eq("order_id", orderId)
+			.eq("commodity_id", commodityId)
+			.eq("sku_id", skuId);
+		Map<String, Object> discountAmountMap = orderCommodityMiddleService.getMap(queryOCMQW);
+		BigDecimal originDiscountAmount = (BigDecimal) discountAmountMap.get("discount_amount"); // 查询之前优惠
+		
 		UpdateWrapper<OrderCommodityMiddleEntity> updOCMQW = new UpdateWrapper<>();
 		updOCMQW.eq("order_id", orderId);
 		OrderCommodityMiddleEntity orderCommodityMiddleEntity = new OrderCommodityMiddleEntity();
+		boolean updOCMQWFlag = false;
 		if (discountAmount != null) {
 			orderCommodityMiddleEntity.setDiscountAmount(discountAmount);
+			updOCMQWFlag = orderCommodityMiddleService.update(orderCommodityMiddleEntity, updOCMQW); // 修改现在优惠
 		}
-		orderCommodityMiddleService.update(updOCMQW);
 
 		// 重新计算订单价格
+		if (updLogisticsFreight && updOCMQWFlag) {
+			OrderEntity orderEntity = getById(orderId);
+			BigDecimal originOrderPayable = orderEntity.getOrderPayable(); // 订单应付款金额（所有商品的数量*单价的总和 + 运费 + ...）
+			BigDecimal originOrderTotalAmount = orderEntity.getOrderTotalAmount(); // 订单总金额（实付金额，可能免运费，优惠券）
+			BigDecimal currOrderPayable = originOrderPayable
+					.subtract(originLogisticsFreight)
+					.add(logisticsFreight);
+			BigDecimal currOrderTotalAmount = originOrderTotalAmount
+					.add(originDiscountAmount)
+					.subtract(discountAmount);
+			orderEntity
+				.setOrderPayable(currOrderPayable)
+				.setOrderTotalAmount(currOrderTotalAmount);
+			updateById(orderEntity);
+		}
 
 		return true;
+		// @formatter:on
 	}
-	
-	/**
-	 * 重新计算订单价格
-	 */
-	private void recalculatePrice ( ) {
-		
-	}
+
 }
